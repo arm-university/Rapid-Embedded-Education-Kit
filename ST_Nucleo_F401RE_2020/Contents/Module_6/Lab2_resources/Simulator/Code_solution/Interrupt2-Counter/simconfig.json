@@ -1,0 +1,12 @@
+{
+    "peripherals": [
+        { "component": "PushButton", "args": { "Button" : "PinNames.p5" } },
+        { "component": "PushButton", "args": { "Button" : "PinNames.p6" } },
+        { "component": "PushButton", "args": { "Button" : "PinNames.p7" } },
+        { "component": "PushButton", "args": { "Button" : "PinNames.p8" } },
+  
+        { "component": "LedRed", "args": { "LED" : "PinNames.p9" } },
+        { "component": "LedBlue", "args": { "LED" : "PinNames.p10" } },
+        { "component": "LedYellow", "args": { "LED" : "PinNames.p11" } }
+    ]
+}

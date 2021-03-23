@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>{{script}} - Mbed Simulator</title>
+  <link rel="stylesheet" href="/style/simulator.css">
+  <link rel="stylesheet" href="/xterm/xterm.css" />
+
+  <!--
+    Emulating Mbed OS 5 applications in the browser
+    (c) 2017-2018 Arm Ltd. Written by Jan Jongboom.
+
+    Version {{version}}
+  -->
+</head>
+<body class="viewer">
+  <div id="viewer-topbar">
+    <div id="add-component">+ Add component</div>
+    <a id="refresh" href="">&#x21bb;</a>
+    <div id="status">Downloading...</div>
+  </div>
+
+
+  <section id="board">
+      <section id="components">
+          <object id="board-svg" data="/img/controller_mbed.svg" type="image/svg+xml"></object>
+      </section>
+  </section>
+
+  <section id="serial">
+      <h2>Serial output</h2>
+      <div id="output"></div>
+  </section>
+
+  <section id="overlay">
+    <div id="add-component-modal">
+      <h2>Add component</h2>
+      <select id="select-component">
+      </select>
+      <div>
+        <p>Pins to use</p>
+        <div id="pins"></div>
+      </div>
+      <button id="add-component-btn">Add component</button>
+    </div>
+  </section>
+
+  <script>
+    window.peripheralsToLoad = {{{peripherals}}};
+  </script>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/timesync/timesync.js"></script>
+  <script src="/xterm/xterm.js"></script>
+  
+  <!-- Required parts of the JS HAL -->
+  <script type="text/javascript" src="/js-ui/ga.js"></script>
+  <script type="text/javascript" src="/js-ui/init.js"></script>
+  <script type="text/javascript" src="/js-hal/EventEmitter.js"></script>
+  <script type="text/javascript" src="/js-hal/pinnames.js"></script>
+  <script type="text/javascript" src="/js-hal/gpio.js"></script>
+  <script type="text/javascript" src="/js-hal/timers.js"></script>
+  <script type="text/javascript" src="/js-hal/network.js"></script>
+  <script type="text/javascript" src="/js-hal/lora.js"></script>
+  <script type="text/javascript" src="/js-hal/blockdevice.js"></script>
+  <script type="text/javascript" src="/js-hal/sleep.js"></script>
+  {{#each jshal}}
+  <script type="text/javascript" src="{{{script}}}"></script>
+  {{/each}}
+
+    <!-- UI handling -->
+  <script type="text/javascript" src="/js-ui/board.js"></script>
+  <script type="text/javascript" src="/js-ui/components/base_component.js"></script>
+  <script type="text/javascript" src="/js-ui/components/led.js"></script>
+  <script type="text/javascript" src="/js-ui/components/potentiometer.js"></script>
+  <script type="text/javascript" src="/js-ui/components/push_button.js"></script>
+  <script type="text/javascript" src="/js-ui/components/pwm_speaker.js"></script>
+  <script type="text/javascript" src="/js-ui/components/switch.js"></script>
+  <script type="text/javascript" src="/js-ui/components/thermistor.js"></script>
+  {{#each jsui}}
+  <script type="text/javascript" src="{{{script}}}"></script>
+  {{/each}}
+  <script type="text/javascript" src="/js-ui/viewer.js"></script>
+
+  <!-- User application -->
+  <script async type="text/javascript" src="/out/{{script}}.js"></script>
+</body>
+</html>

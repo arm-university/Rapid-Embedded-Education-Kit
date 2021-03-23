@@ -1,0 +1,8 @@
+{
+    "peripherals": [
+        { "component": "Thermistor", "args": { "Thermistor" : "PinNames.p15" } },
+        { "component": "Thermistor", "args": { "Thermistor" : "PinNames.p16" } },
+  
+        { "component": "PwmSpeaker", "args": { "Speaker" : "PinNames.p21" } }
+    ]
+}

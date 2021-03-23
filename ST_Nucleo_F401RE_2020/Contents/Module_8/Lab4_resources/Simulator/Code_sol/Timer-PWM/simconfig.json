@@ -1,0 +1,12 @@
+{
+    "peripherals": [
+        { "component": "LedRed", "args": { "LED" : "PinNames.p22" } },
+        { "component": "LedBlue", "args": { "LED" : "PinNames.p23" } },
+        { "component": "LedYellow", "args": { "LED" : "PinNames.p24" } },
+
+        { "component": "Thermistor", "args": { "Thermistor" : "PinNames.p15" } },
+        { "component": "Thermistor", "args": { "Thermistor" : "PinNames.p16" } },
+  
+        { "component": "PwmSpeaker", "args": { "Speaker" : "PinNames.p21" } }
+    ]
+}
