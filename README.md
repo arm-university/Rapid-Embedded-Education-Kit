@@ -34,4 +34,4 @@ To produce students who can design and program Arm-based embedded systems and im
 **Extra Reading:** The Arm Cortex-M Processor Architecture: Part 2.
 
 ## License
-You are free to fork or clone this material. See LICENSE.md for the complete license.
+You are free to fork or clone this material. See [LICENSE.md](https://github.com/arm-university/Rapid-Embedded-Education-Kit/blob/main/License/LICENSE.md) for the complete license.
