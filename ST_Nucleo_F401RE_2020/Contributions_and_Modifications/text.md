@@ -58,4 +58,4 @@ For more information about how to contribute, please see our workflow.
 
 ### Workflow
 
-All content and code changes and additions to Arm Education material is handled through GitHub and is subject to a QA process. If you want to contribute, either by adding features or by fixing bugs, please see the the workflow. 
+All content and code changes and additions to Arm Education material is handled through GitHub and is subject to a QA process. If you want to contribute, either by adding features or by fixing bugs, please see the workflow. 
