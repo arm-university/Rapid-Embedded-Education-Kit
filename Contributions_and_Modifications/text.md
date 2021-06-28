@@ -1,6 +1,6 @@
 Arm Education has made the Rapid Embedded Education Kit open for modification and additions. Contributions are an important part of our materials, and our goal is to make it as simple as possible to become a contributor.
 
-You can make contributions to lecture and labs. Arm Education uses the following license - [License](https://github.com/arm-university/Rapid-Embedded-Education-Kit/blob/af4aca6c09e7d91e434bbacf5bb214e594acbcef/License/LICENSE.md)
+You can make contributions to lecture and labs. Arm Education uses the following license - [License](https://github.com/arm-university/Rapid-Embedded-Education-Kit/blob/main/License/LICENSE.md)
 
 To encourage collaboration, as well as robust, consistent and maintainable content, we have developed a set of guidelines for contributing to these materials.
 
