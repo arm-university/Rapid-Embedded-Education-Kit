@@ -1,10 +1,3 @@
-# Disclaimer
-Arm is committed to making the language we use inclusive, meaningful, and respectful. Our goal is to remove and replace non-inclusive language from our vocabulary to reflect our values and represent our global ecosystem.
- 
-Arm is working actively with our partners, standards bodies, and the wider ecosystem to adopt a consistent approach to the use of inclusive language and to eradicate and replace offensive terms. We recognise that this will take time. This course contains references to non-inclusive language; it will be updated with newer terms as those terms are agreed and ratified with the wider community. 
- 
-Contact us at education@arm.com with questions or comments about this course. You can also report non-inclusive and offensive terminology usage in Arm content at terms@arm.com.
-
 
 # Rapid-Embedded-Education-Kit
 
@@ -41,6 +34,12 @@ To produce students who can design and program Arm-based embedded systems and im
 
 **Extra Reading:** The Arm Cortex-M Processor Architecture: Part 2.
 
-
 ## License
 You are free to amend, modify, fork or clone this material. See [LICENSE.md](https://github.com/arm-university/Rapid-Embedded-Education-Kit/blob/main/License/LICENSE.md) for the complete license.
+
+# Inclusive Language
+Arm is committed to making the language we use inclusive, meaningful, and respectful. Our goal is to remove and replace non-inclusive language from our vocabulary to reflect our values and represent our global ecosystem.
+ 
+Arm is working actively with our partners, standards bodies, and the wider ecosystem to adopt a consistent approach to the use of inclusive language and to eradicate and replace offensive terms. We recognise that this will take time. This course contains references to non-inclusive language; it will be updated with newer terms as those terms are agreed and ratified with the wider community. 
+ 
+Contact us at education@arm.com with questions or comments about this course. You can also report non-inclusive and offensive terminology usage in Arm content at terms@arm.com.
