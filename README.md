@@ -9,7 +9,9 @@ Our flagship offering to universities worldwide is the Arm University Program Ed
 
 These self-contained educational materials offered exclusively and at no cost to academics and teaching staff worldwide. They’re designed to support your day-to-day teaching on core electronic engineering and computer science subjects. You have the freedom to choose which modules to teach – you can use all the modules in the Education Kit or only those that are most appropriate to your teaching outcomes.
 
-Our Rapid Embedded Systems Design Education Kit covers the fundamental principles of how to accelerate the development of embedded systems and rapidly prototype various embedded applications. A full description of the education kit can be found [here](https://www.arm.com/resources/education/education-kits/rapid-embedded-systems).
+Our Rapid Embedded Systems Design Education Kit covers the fundamental principles of how to accelerate the development of embedded systems and rapidly prototype various embedded applications. A full description of the education kit can be found [here](https://www.arm.com/resources/education/education-kits/rapid-embedded-systems). 
+
+We welcome amendments & modifications to this education kit. Details about how to contribute, what type of modifications we are looking for and the workflow can be found [here](https://github.com/arm-university/Rapid-Embedded-Education-Kit/tree/main/Contributions_and_Modifications).
 
 
  ## Kit specification:
