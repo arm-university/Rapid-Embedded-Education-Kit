@@ -1,5 +1,5 @@
 
-[Table of Contents](../../README.MD)
+[Table of Contents](/README.MD)
 
 ---
 
@@ -12,6 +12,6 @@ TBD
 
 ---
 
-[Table of Contents](../../README.MD)
+[Table of Contents](/README.MD)
 
 
