@@ -2,6 +2,10 @@
 
 ---
 
+![header](../../Materials/img/ARM_University_horizontal_blue_LG.png)
+
+---
+
 # Module 7 - Analog Input and Output
 
 ## Lecture Slides
@@ -10,7 +14,7 @@ The lecture slides relevant to this section are listed below. It is suggested yo
 
 | Lecture | Description |
 | - | - |
-| 1 | [Analog Input and Output](./Module_7.pptx) |
+| 7 | [Analog Input and Output](./Module_7.pptx) |
 | |
 
 ## Equipment required:

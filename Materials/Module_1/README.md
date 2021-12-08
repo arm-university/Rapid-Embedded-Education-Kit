@@ -3,6 +3,7 @@
 ---
 
 ![header](../../Materials/img/ARM_University_horizontal_blue_LG.png)
+
 ---
 
 # Module 1 - Introduction to Embedded Systems
