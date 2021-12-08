@@ -46,13 +46,13 @@ Before proceeding, it is recommended that you read the [section on getting start
 ---
 
 ## Syllabus
-1. [Introduction to Embedded Systems](/Materials/Module_1)
+1. [Introduction to Embedded Systems](/Materials/Module_1/README.md)
 1. The Arm Cortex-M4 Processor Architecture
 1. Introduction to Arm Cortex-M4 Programming
 1. Introduction to the Mbed Platform and CMSIS
 1. Digital Input and Output (IO)
 1. Interrupts and Low Power Features
-1. [Analog Input and Output](Materials/Module_7)
+1. [Analog Input and Output](Materials/Module_7/README.md)
 1. Timer and Pulse-Width Modulation
 1. Serial Communication
 1. Real-Time Operating Systems
