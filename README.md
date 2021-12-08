@@ -46,7 +46,7 @@ Before proceeding, it is recommended that you read the [section on getting start
 ---
 
 ## Syllabus
-1. [Introduction to Embedded Systems](Materials/Module_1/README.md)
+1. [Introduction to Embedded Systems](/Materials/Module_1/README.md)
 1. The Arm Cortex-M4 Processor Architecture
 1. Introduction to Arm Cortex-M4 Programming
 1. Introduction to the Mbed Platform and CMSIS
