@@ -1,4 +1,4 @@
-[Table of Contents](/README.MD)
+[Table of Contents](/README.md)
 
 ---
 
@@ -15,7 +15,7 @@ There is no lab content for this module.
 
 ---
 
-[Table of Contents](/README.MD)
+[Table of Contents](/README.md)
 
 
 
