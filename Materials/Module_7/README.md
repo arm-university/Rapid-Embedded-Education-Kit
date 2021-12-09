@@ -41,7 +41,7 @@ In this lab, we will be using the following software and hardware:
 
 * A breadboard, 2 x 100Ω resistors, 2 x 10kΩ potentiometers, 1 x speaker (ABI-001-RC), 2 x LED.
 
-The code skeleton, which includes some support for implementing the task in [section 5.2]() should be found in the same folder as this manual.
+The code skeleton, which includes some support for implementing the task in [section 5.2](#5.2-Your-Application-Code) should be found in the same folder as this manual.
 
 # 3 Hardware Setup
 
