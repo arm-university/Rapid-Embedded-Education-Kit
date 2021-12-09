@@ -11,30 +11,11 @@ LAB EXERCISE 3 - Analog input and PWM
 
 #include "mbed.h"
 
-// **************************** NOTE *******************************
-#define HW_PLATFORM SIMULATOR //Comment this line out if using physical hardware
-//#define HW_PLATFORM NUCLEO_F401RE
-//#define HW_PLATFORM NUCLEO_F428ZI
-// *****************************************************************
 
-#if HW_PLATFORM == SIMULATOR
-#define SPEAKER_PIN p21     
-#define AN_POT1_PIN p15
-#define AN_POT2_PIN p16
-#elif HW_PLATFORM == NUCLEO_F401RE
-//Tutors can adapt this for their own hardware
-#define SPEAKER_PIN D6
-#define AN_POT1_PIN A0
-#define AN_POT2_PIN A1
-#else
-
-#endif
 /*
 Define the PWM speaker output
 Define analog inputs
-
-Use the pin definitions at the top of this file
-
+Define serial output
 */
 
 	//Write your code here
