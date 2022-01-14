@@ -11,7 +11,12 @@ These self-contained educational materials offered exclusively and at no cost to
 
 Our Rapid Embedded Systems Design Education Kit covers the fundamental principles of how to accelerate the development of embedded systems and rapidly prototype various embedded applications. A full description of the education kit can be found [here](https://www.arm.com/resources/education/education-kits/rapid-embedded-systems). 
 
-We welcome amendments & modifications to this education kit. Details about how to contribute, what type of modifications we are looking for and the workflow can be found [here](https://github.com/arm-university/Rapid-Embedded-Education-Kit/tree/main/Contributions_and_Modifications).
+## Getting Involved
+We welcome contributions, amendments & modifications to this education kit. For details, please click on the following links:
+
+* [How to contribute](https://github.com/arm-university/Rapid-Embedded-Education-Kit/blob/main/Contributions_and_Modifications/Contributions_And_Modifications.md)
+* [Type of modifications](https://github.com/arm-university/Rapid-Embedded-Education-Kit/blob/main/Contributions_and_Modifications/Desired_Contributions.md) we are looking for. We also use [Projects](https://github.com/arm-university/Rapid-Embedded-Education-Kit/projects) to track progress.
+* [Workflow](https://github.com/arm-university/Rapid-Embedded-Education-Kit/blob/main/Contributions_and_Modifications/workflow.pdf)
 
 
  ## Kit specification:
