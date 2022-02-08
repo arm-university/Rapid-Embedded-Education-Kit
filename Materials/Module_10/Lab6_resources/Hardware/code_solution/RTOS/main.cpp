@@ -13,7 +13,6 @@ LAB EXERCISE 6 - Real-Time Operating System
  *----------------------------------------------------------------------------*/
 
 #include "mbed.h"
-#include "rtos.h"
 #include "DS1631.h"
 #include "NHD_0216HZ.h"
 #include "pindef.h"
@@ -39,7 +38,7 @@ void temp_thread(void const *args){
 		lcd.set_cursor(0, 0);
 		lcd.printf("Temp: %.2f", temp_sensor.read());
 		lcd_mutex.unlock();
-		Thread::wait(100);
+		ThisThread::sleep_for(100ms);
 	}
 }
 
@@ -51,7 +50,7 @@ void adjust_brightness(void const *args){
 		red = 1-v;
 		green = 1-v;
 		blue = 1-v;
-		Thread::wait(500);
+		ThisThread::sleep_for(500ms);
 	}
 }
 
@@ -60,7 +59,7 @@ void led1_thread(void const *args){
 	led = 0;
 	while(1){
 		led = !led;
-		Thread::wait(500);
+		ThisThread::sleep_for(500ms);
 	}
 }
 
@@ -73,7 +72,7 @@ void count_thread(void const *args){
 		lcd.printf("Counting: %.2f", k);
 		lcd_mutex.unlock();
 		k += 0.25f;
-		Thread::wait(1000);
+		ThisThread::sleep_for(1000ms);
 	}
 }
 
@@ -83,14 +82,17 @@ void count_thread(void const *args){
 
 int main(){
 	//Initialise and clear the LCD display
-	lcd.init_lcd();
+  lcd.init_lcd();
   lcd.clr_lcd();
-  
-	//Start all threads
-	Thread thread1(led1_thread);
-  Thread thread2(count_thread);
-  Thread thread3(temp_thread);
-  Thread thread4(adjust_brightness);
+  Thread thread1;
+  Thread thread2;
+  Thread thread3;
+  Thread thread4;
+  //Start all threads
+  thread1.start(&led1_thread);
+  thread2.start(&count_thread);
+  thread3.start(&temp_thread);
+  thread4.start(&adjust_brightness);
 	
 	//Wait for timer interrupt
   while(1){
