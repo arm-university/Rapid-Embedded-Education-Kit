@@ -13,7 +13,6 @@ LAB EXERCISE 6 - Real-Time Operating System
  *----------------------------------------------------------------------------*/
 
 #include "mbed.h"
-#include "rtos.h"
 #include "DS1631.h"
 #include "NHD_0216HZ.h"
 
