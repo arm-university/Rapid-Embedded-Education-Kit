@@ -36,7 +36,7 @@ Operating system (OS)
 * Various OSs are available in the market for various hardware platforms, e.g., Windows, Linux, Unix, Mac OS, Android, iOS.
 
 <figure>
-<img src="../../Materials/img/operating_system_overview.png">
+<img src="../../Materials/img/operating_system_overview.PNG">
 <figcaption> Figure 1: Operating system overview</figcaption>
 </figure>
 
