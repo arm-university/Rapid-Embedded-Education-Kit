@@ -94,7 +94,7 @@ We can use the PwmOut interface to control the frequency and duty cycle of a PWM
 ```C++
 PwmOut led(D5);		//define the PWM output
 led = 0.5;			//set the duty cycle of PWM output to 50%
-led.period(0.02)		//set the output frequency to 50Hz ; 
+led.period(0.02)	//set the output frequency to 50Hz ; 
 ```
 
 The PwmOut interface has a set of member functions which can be found in figure 3:
