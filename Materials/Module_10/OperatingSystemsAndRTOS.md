@@ -118,7 +118,7 @@ Real-time guarantees the completion of a process within a defined time interval.
 Real-time does not make any statement about the total time duration or the processing speed.
 
 
-<i>Summary</i>
+<i><b>Summary</i><b>
 
 An RTOS’s process completion time is completely deterministic and guarantees a defined time interval, without reference to a particular processing speed. Real-time does not necessarily mean fast.  A very fast process can be blocked and stuck, which means that it is no longer real-time.
 
@@ -257,7 +257,7 @@ void led2_thread()
 {
     while (true) {
         led2 = !led2;
-        ThisThread::sleep_for(1000);//Puts the thread into the WAITING state for 1000 ms
+        ThisThread::sleep_for(1000ms);//Puts the thread into the WAITING state for 1000 ms
     }
 }
 
@@ -267,7 +267,7 @@ int main()
 
     while (true) {
         led1 = !led1;
-        ThisThread::sleep_for(500); //Puts the thread into the WAITING state for 500 ms
+        ThisThread::sleep_for(500ms); //Puts the thread into the WAITING state for 500 ms
     }
 }
 ```
@@ -275,8 +275,7 @@ int main()
 | Threads |
 | --- |
 | How many threads are in the application? **<p title="Two threads. The main thread and the newly created thread">Hover here to see the solution</p>** |
-| What does the <b><i>ThisThread::sleep_for(500)</b></i> line do? **<p title="ThisThread::sleep:for(500) puts the thread in the WAITING state for 500ms">Hover here to see the solution</p>** |
-| 
+| What does the <b><i>ThisThread::sleep_for(500ms)</b></i> line do? **<p title="ThisThread::sleep:for(500) puts the thread in the WAITING state for 500ms">Hover here to see the solution</p>** |
 
 
 ## Mutex
@@ -328,9 +327,9 @@ void test_thread(void const *args)
 {
     while (true) {
         notify((const char *)args, 0); 
-        ThisThread::sleep_for(1000);
+        ThisThread::sleep_for(1000ms);
         notify((const char *)args, 1);
-        ThisThread::sleep_for(1000);
+        ThisThread::sleep_for(1000ms);
     }
 }
 
@@ -403,7 +402,7 @@ void test_thread(void const *name)
     while (true) {
         one_slot.acquire(); //Blocks if no resources are available
         printf("%s\n\r", (const char *)name); //Print thread name when resources available
-        ThisThread::sleep_for(1000); 
+        ThisThread::sleep_for(1000ms); 
         one_slot.release(); // Releases semaphore, increment semaphore ( resource count )
     }
 }
