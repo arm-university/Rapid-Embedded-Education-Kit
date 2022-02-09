@@ -348,15 +348,15 @@ The function calling the printing stdio blocks it for 2000ms.
 In the main routine, two and one main procedure are started (see pink frame), generating this output:
 
 > Th2: 0
-<br>
+
 > 1 second: Th3: 0
-<br>
+
 > 1 second: Th1: 0
-<br>
+
 > 1 second: Th1: 1
-<br>
+
 > 1 second: Th3: 1
-<br>
+
 > 1 second: Th2: 1
 
 If mutex were not blocking stdio, the output could have been arbitrarily mixed.
@@ -423,17 +423,17 @@ In this example, the stdio is released for 2 threads. If both slots are not used
 
 Result we would like to see:
 > Th 2 
-<br>
+
 > immediately: Th 3
-<br>
+
 > 1 second: Th 1
 
 Result we might see:
 
 > Th Th 3
-<br>
+
 > 2
-<br>
+
 > 1 second: Th 1
 
 This is because both threads will try to use the stdio simultaneously.
