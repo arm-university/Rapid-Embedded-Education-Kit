@@ -160,12 +160,12 @@ To play music, it is better to define a list of notes that maybe used to play th
 After defining the music note and beat length, you can then make a note array which will produce a simple piece of music, for example the following sheet gives the notes and beats of “Jingle bells”
 
 <figure>
-<img src="../../Materials/img/jingle-bells-4-bar.png" width="400px">
+<img src="../../Materials/img/Module_8_jingle-bells-4-bar.png" width="400px">
 <figcaption>Figure 3: jingle bells 4 bar</figcaption>
 </figure>
 
 <figure>
-<img src="../../Materials/img/jingle-bells-4-bar-2.png" width="400px">
+<img src="../../Materials/img/Module_8_jingle-bells-4-bar-2.png" width="400px">
 <figcaption>Figure 4: jingle bells 4 bar 2</figcaption>
 </figure>
 

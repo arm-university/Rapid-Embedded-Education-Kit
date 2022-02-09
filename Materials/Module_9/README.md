@@ -163,7 +163,7 @@ In this lab task, we are going to display the temperature on the PC using the I2
 In this task we are going to use the temperature sensor (DS1631), its pin configurations are presented below: 
 
 <figure>
-<img src="../../Materials/img/DS1631.png" width="200px" height="200px">
+<img src="../../Materials/img/Module_9_DS1631.png" width="200px" height="200px">
 <figcaption>Figure 2: DS1631</figcaption>
 </figure>
 
