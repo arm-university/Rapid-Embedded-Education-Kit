@@ -118,7 +118,7 @@ Real-time guarantees the completion of a process within a defined time interval.
 Real-time does not make any statement about the total time duration or the processing speed.
 
 
-<i><b>Summary</i><b>
+<i><b>Summary</i></b>
 
 An RTOS’s process completion time is completely deterministic and guarantees a defined time interval, without reference to a particular processing speed. Real-time does not necessarily mean fast.  A very fast process can be blocked and stuck, which means that it is no longer real-time.
 
