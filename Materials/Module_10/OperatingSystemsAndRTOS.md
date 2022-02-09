@@ -275,7 +275,7 @@ int main()
 | Threads |
 | --- |
 | How many threads are in the application? **<p title="Two threads. The main thread and the newly created thread">Hover here to see the solution</p>** |
-| What does the <b><i>ThisThread::sleep_for(500ms)</b></i> line do? **<p title="ThisThread::sleep:for(500) puts the thread in the WAITING state for 500ms">Hover here to see the solution</p>** |
+| What does the <b><i>ThisThread::sleep_for(500ms)</b></i> line do? **<p title="ThisThread::sleep:for(500ms) puts the thread in the WAITING state for 500ms">Hover here to see the solution</p>** |
 
 
 ## Mutex
