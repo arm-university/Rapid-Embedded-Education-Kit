@@ -28,15 +28,15 @@ If you clone this repository, lecture slides are available in PowerPoint format 
     - A platform used for the easy prototyping and development of applications and systems based on Arm Cortex-M-based microcontrollers, typically for use in the world of the Internet of Things (IoT).
 
 * The Mbed platform provides:
-    - Open software libraries
-    - Open hardware designs 
-    - Open online tools for professional rapid prototyping of products based on Arm-based microcontrollers
+    - Open software libraries.
+    - Open hardware designs .
+    - Open online tools for professional rapid prototyping of products based on Arm-based microcontrollers.
 
 * The Mbed platform includes:
-    - Mbed Operating System (Mbed OS)
-        - Libraries, RTOS core, HAL, API, and more
-    - A microcontroller Hardware Development Kit (HDK) and supported development boards
-    - Integrated Development Environment (IDE), including an online compiler and online developer collaboration tools
+    - Mbed Operating System (Mbed OS).
+        - Libraries, RTOS core, HAL, API, and more.
+    - A microcontroller Hardware Development Kit (HDK) and supported development boards.
+    - Integrated Development Environment (IDE), including an online compiler and online developer collaboration tools.
 
 <!-- The Mbed platform provides a full set of resources necessary and useful for developers of Arm Cortex-M-based systems. It is an online system, supported by a broad community and microcontroller companies, offering:
 * Mbed OS 5
@@ -46,60 +46,59 @@ If you clone this repository, lecture slides are available in PowerPoint format 
 
 # 2 Mbed OS - Overview
 <figure>
-<img src="../../Materials/img/MbedOS_fetures.png" width="600px">
-<figcaption>Figure 1: MbedOS fetures </figcaption>
+<img src="../../Materials/img/MbedOS_features.png" width="600px">
+<figcaption>Figure 1: MbedOS features </figcaption>
 </figure>
 
-* An open-source operating system for platforms using Arm microcontrollers, specifically designed for devices involved in the Internet of Things (IoT)
+* An open-source operating system for platforms using Arm microcontrollers, specifically designed for devices involved in the Internet of Things (IoT).
 
-* Offers a variety of features to enable the development of IoT connected systems
+* Offers a variety of features to enable the development of IoT connected systems.
 
-* Provides a layer of abstraction that interprets the application code in way the hardware can understand
+* Provides a layer of abstraction that interprets the application code in way the hardware can understand.
 
-* This enables the developer to focus on programming applications that can run on a range of devices
-    * An Mbed OS application can be run on any Mbed-compatible platform
+* This enables the developer to focus on programming applications that can run on a range of devices.
+    * An Mbed OS application can be run on any Mbed-compatible platform.
 
 ##  2.1 Mbed OS – Cortex-M RTOS Kernel 
-* Mbed has an RTOS core
-    * Supports deterministic, multithreaded, real-time software execution
+* Mbed has an RTOS core.
+    * Supports deterministic, multithreaded, real-time software execution.
 
-* RTOS primitives are available to allow drivers and applications to rely on threads, semaphores, mutexes and other RTOS features
+* RTOS primitives are available to allow drivers and applications to rely on threads, semaphores, mutexes and other RTOS features.
 
 ## 2.2 Mbed OS - Security
 
 * Mbed provides two security-focused embedded building blocks:
-    * Arm Mbed TLS
-    * Secure Partition Manager (SPM)
+    * Arm Mbed TLS.
+    * Secure Partition Manager (SPM).
 
-* Mbed TLS is a protocol for securing communication channels between devices and servers or gateways
+* Mbed TLS is a protocol for securing communication channels between devices and servers or gateways.
 
 * The secure partition manager is responsible for:
-    * Isolating software within partitions
-    * Managing the execution of software within partitions
-    * Providing Inter-Process Communication (IPC) between partitions
+    * Isolating software within partitions.
+    * Managing the execution of software within partitions.
+    * Providing Inter-Process Communication (IPC) between partitions.
 
 ## 2.3 Mbed OS - Connectivity
 
-* Mbed OS supports a number of connectivity protocols
-    - Paired with Pelion Device Management to provide full support for a range of communication options
+* Mbed OS supports a number of connectivity protocols.
+    - Paired with Pelion Device Management to provide full support for a range of communication options.
 
 * Such technologies include:
-    * NarrowBand-IoT (NB-IoT): 
-    * Bluetooth Low Energy (BLE)
-    * 6LoWPAN
-    * Thread
+    * NarrowBand-IoT (NB-IoT).
+    * Bluetooth Low Energy (BLE).
+    * 6LoWPAN.
+    * Thread.
 
 ## 2.4 Mbed Software Development Kit
 
 * Mbed Software Development Kit (SDK) includes:
-    * Software libraries
-        * Official C/C++ software libraries
-            * Start-up code, peripheral drivers, networking, RTOS and runtime environment
-        * Community-developed libraries and codes
-            * Cookbook of hundreds of reusable peripheral and module libraries have been built on top of the SDK, which can be used to build your projects faster
-    * Software tools, such as build tools, test and debug scripts
-
-* Enables rapid prototyping of embedded applications
+    * Software libraries.
+        * Official C/C++ software libraries.
+            * Start-up code, peripheral drivers, networking, RTOS and runtime environment.
+        * Community-developed libraries and codes.
+            * Cookbook of hundreds of reusable peripheral and module libraries have been built on top of the SDK, which can be used to build your projects faster.
+    * Software tools, such as build tools, test and debug scripts.
+* Enables rapid prototyping of embedded applications.
 
 It is a rich toolbox that supports developers by providing guides and code segments for already solved problems.
 
@@ -107,25 +106,25 @@ Many of these software tools, such as BTLE-stacks or start-up codes, are continu
 
 ## 2.5 Mbed Hardware Development Kit 
 
-* The Mbed Hardware Development Kit (HDK) consists of different hardware design resource that assist in the development of custom hardware
-    * Allows utilisation of the Arm Mbed ecosystem and associated technologies such as Mbed OS and DAPLink
+* The Mbed Hardware Development Kit (HDK) consists of different hardware design resource that assist in the development of custom hardware.
+    * Allows utilisation of the Arm Mbed ecosystem and associated technologies such as Mbed OS and DAPLink.
 
-* Working with boards based on the Mbed HDK allows for an efficient start to working with the Mbed platform
+* Working with boards based on the Mbed HDK allows for an efficient start to working with the Mbed platform.
 
 * The HDK offers:
-    * Eagle schematics and board files
-    * PDF schematics and board copies
-    * CAM Job GERBERS for manufacture (including pick/place and drill)
-    * Bill of Materials (BOM)
-    * A repository of content and projects
+    * Eagle schematics and board files.
+    * PDF schematics and board copies.
+    * CAM Job GERBERS for manufacture (including pick/place and drill).
+    * Bill of Materials (BOM).
+    * A repository of content and projects.
  
 Benefits of the Mbed HDK:
-* Quick design short-cut
-    * Using ready-made schematics
+* Quick design short-cut.
+    * Using ready-made schematics.
 
-* Easy-to-use USB and debugging support
+* Easy-to-use USB and debugging support.
 
-* Compatible with Mbed OS
+* Compatible with Mbed OS.
 
 <figure>
 <img src="../../Materials/img/Evaluation_board.png" width="600px">
@@ -140,21 +139,21 @@ The DAPLink debug probe is connected to the host computer via USB and connects t
 
 Features – provided via USB connection:
 * HID interface
-    * Provides a channel over which CMSIS-DAP protocols can run
-        * Enables tools such as Keil MDK, IAR Workbench, and pyOCD
+    * Provides a channel over which CMSIS-DAP protocols can run.
+        * Enables tools such as Keil MDK, IAR Workbench, and pyOCD.
 
 * USB drag and drop programming
-    * The DAPLink debug probes appear as a USB disk on the host computer
-    * Binary and hex files can be copied to the USB disk which are then programmed into the memory of the target system
+    * The DAPLink debug probes appear as a USB disk on the host computer.
+    * Binary and hex files can be copied to the USB disk which are then programmed into the memory of the target system.
 
 * USB serial port
-    * DAPLink probe also provides a USB serial port
-        * Port will appear on a Windows as a COM port or Linux as a /dev/tty interface
+    * DAPLink probe also provides a USB serial port.
+        * Port will appear on a Windows as a COM port or Linux as a /dev/tty interface.
 
 # 4 Development Tools
 
 There are multiple ways for developers to program with Mbed. These consist of:
-* Mbed Studio 
+* Mbed Studio
 * Mbed Online Compiler
 * Mbed CLI
 
@@ -165,16 +164,16 @@ There are multiple ways for developers to program with Mbed. These consist of:
  </figcaption>
 </figure>
 
-* Integrated development environment (IDE) for Mbed OS 5 applications
+* Integrated development environment (IDE) for Mbed OS 5 applications.
 
-    * Includes everything required to create, compile and debug Mbed programs
+    * Includes everything required to create, compile and debug Mbed programs.
 
-    * Automatically detects connected Mbed enabled boards   
-        * Quick development for specific targets
+    * Automatically detects connected Mbed enabled boards. 
+        * Quick development for specific targets.
 
-    * Flashes code directly to connected platform
+    * Flashes code directly to connected platform.
 
-    * Provides debug session for debugging and profiling the target board
+    * Provides debug session for debugging and profiling the target board.
 
 ## 4.2 Mbed Online Compiler
 
@@ -206,13 +205,13 @@ There are multiple ways for developers to program with Mbed. These consist of:
 The Mbed platform offers a number of tools that support testing of your Mbed code:
 
 * Greentea
-    * Automated testing tool for Arm Mbed OS development
-    * Pair with 'UNITY' and 'utest' frameworks
+    * Automated testing tool for Arm Mbed OS development.
+    * Pair with 'UNITY' and 'utest' frameworks.
     * https://os.mbed.com/docs/mbed-os/v5.15/tools/greentea-testing-applications.html
 
 * Icetea
-    * Automated testing tool for Arm Mbed OS development
-    * Typically used for local development and automation in a continuous integration environment
+    * Automated testing tool for Arm Mbed OS development.
+    * Typically used for local development and automation in a continuous integration environment.
     * https://os.mbed.com/docs/mbed-os/v5.15/tools/icetea-testing-applications.html
 
 Process of flashing boards, running the tests, and generating reports is automated by the test system.
@@ -235,34 +234,34 @@ Some example boards include:
 
 ## 7.1 High-level Programming
 Advantages:
-* Higher productivity (less development time)
-* Portability across devices 
-* Resulting code that is easier code to read and maintain
-* Allows reuse of code
-* Rapid prototyping of applications
+* Higher productivity (less development time).
+* Portability across devices. 
+* Resulting code that is easier code to read and maintain.
+* Allows reuse of code.
+* Rapid prototyping of applications.
 	
 Disadvantages:
-* Less optimized code
-* Additional translation time for source to machine code
-* Another level of abstraction to deal with
+* Less optimized code.
+* Additional translation time for source to machine code.
+* Another level of abstraction to deal with.
 
 ## 7.2 Low-level Programming
 Advantages:
-* More optimized code and memory efficient
-* Less translation time for source to machine code
-* Directly talk to hardware
+* More optimized code and memory efficient.
+* Less translation time for source to machine code.
+* Directly talk to hardware.
 
 Disadvantages:
-* Less portability from one device to another
-* Resulting code is more difficult for others to read, reuse, and maintain
-* Low productivity
+* Less portability from one device to another.
+* Resulting code is more difficult for others to read, reuse, and maintain.
+* Low productivity.
 
 ## 7.3 Comparison: High-level vs Low-level
 MCU register layer
-* Blinky example by poking registers
+* Blinky example by poking registers.
 
 Mbed API 
-* Blinky example using Mbed API functions
+* Blinky example using Mbed API functions.
 
 <!-- MODULE 4 COMPARATION HIGH VS LOW LEVEL PROGRAMMING -->
 <figure>
@@ -304,11 +303,11 @@ The code is short and efficient, but is nearly unreadable if the purpose of the 
 
 ### 7.3.2 Mbed API Example
 
-* The Mbed API provides the actual user-friendly object-oriented API to the final user
-* More friendly functions/APIs 
-* Object oriented API (using C++)
-* Top-level API used by the majority of the programs developed on the mbed platform
-* Defines basic operators to provide intuitive casting to primitive types and assignments
+* The Mbed API provides the actual user-friendly object-oriented API to the final user.
+* More friendly functions/APIs.
+* Object oriented API (using C++).
+* Top-level API used by the majority of the programs developed on the mbed platform.
+* Defines basic operators to provide intuitive casting to primitive types and assignments.
 * A digital IO class is defined as shown in the code clip.
 
 ```C
@@ -372,7 +371,7 @@ int main(){
     }
 }
 ```
-Looking at line **DigitalOut led1(LED1);**:
+Looking at line **DigitalOut led1(LED1)**:
 
 ```C
 class DigitalInOut {
@@ -383,7 +382,8 @@ public:
     }
 ```
 
-The assignment of 1 and 0 in line **led1 = 1;** or **led1 = 0;** , lets it toggle on and off by writing the according values to the port (= address). This uses an operator function as shown below: 
+The declaration of led1 already constructs and assigns it to LED1 as part of the evaluation board, with the correct ports and addresses. The assignment of 1 and 0in line **led1 = 1** or **led1 = 0** , lets it toggle on and off by writing the according values to the port (= address).This uses an operator function as shown below:
+
 ```C
 
 DigitalInOut& operator= (DigitalInOut& rhs)   {
@@ -400,16 +400,17 @@ In this code, the use of addresses is completely encapsulated and invisible.
 
 * Note that the Mbed API is programmed using the object-oriented language C++, which originated from C language with object-oriented features such as classes.
 Deep knowledge of  C++ is not necessary to use the Mbed API. However, many tutorials and books can help you learn C++ if you wish. 
-* In this example, code is written using the Mbed API. The declaration of led1 already constructs and assigns it to LED1 as part of the evaluation board, with the correct ports and addresses. The assignment of 1 and 0, in lines 7 and 10 respectively, lets it toggle on and off by writing the according values to the port (= address).
 
 # 8 Cortex Microcontroller Software Interface Standard (CMSIS)
 
-CMSIS: Cortex Microcontroller Software Interface Standard
-A vendor-independent hardware abstraction layer for the Cortex-M processor series
-Provides a standardized software interface, such as library functions, which help control the processor more easily, e.g. configuring the Nested Vectored Interrupt Controller (NVIC)
-Improves software portability across different Cortex-M processors and Cortex-M based microcontrollers
+CMSIS: Cortex Microcontroller Software Interface Standard.
 
-<!-- SLIDE 24 -->
+A vendor-independent hardware abstraction layer for the Cortex-M processor series.
+
+Provides a standardized software interface, such as library functions, which help control the processor more easily, e.g. configuring the Nested Vectored Interrupt Controller (NVIC).
+
+Improves software portability across different Cortex-M processors and Cortex-M based microcontrollers.
+
 <figure>
 <img src="../../Materials/img/CMSIS_low_level_vs_high_level.png" width="600px">
 <figcaption>Figure 7: Cortex Microcontroller Software Interface Standard</figcaption>
@@ -448,64 +449,83 @@ Better compatibility when integrating third-party software components, since all
 Better code density and smaller memory footprint, since the codes in CMSIS have been optimized and tested.
 
 <figure>
-<img src="../../Materials/img/nucleo_f401re_pin_descriptions.png" width="600px">
-<figcaption>Figure 9: Benefits of CMSIS</figcaption>
+<img src="../../Materials/img/CMSIS_partners.png" width="600px">
+<figcaption>Figure 9: CMSIS partners</figcaption>
 </figure>
 
-## CMSIS Components
+## 8.3 CMSIS Components
 The CMSIS consists of the following components:
 * CMSIS-CORE 
 * CMSIS-DSP, CMSIS-RTOS API and CMSIS-SVD
 * In this module, we will focus on using CMSIS-CORE
-<!-- SLIDE 27 -->
+
 <figure>
-<img src="../../Materials/img/nucleo_f401re_pin_descriptions.png" width="600px">
-<figcaption>Figure 1: The NUCLEO F401RE board pin descriptions</figcaption>
+<img src="../../Materials/img/CMSIS_components.png" width="600px">
+<figcaption>Figure 9: CMSIS Components</figcaption>
 </figure>
 
-# CMSIS-DAP
-CMSIS-DAP is an interface firmware for the debug unit that connects the debug port to USB
+## 8.4 CMSIS-DAP
 
-Debuggers can connect via USB to the debug unit and to the device running the application software
+CMSIS-DAP is an interface firmware for the debug unit that connects the debug port to USB.
+Debuggers can connect via USB to the debug unit and to the device running the application software.
+The debug unit is connected to the target device via JTAG or SW.
+The Arm-Cortex processors then provide the CoreSight Debug and Trace Unit.
 
-The debug unit is connected to the target device via JTAG or SW
-
-The Arm-Cortex processors then provide the CoreSight Debug and Trace Unit
-
-<!-- SLIDE 28 -->
 <figure>
-<img src="../../Materials/img/nucleo_f401re_pin_descriptions.png" width="600px">
-<figcaption>Figure 1: The NUCLEO F401RE board pin descriptions</figcaption>
+<img src="../../Materials/img/CMSIS_DAP.png" width="600px">
+<figcaption>Figure 10: CMSIS-DAP</figcaption>
 </figure>
 
-## CMSIS Functions: Access NVIC
-<!-- SLIDE 29 -->
-<figure>
-<img src="../../Materials/img/nucleo_f401re_pin_descriptions.png" width="600px">
-<figcaption>Figure 1: The NUCLEO F401RE board pin descriptions</figcaption>
-</figure>
+## 8.5 CMSIS Functions: Access NVIC
 
-## CMSIS Functions: Access Special Registers
-
-<!-- SLIDE 30 -->
-<figure>
-<img src="../../Materials/img/nucleo_f401re_pin_descriptions.png" width="600px">
-<figcaption>Figure 1: The NUCLEO F401RE board pin descriptions</figcaption>
-</figure>
-
-## CMSIS Functions: Execute Special Instructions
+| CMSIS Function	| Description |
+| - | - |
+| `void NVIC_EnableIRQ (IRQn_Type IRQn)` | Enables an interrupt or exception. |
+| `void NVIC_DisableIRQ (IRQn_Type IRQn)` | Disables an interrupt or exception. |
+| `void NVIC_SetPendingIRQ (IRQn_Type IRQn)` | Sets the pending status of interrupt or exception to 1. |
+| `void NVIC_ClearPendingIRQ (IRQn_Type IRQn)` | Clears the pending status of interrupt or exception to 0. |
+| `uint32_t NVIC_GetPendingIRQ (IRQn_Type IRQn)` | Reads the pending status of interrupt or exception. This function returns non-zero value if the pending status is set to 1. |
+| `void NVIC_SetPriority (IRQn_Type IRQn, uint32_t priority)` | Sets the priority of an interrupt or exception with configurable priority level to 1. |
+| `uint32_t NVIC_GetPriority (IRQn_Type IRQn)` | Reads the priority of an interrupt or exception with configurable priority level. This function return the current priority level. |
 
 
-<!-- SLIDE 31 -->
-<figure>
-<img src="../../Materials/img/nucleo_f401re_pin_descriptions.png" width="600px">
-<figcaption>Figure 1: The NUCLEO F401RE board pin descriptions</figcaption>
-</figure>
+## 8.6 CMSIS Functions: Access Special Registers
 
-## CMSIS Functions: Access System
+| Special Register	| Access | CMSIS Function |
+| - | - | - |
+| PRIMASK | Read |`uint32_t __get_PRIMASK (void)` |
+| PRIMASK | Write |`void __set_PRIMASK (uint32_t value)` |
+| CONTROL | Read |`uint32_t __get_CONTROL (void)` |
+| CONTROL | Write |`void __set_CONTROL (uint32_t value)` |
+| MSP | Read |`uint32_t __get_MSP (void)` |
+| MSP | Write |`void __set_MSP (uint32_t TopOfMainStack)` |
+| PSP | Read |`uint32_t __get_PSP (void)` |
+| PSP | Write |`void __set_PSP (uint32_t TopOfProcStack)` |
 
-<!-- SLIDE 32 -->
-<figure>
-<img src="../../Materials/img/nucleo_f401re_pin_descriptions.png" width="600px">
-<figcaption>Figure 1: The NUCLEO F401RE board pin descriptions</figcaption>
-</figure>
+
+## 8.7 CMSIS Functions: Execute Special Instructions
+
+
+| Instruction	| CMSIS Intrinsic Function |
+| - | - |
+| CPSIE i |`void __enable_irq(void)` |
+| CPSID i |`void __disable_irq(void)` |
+| ISB |`void __ISB(void)` |
+| DSB  |`void __DSB(void)` |
+| DMB  |`void __DMB(void)` |
+| NOP  |`void __NOP(void)` |
+| REV  |`uint32_t __REV(uint32_t int value)` |
+| REV16 |`uint32_t __REV16(uint32_t int value)` |
+| REVSH  |`uint32_t __REVSH(uint32_t int value)` |
+| SEV  |`void __SEV(void)` |
+| WFE  |`void __WFE(void)` |
+| WFI |`void __WFI(void)` |
+
+## 8.8 CMSIS Functions: Access System
+
+| CMSIS Function	| Description |
+| - | - |
+| `void NVIC_SystemReset(void)` | Initiate a system reset request. |
+| `uint32_t SysTick_Config(uint32_t ticks)` | Initialize and start the SysTick counter and its interrupt. |
+| `void SystemInit (void)` | Initialize the system. |
+| `void SystemCoreClockUpdate(void)` | Update the SystemCoreClock variable. |
