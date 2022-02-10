@@ -46,7 +46,7 @@ If you clone this repository, lecture slides are available in PowerPoint format 
 
 # 2 Mbed OS - Overview
 <figure>
-<img src="../../Materials/img/MbedOS_features.png" width="600px">
+<img src="../../Materials/img/MbedOS_features.png" width="500px">
 <figcaption>Figure 1: MbedOS features </figcaption>
 </figure>
 
@@ -91,6 +91,9 @@ If you clone this repository, lecture slides are available in PowerPoint format 
 
 ## 2.4 Mbed Software Development Kit
 
+It is a rich toolbox that supports developers by providing guides and code segments for already solved problems.
+Many of these software tools, such as BTLE-stacks or start-up codes, are continuously maintained by the community for faster code development.
+
 * Mbed Software Development Kit (SDK) includes:
     * Software libraries.
         * Official C/C++ software libraries.
@@ -100,23 +103,21 @@ If you clone this repository, lecture slides are available in PowerPoint format 
     * Software tools, such as build tools, test and debug scripts.
 * Enables rapid prototyping of embedded applications.
 
-It is a rich toolbox that supports developers by providing guides and code segments for already solved problems.
 
-Many of these software tools, such as BTLE-stacks or start-up codes, are continuously maintained by the community for faster code development.
 
 ## 2.5 Mbed Hardware Development Kit 
 
-* The Mbed Hardware Development Kit (HDK) consists of different hardware design resource that assist in the development of custom hardware.
-    * Allows utilisation of the Arm Mbed ecosystem and associated technologies such as Mbed OS and DAPLink.
+The Mbed Hardware Development Kit (HDK) consists of different hardware design resource that assist in the development of custom hardware.
+* Allows utilisation of the Arm Mbed ecosystem and associated technologies such as Mbed OS and DAPLink.
 
-* Working with boards based on the Mbed HDK allows for an efficient start to working with the Mbed platform.
+Working with boards based on the Mbed HDK allows for an efficient start to working with the Mbed platform.
 
-* The HDK offers:
-    * Eagle schematics and board files.
-    * PDF schematics and board copies.
-    * CAM Job GERBERS for manufacture (including pick/place and drill).
-    * Bill of Materials (BOM).
-    * A repository of content and projects.
+The HDK offers:
+* Eagle schematics and board files.
+* PDF schematics and board copies.
+* CAM Job GERBERS for manufacture (including pick/place and drill).
+* Bill of Materials (BOM).
+* A repository of content and projects.
  
 Benefits of the Mbed HDK:
 * Quick design short-cut.
@@ -127,7 +128,7 @@ Benefits of the Mbed HDK:
 * Compatible with Mbed OS.
 
 <figure>
-<img src="../../Materials/img/Evaluation_board.png" width="600px">
+<img src="../../Materials/img/Evaluation_board.png" width="500px">
 <figcaption>Figure 2: An example of how a microcontroller sub-system might be used to build an evaluation board
  </figcaption>
 </figure>
@@ -140,7 +141,7 @@ The DAPLink debug probe is connected to the host computer via USB and connects t
 Features – provided via USB connection:
 * HID interface
     * Provides a channel over which CMSIS-DAP protocols can run.
-        * Enables tools such as Keil MDK, IAR Workbench, and pyOCD.
+    * Enables tools such as Keil MDK, IAR Workbench, and pyOCD.
 
 * USB drag and drop programming
     * The DAPLink debug probes appear as a USB disk on the host computer.
@@ -148,7 +149,7 @@ Features – provided via USB connection:
 
 * USB serial port
     * DAPLink probe also provides a USB serial port.
-        * Port will appear on a Windows as a COM port or Linux as a /dev/tty interface.
+    * Port will appear on a Windows as a COM port or Linux as a /dev/tty interface.
 
 # 4 Development Tools
 
@@ -159,26 +160,22 @@ There are multiple ways for developers to program with Mbed. These consist of:
 
 ## 4.1 Mbed Studio
 <figure>
-<img src="../../Materials/img/Mbed_studio_ide.png" width="600px">
+<img src="../../Materials/img/Mbed_studio_ide.png" width="500px">
 <figcaption>Figure 3: Mbed Studio IDE
  </figcaption>
 </figure>
 
 * Integrated development environment (IDE) for Mbed OS 5 applications.
-
     * Includes everything required to create, compile and debug Mbed programs.
-
     * Automatically detects connected Mbed enabled boards. 
-        * Quick development for specific targets.
-
+    * Quick development for specific targets.
     * Flashes code directly to connected platform.
-
     * Provides debug session for debugging and profiling the target board.
 
 ## 4.2 Mbed Online Compiler
 
 <figure>
-<img src="../../Materials/img/Mbed_online_compiler.png" width="600px">
+<img src="../../Materials/img/Mbed_online_compiler.png" width="500px">
 <figcaption>Figure 4: Mbed Online Compiler
  </figcaption>
 </figure>
@@ -192,7 +189,7 @@ There are multiple ways for developers to program with Mbed. These consist of:
 ## 4.3 Mbed CLI
 
 <figure>
-<img src="../../Materials/img/Mbed_cli.png" width="600px">
+<img src="../../Materials/img/Mbed_cli.png" width="500px">
 <figcaption>Figure 5: Mbed CLI
  </figcaption>
 </figure>
@@ -265,7 +262,7 @@ Mbed API
 
 <!-- MODULE 4 COMPARATION HIGH VS LOW LEVEL PROGRAMMING -->
 <figure>
-<img src="../../Materials/img/High_level_vs_low_level.png" width="600px">
+<img src="../../Materials/img/High_level_vs_low_level.png" width="500px">
 <figcaption>Figure 6: High-level vs Low-level </figcaption>
 </figure>
 
@@ -273,6 +270,8 @@ Mbed API
 As shown in previous modules, the GPIO peripheral can be directly accessed by writing/reading specific memory addresses:
 * Assign a pointer to the address of each register.
 * Registers can be read/ written to using the pointer.
+
+Example of low-level programming:
 
 ```C
 #include "mbed.h"
@@ -309,6 +308,8 @@ The code is short and efficient, but is nearly unreadable if the purpose of the 
 * Top-level API used by the majority of the programs developed on the mbed platform.
 * Defines basic operators to provide intuitive casting to primitive types and assignments.
 * A digital IO class is defined as shown in the code clip.
+
+Example of high-level programming:
 
 ```C
 class DigitalInOut{
@@ -371,7 +372,7 @@ int main(){
     }
 }
 ```
-Looking at line **DigitalOut led1(LED1)**:
+Stepping inside line **DigitalOut led1(LED1)**:
 
 ```C
 class DigitalInOut {
@@ -434,7 +435,7 @@ Names of system initialization functions e.g.
 * System initialization: void SystemInit (void)
 
 <figure>
-<img src="../../Materials/img/CMSIS_compliant.png" width="600px">
+<img src="../../Materials/img/CMSIS_compliant.png" width="300px">
 <figcaption>Figure 8: CMSIS Compliant </figcaption>
 </figure>
 
@@ -449,7 +450,7 @@ Better compatibility when integrating third-party software components, since all
 Better code density and smaller memory footprint, since the codes in CMSIS have been optimized and tested.
 
 <figure>
-<img src="../../Materials/img/CMSIS_partners.png" width="600px">
+<img src="../../Materials/img/CMSIS_partners.png" width="400px">
 <figcaption>Figure 9: CMSIS partners</figcaption>
 </figure>
 
@@ -460,7 +461,7 @@ The CMSIS consists of the following components:
 * In this module, we will focus on using CMSIS-CORE
 
 <figure>
-<img src="../../Materials/img/CMSIS_components.png" width="600px">
+<img src="../../Materials/img/CMSIS_components.png" width="500px">
 <figcaption>Figure 9: CMSIS Components</figcaption>
 </figure>
 
@@ -472,7 +473,7 @@ The debug unit is connected to the target device via JTAG or SW.
 The Arm-Cortex processors then provide the CoreSight Debug and Trace Unit.
 
 <figure>
-<img src="../../Materials/img/CMSIS_DAP.png" width="600px">
+<img src="../../Materials/img/CMSIS_DAP.png" width="500px">
 <figcaption>Figure 10: CMSIS-DAP</figcaption>
 </figure>
 
