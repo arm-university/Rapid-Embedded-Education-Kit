@@ -14,6 +14,8 @@ Rapid Embedded Systems - Design and Programming Course - Rev 1.1
 
 The lecture slides relevant to this section are listed below.
 
+For the lab notes on this module, please click see [here](./Lab.md)
+
 | Lecture | Description |
 | - | - |
 | 10 | [ Real-time operating systems](./Module_10.pptx) |
