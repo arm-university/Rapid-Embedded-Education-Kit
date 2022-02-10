@@ -199,17 +199,13 @@ There are multiple ways for developers to program with Mbed. These consist of:
 * Enables Git and Mercurial-based version control, along with dependency management, code publishing, support for remotely hosted repositories, and use of the Arm Mbed OS build system.
 
 # 5  Testing with Mbed
-The Mbed platform offers a number of tools that support testing of your Mbed code:
+
+The Mbed platform offers a number of tools that support testing of your Mbed code. One of them is:
 
 * Greentea
     * Automated testing tool for Arm Mbed OS development.
     * Pair with 'UNITY' and 'utest' frameworks.
-    * https://os.mbed.com/docs/mbed-os/v5.15/tools/greentea-testing-applications.html
-
-* Icetea
-    * Automated testing tool for Arm Mbed OS development.
-    * Typically used for local development and automation in a continuous integration environment.
-    * https://os.mbed.com/docs/mbed-os/v5.15/tools/icetea-testing-applications.html
+    * https://os.mbed.com/docs/mbed-os/v6.15/debug-test/greentea-for-testing-applications.html
 
 Process of flashing boards, running the tests, and generating reports is automated by the test system.
 
