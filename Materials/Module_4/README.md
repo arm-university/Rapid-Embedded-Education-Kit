@@ -46,7 +46,7 @@ If you clone this repository, lecture slides are available in PowerPoint format 
 
 # 2 Mbed OS - Overview
 <figure>
-<img src="../../Materials/img/MbedOS_features.png" width="500px">
+<img src="../../Materials/img/MbedOS_features.png" width="400px">
 <figcaption>Figure 1: MbedOS features </figcaption>
 </figure>
 
@@ -57,37 +57,37 @@ If you clone this repository, lecture slides are available in PowerPoint format 
 * Provides a layer of abstraction that interprets the application code in way the hardware can understand.
 
 * This enables the developer to focus on programming applications that can run on a range of devices.
-    * An Mbed OS application can be run on any Mbed-compatible platform.
+* An Mbed OS application can be run on any Mbed-compatible platform.
 
 ##  2.1 Mbed OS – Cortex-M RTOS Kernel 
-* Mbed has an RTOS core.
-    * Supports deterministic, multithreaded, real-time software execution.
+Mbed has an RTOS core.
+* Supports deterministic, multithreaded, real-time software execution.
 
-* RTOS primitives are available to allow drivers and applications to rely on threads, semaphores, mutexes and other RTOS features.
+RTOS primitives are available to allow drivers and applications to rely on threads, semaphores, mutexes and other RTOS features.
 
 ## 2.2 Mbed OS - Security
 
-* Mbed provides two security-focused embedded building blocks:
-    * Arm Mbed TLS.
-    * Secure Partition Manager (SPM).
+Mbed provides two security-focused embedded building blocks:
+* Arm Mbed TLS.
+* Secure Partition Manager (SPM).
 
-* Mbed TLS is a protocol for securing communication channels between devices and servers or gateways.
+Mbed TLS is a protocol for securing communication channels between devices and servers or gateways.
 
-* The secure partition manager is responsible for:
-    * Isolating software within partitions.
-    * Managing the execution of software within partitions.
-    * Providing Inter-Process Communication (IPC) between partitions.
+The secure partition manager is responsible for:
+* Isolating software within partitions.
+* Managing the execution of software within partitions.
+* Providing Inter-Process Communication (IPC) between partitions.
 
 ## 2.3 Mbed OS - Connectivity
 
-* Mbed OS supports a number of connectivity protocols.
-    - Paired with Pelion Device Management to provide full support for a range of communication options.
+Mbed OS supports a number of connectivity protocols.
+* Paired with Pelion Device Management to provide full support for a range of communication options.
 
-* Such technologies include:
-    * NarrowBand-IoT (NB-IoT).
-    * Bluetooth Low Energy (BLE).
-    * 6LoWPAN.
-    * Thread.
+Such technologies include:
+* NarrowBand-IoT (NB-IoT).
+* Bluetooth Low Energy (BLE).
+* 6LoWPAN.
+* Thread.
 
 ## 2.4 Mbed Software Development Kit
 
@@ -128,7 +128,7 @@ Benefits of the Mbed HDK:
 * Compatible with Mbed OS.
 
 <figure>
-<img src="../../Materials/img/Evaluation_board.png" width="500px">
+<img src="../../Materials/img/Evaluation_board.png" width="400px">
 <figcaption>Figure 2: An example of how a microcontroller sub-system might be used to build an evaluation board
  </figcaption>
 </figure>
@@ -435,7 +435,7 @@ Names of system initialization functions e.g.
 * System initialization: void SystemInit (void)
 
 <figure>
-<img src="../../Materials/img/CMSIS_compliant.png" width="300px">
+<img src="../../Materials/img/CMSIS_compliant.png" width="200px">
 <figcaption>Figure 8: CMSIS Compliant </figcaption>
 </figure>
 
@@ -450,7 +450,7 @@ Better compatibility when integrating third-party software components, since all
 Better code density and smaller memory footprint, since the codes in CMSIS have been optimized and tested.
 
 <figure>
-<img src="../../Materials/img/CMSIS_partners.png" width="400px">
+<img src="../../Materials/img/CMSIS_partners.png" width="300px">
 <figcaption>Figure 9: CMSIS partners</figcaption>
 </figure>
 
@@ -461,8 +461,8 @@ The CMSIS consists of the following components:
 * In this module, we will focus on using CMSIS-CORE
 
 <figure>
-<img src="../../Materials/img/CMSIS_components.png" width="500px">
-<figcaption>Figure 9: CMSIS Components</figcaption>
+<img src="../../Materials/img/CMSIS_components.png" width="400px">
+<figcaption>Figure 10: CMSIS Components</figcaption>
 </figure>
 
 ## 8.4 CMSIS-DAP
@@ -473,8 +473,8 @@ The debug unit is connected to the target device via JTAG or SW.
 The Arm-Cortex processors then provide the CoreSight Debug and Trace Unit.
 
 <figure>
-<img src="../../Materials/img/CMSIS_DAP.png" width="500px">
-<figcaption>Figure 10: CMSIS-DAP</figcaption>
+<img src="../../Materials/img/CMSIS_DAP.png" width="400px">
+<figcaption>Figure 11: CMSIS-DAP</figcaption>
 </figure>
 
 ## 8.5 CMSIS Functions: Access NVIC
