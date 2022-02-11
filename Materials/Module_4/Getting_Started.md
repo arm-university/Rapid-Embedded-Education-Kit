@@ -79,6 +79,7 @@ The program should then show up in the explorer on the left-hand side of the IDE
 </figure><br>
 
 
+
 Let’s repeat the process, but this time, we will import a project called “mbed-os-example-blinky”.
 1)	Open the “File” menu and then select “New Program”.
 2)	Select “mbed-os-example-blinky” from the dropdown list and then click “Add Program”.
