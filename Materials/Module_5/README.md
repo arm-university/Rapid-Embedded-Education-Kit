@@ -254,3 +254,9 @@ If you have any issues – refer to the code solution files provided for some he
 # 6	Additional references
 Documentation Mbed API for Digital I/O 
 https://os.mbed.com/docs/mbed-os/v5.13/apis/digitalin.html
+
+---
+
+[Table of Contents](/README.md#syllabus)
+
+Copyright © 2021 Arm Limited (or its affiliates). All rights reserved. 
