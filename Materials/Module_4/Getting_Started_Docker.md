@@ -155,18 +155,21 @@ apt-cache madison docker-ce
 You will get a message similar to the following snapshot, which will list the various versions:
 
 <figure>
-<img src="../../Materials/img/snapshot_message.png" width="400px">
+<img src="../../Materials/img/snapshot_message.png" width="500px">
 <figcaption>Figure 7: Snapshot of the message </figcaption>
 </figure><br>
 <br>
-7.	Install a specific version using the version string from the second column. For example, to install version ``` 5:19.03.11~3-0~ubuntu-focal``` which is listed in the above snapshot, run the following command:
+7.	Install a specific version using the version string from the second column. For example, to install version <i>5:19.03.11~3-0~ubuntu-focal</i>
+which is listed in the above snapshot, run the following command:
+
 ``` 
 sudo apt-get install docker-ce=5:19.03.11~3-0~ubuntu-focal docker-ce-cli=5:19.03.11~3-0~ubuntu-focal containerd.io
 ``` 
+
 You will get a message similar to the following snapshot: 
 
 <figure>
-<img src="../../Materials/img/snapshot_docker_install.png" width="400px">
+<img src="../../Materials/img/snapshot_docker_install.png" width="500px">
 <figcaption>Figure 8: Snapshot Docker install </figcaption>
 </figure><br>
 <br>
@@ -220,13 +223,13 @@ You should get the following message:
 4.	Expand your OS system tray (or status bar, depending on your OS), and right click on the Docker Icon. Then select Dashboard. 
 
 <figure>
-<img src="../../Materials/img/windows_os_docker_icon.png" width="300px">
+<img src="../../Materials/img/windows_os_docker_icon.png" width="200px">
 <figcaption>Figure 12: Windows OS - Docker Icon - Dashboard  </figcaption>
 </figure><br>
 <br>
 
 <figure>
-<img src="../../Materials/img/mac_os_docker_icon.png" width="300px">
+<img src="../../Materials/img/mac_os_docker_icon.png" width="200px">
 <figcaption>Figure 13: MAC OS - Docker Icon - Dashboard  </figcaption>
 </figure><br>
 <br>
@@ -278,9 +281,10 @@ You should get the following message:
 </figure><br>
 <br>
 4.	Open a browser in Ubuntu and enter the following URL:
-```
 http://localhost:7829/ 
-```
+
+<br>
+
 A browser will now launch with the Mbed Simulator as shown in the following diagram.
 
 <figure>
