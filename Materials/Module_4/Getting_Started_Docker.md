@@ -270,9 +270,10 @@ Once completed you should get a display similar to the following:
 <figcaption>Figure 16: Pull complete  </figcaption>
 </figure><br>
 <br>
-3.	Run the Mbed Simulator
+3.	Run the Mbed Simulator 
+
 ```
-sudo docker run -p 7829:7829 armedu/mbed_sim 
+sudo docker run -p 7829:7829 armedu/mbed_sim
 ```
 You should get the following message:
 <figure>
@@ -280,11 +281,9 @@ You should get the following message:
 <figcaption>Figure 17: Run the Mbed Simulator  </figcaption>
 </figure><br>
 <br>
-4.	Open a browser in Ubuntu and enter the following URL:
-http://localhost:7829/ 
+4.	Open a browser in Ubuntu and enter the following URL: <i>http://localhost:7829/</i>
 
 <br>
-
 A browser will now launch with the Mbed Simulator as shown in the following diagram.
 
 <figure>
@@ -293,9 +292,11 @@ A browser will now launch with the Mbed Simulator as shown in the following diag
 </figure><br>
 <br>
 5.	[Optional] If you would like to list all running docker containers, run the following command in a separate terminal: 
+
 ```
 sudo docker ps
 ```
+
 	You should get a list similar to: 
 
 <figure>
