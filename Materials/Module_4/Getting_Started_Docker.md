@@ -45,27 +45,27 @@ To install Docker Desktop on Windows, follow these steps:
 1.	Download the appropriate Docker Desktop Installer program from the link provided in Software requirements.
 
 2.	Run the downloaded Docker Desktop installer. You can accept the default configuration where appropriate and click OK. 
-<figure>
+<br><figure>
 <img src="../../Materials/img/setting_up_docker.png" width="300px">
 <figcaption> Figure 1: Installing Docker Desktop </figcaption>
 </figure><br>
 
 Note: It may take some time for the Installer to unpack the files. If the installation is successful, there will be an ‘Installation succeeded’ display. 
 
-<figure>
+<br><figure>
 <img src="../../Materials/img/docker_unpacking_files.png" width="300px">
 <figcaption>Figure 2: Unpacking files </figcaption>
 </figure><br>
 
 3.	Click Close and restart. This will restart your PC.
 
-<figure>
+<br><figure>
 <img src="../../Materials/img/docker_installation_successful.png" width="300px">
 <figcaption>Figure 3: Installation succeeded </figcaption>
 </figure><br>
 After restarting your PC, you will notice Docker in your Windows system tray, for example:
 
-<figure>
+<br><figure>
 <img src="../../Materials/img/Docker_in_windows_system_tray.png" width="200px">
 <figcaption>Figure 4: Docker in Windows system tray </figcaption>
 </figure><br>
@@ -82,7 +82,7 @@ To install Docker Desktop on your Mac, follow these steps:
 
 3.	Drag and drop Docker.app to Applications. 
 
-<figure>
+<br><figure>
 <img src="../../Materials/img/docker_app_mac.png" width="300px">
 <figcaption>Figure 5: Docker.app </figcaption>
 </figure><br />
@@ -90,7 +90,7 @@ To install Docker Desktop on your Mac, follow these steps:
 4.	Open the Applications folder and double click on Docker.app. 
 You will notice Docker in the top status bar that indicates that Docker is running, for example:
 
-<figure>
+<br><figure>
 <img src="../../Materials/img/Docker_in_mac_status_bar.png" width="200px">
 <figcaption>Figure 6: Docker in status bar </figcaption>
 </figure><br>
@@ -152,7 +152,7 @@ apt-cache madison docker-ce
 ```
 You will get a message similar to the following snapshot, which will list the various versions:
 
-<figure>
+<br><figure>
 <img src="../../Materials/img/snapshot_message.png" width="400px">
 <figcaption>Figure 7: Snapshot of the message </figcaption>
 </figure><br>
@@ -163,7 +163,7 @@ sudo apt-get install docker-ce=5:19.03.11~3-0~ubuntu-focal docker-ce-cli=5:19.03
 ``` 
 You will get a message similar to the following snapshot: 
 
-<figure>
+<br><figure>
 <img src="../../Materials/img/snapshot_docker_install.png" width="400px">
 <figcaption>Figure 8: Snapshot Docker install </figcaption>
 </figure><br>
@@ -174,7 +174,7 @@ sudo docker run hello-world
 ``` 
 You will get a message similar to the following snapshot: 
 
-<figure>
+<br><figure>
 <img src="../../Materials/img/docker_test_message.png" width="500px">
 <figcaption>Figure 9: Docker test message </figcaption>
 </figure><br>
@@ -200,7 +200,7 @@ Note:
 *	You should not need to install Git in order to run the docker commands. 
 Once completed you should get a display similar to the following: 
 
-<figure>
+<br><figure>
 <img src="../../Materials/img/Mbed_simulator_pull_result.png" width="500px">
 <figcaption>Figure 10: Mbed simulator pull result </figcaption>
 </figure><br>
@@ -210,14 +210,14 @@ docker run -p 7829:7829 armedu/mbed_sim
 
 You should get the following message:
 
-<figure>
+<br><figure>
 <img src="../../Materials/img/Mbed_simulator_run_result.png" width="500px">
 <figcaption>Figure 11: Mbed simulator run result </figcaption>
 </figure><br>
 
 4.	Expand your OS system tray (or status bar, depending on your OS), and right click on the Docker Icon. Then select Dashboard. 
 
-<figure>
+<br><figure>
 <img src="../../Materials/img/windows_os_docker_icon.png" width="300px">
 <figcaption>Figure 12: Windows OS - Docker Icon - Dashboard  </figcaption>
 </figure><br>
@@ -231,14 +231,14 @@ You should get the following message:
 5.	Hover your mouse over the relevant container named ‘mbed_sim’ and select ‘Open in Browser’. 
 
 
-<figure>
+<br><figure>
 <img src="../../Materials/img/container_Mbed_sim.png" width="400px">
 <figcaption>Figure 14: Relevant container ‘mbed_sim’  </figcaption>
 </figure><br>
 
 A browser will now launch with the Mbed Simulator as shown in the following diagram.
 
-<figure>
+<br><figure>
 <img src="../../Materials/img/browser_mbed_simulator.png" width="500px">
 <figcaption>Figure 15: Mbed Simulator  </figcaption>
 </figure><br>
@@ -259,7 +259,7 @@ Note:
 
 Once completed you should get a display similar to the following: 
 
-<figure>
+<br><figure>
 <img src="../../Materials/img/ubuntu_pull_complete.png" width="500px">
 <figcaption>Figure 16: Pull complete  </figcaption>
 </figure><br>
@@ -269,7 +269,7 @@ Once completed you should get a display similar to the following:
 sudo docker run -p 7829:7829 armedu/mbed_sim 
 ```
 You should get the following message:
-<figure>
+<br><figure>
 <img src="../../Materials/img/ubuntu_mbed_simulator_run.png" width="500px">
 <figcaption>Figure 17: Run the Mbed Simulator  </figcaption>
 </figure><br>
@@ -280,7 +280,7 @@ http://localhost:7829/
 ```
 A browser will now launch with the Mbed Simulator as shown in the following diagram.
 
-<figure>
+<br><figure>
 <img src="../../Materials/img/mbed_simulator_ubuntu.png" width="500px">
 <figcaption>Figure 18: Mbed Simulator diagram </figcaption>
 </figure><br>
@@ -291,7 +291,7 @@ sudo docker ps
 ```
 	You should get a list similar to: 
 
-<figure>
+<br><figure>
 <img src="../../Materials/img/ubuntu_list_all_running_docker_containers.png" width="400px">
 <figcaption>Figure 19: List with all running docker containers </figcaption>
 </figure><br>
@@ -322,7 +322,7 @@ To enable Hyper-V and Containers, follow these steps:
 
 3.	Ensure that Hyper-V and Containers checkboxes are both filled, as shown below: 
 
-<figure>
+<br><figure>
 <img src="../../Materials/img/hyperv_container_checkboxes.png" width="400px">
 <figcaption>Figure 20: Containers and Hyper-V are checked </figcaption>
 </figure><br>

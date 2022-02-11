@@ -57,7 +57,7 @@ Upon installation of Mbed Studio, a workspace named “Mbed Programs” is creat
 
 You can change this workspace by clicking “File” and then selecting “Open Workspace”. Navigate to the folder you wish to make the new workspace and select it. 
 
-<figure>
+<br><figure>
 <img src="../../Materials/img/Mbed_studio_open_workspace.png" width="200px">
 <figcaption>Figure 1: Mbed Studio - “File” - “Open Workspace” </figcaption>
 </figure><br>
@@ -73,7 +73,7 @@ In order to create a new program:
 
 The program should then show up in the explorer on the left-hand side of the IDE as shown:
 
-<figure>
+<br><figure>
 <img src="../../Materials/img/Mbed_studio_new_program.png" width="200px">
 <figcaption>Figure 2: Mbed Studio - New program </figcaption>
 </figure><br>
@@ -85,7 +85,7 @@ Let’s repeat the process, but this time, we will import a project called “mb
 2)	Select “mbed-os-example-blinky” from the dropdown list and then click “Add Program”.
 The example program should now appear in the explorer and be populated with the relevant files (this may require reopening the workspace to work):
 
-<figure>
+<br><figure>
 <img src="../../Materials/img/mbed_os_example_blinky.png" width="200px">
 <figcaption>Figure 3: Mbed Studio - “mbed-os-example-blinky” </figcaption>
 </figure><br>
@@ -93,21 +93,21 @@ The example program should now appear in the explorer and be populated with the 
 ### 3.1.3	Build and running a program
 Now you can plug in your Mbed enabled board and select it from the list of targets, in this case we will be using the Nucleo-F401RE:
 
-<figure>
+<br><figure>
 <img src="../../Materials/img/Mbed_studio_target_board.png" width="300px">
 <figcaption>Figure 4: Mbed Studio - Target board </figcaption>
 </figure><br>
 
 Once the board is selected, ensure that “mbed-os-example-blinky” is the current active program and then select the “Build program” button:
 
-<figure>
+<br><figure>
 <img src="../../Materials/img/Mbed_studio_build.png" width="300px">
 <figcaption>Figure 5: Mbed Studio - Build program </figcaption>
 </figure><br>
 
 As a result of the build process, Mbed will create a .bin file, which will contain result of compiling your program into machine code for whichever device you are using. Copying this file to your boards internal storage will have the effect of loading the program onto your board, at which point the program (for instance a blinking LED) should run!
 
-<figure>
+<br><figure>
 <img src="../../Materials/img/Mbed_studio_run.png" width="300px">
 <figcaption>Figure 6: Mbed Studio - Run program </figcaption>
 </figure><br>
@@ -174,7 +174,7 @@ $ mbed detect
 ```
 You should have an output similar to:
 
-<figure>
+<br><figure>
 <img src="../../Materials/img/detect_supported targets.png" width="400px">
 <figcaption>Figure 7: Mbed Studio - Detected target  </figcaption>
 </figure><br>
@@ -195,7 +195,7 @@ In order to compile your project, run in your project directory:
 $ mbed compile
 ```
 
-<figure>
+<br><figure>
 <img src="../../Materials/img/Mbed_example_building_project.png" width="300px">
 <figcaption>Figure 8: An example for the NUCLEO_F401RE and ARM Compiler  </figcaption>
 </figure><br>
