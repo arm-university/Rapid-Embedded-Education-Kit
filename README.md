@@ -51,12 +51,12 @@ Before proceeding, it is recommended that you read the [section on getting start
 1. Introduction to Arm Cortex-M4 Programming
 1. Introduction to the Mbed Platform and CMSIS
 1. Digital Input and Output (IO)
-1. Interrupts and Low Power Features
+1. [Interrupts and Low Power Features](Materials/Module_6/README.md)
 1. [Analog Input and Output](Materials/Module_7/README.md)
-1. Timer and Pulse-Width Modulation
-1. Serial Communication
+1. [Timer and Pulse-Width Modulation](Materials/Module_8/README.md)
+1. [Serial Communication](Materials/Module_9/README.md)
 1. Real-Time Operating Systems
-1. Final Project: Audio Player
+1. [Final Project: Audio Player](Materials/Module_11/README.md)
 
 **Extra Reading:** The Arm Cortex-M Processor Architecture: Part 2.
 
