@@ -42,7 +42,7 @@ Mbed online compiler, which can be found here: https://ide.mbed.com/compiler
 
 * NUCLEO-F401RE, or another suitable Mbed OS 5 compatible development board. A full list of compatible devices can be found here: https://os.mbed.com/platforms, note that outputs may have to be reconfigured for devices following a different standard.
 
-* A breadboard, 4 x 330 Ω resistors, 4 x buttons, 1 red LED, 1 blue LED, 1 green LED
+* A breadboard, 4 x 330 Ω resistors, 4 x buttons, 1 red LED, 1 blue LED, 1 green LED.
 
 # 3	Mbed Studio Setup
 ## 3.1	Mbed Studio
@@ -58,9 +58,9 @@ Upon installation of Mbed Studio, a workspace named “Mbed Programs” is creat
 You can change this workspace by clicking “File” and then selecting “Open Workspace”. Navigate to the folder you wish to make the new workspace and select it. 
 
 <figure>
-<img src="../../Materials/img/Mbed_studio_open_workspace.png" width="400px">
+<img src="../../Materials/img/Mbed_studio_open_workspace.png" width="300px">
 <figcaption>Figure 1: Mbed Studio - “File” - “Open Workspace” </figcaption>
-</figure>
+</figure><br />
 
 ### 3.1.2	Creating or importing programs
 In Mbed Studio you can create your own programs or import pre-created programs into the IDE.
@@ -73,9 +73,9 @@ In order to create a new program:
 The program should then show up in the explorer on the left-hand side of the IDE as shown:
 
 <figure>
-<img src="../../Materials/img/Mbed_studio_new_program.png" width="400px">
+<img src="../../Materials/img/Mbed_studio_new_program.png" width="300px">
 <figcaption>Figure 2: Mbed Studio - New program </figcaption>
-</figure>
+</figure><br />
 
 Let’s repeat the process, but this time, we will import a project called “mbed-os-example-blinky”.
 1)	Open the “File” menu and then select “New Program”.
@@ -83,9 +83,9 @@ Let’s repeat the process, but this time, we will import a project called “mb
 The example program should now appear in the explorer and be populated with the relevant files (this may require reopening the workspace to work):
 
 <figure>
-<img src="../../Materials/img/mbed_os_example_blinky.png" width="400px">
+<img src="../../Materials/img/mbed_os_example_blinky.png" width="300px">
 <figcaption>Figure 3: Mbed Studio - “mbed-os-example-blinky” </figcaption>
-</figure>
+</figure><br />
 
 ### 3.1.3	Build and running a program
 Now you can plug in your Mbed enabled board and select it from the list of targets, in this case we will be using the Nucleo-F401RE:
@@ -93,21 +93,21 @@ Now you can plug in your Mbed enabled board and select it from the list of targe
 <figure>
 <img src="../../Materials/img/Mbed_studio_target_board.png" width="300px">
 <figcaption>Figure 4: Mbed Studio - Target board </figcaption>
-</figure>
+</figure><br />
 
 Once the board is selected, ensure that “mbed-os-example-blinky” is the current active program and then select the “Build program” button:
 
 <figure>
 <img src="../../Materials/img/Mbed_studio_build.png" width="300px">
 <figcaption>Figure 5: Mbed Studio - Build program </figcaption>
-</figure>
+</figure><br />
 
 As a result of the build process, Mbed will create a .bin file, which will contain result of compiling your program into machine code for whichever device you are using. Copying this file to your boards internal storage will have the effect of loading the program onto your board, at which point the program (for instance a blinking LED) should run!
 
 <figure>
 <img src="../../Materials/img/Mbed_studio_run.png" width="300px">
 <figcaption>Figure 6: Mbed Studio - Run program </figcaption>
-</figure>
+</figure><br />
 
 Alternatively, pressing “Run program” should automatically build and load the program to your board. You may need to press the reset switch on the board in order for the new program to run.
 
@@ -172,9 +172,9 @@ $ mbed detect
 You should have an output similar to:
 
 <figure>
-<img src="../../Materials/img/detect_supported targets.png" width="300px">
+<img src="../../Materials/img/detect_supported targets.png" width="400px">
 <figcaption>Figure 7: Mbed Studio - Detected target  </figcaption>
-</figure>
+</figure><br />
 
 To set a default target, use the mbed target command with the name of your target (in this example, the NUCLEO_F401RE), run:
 
@@ -195,7 +195,7 @@ $ mbed compile
 <figure>
 <img src="../../Materials/img/Mbed_example_building_project.png" width="300px">
 <figcaption>Figure 8: An example for the NUCLEO_F401RE and ARM Compiler  </figcaption>
-</figure>
+</figure><br />
 
 To run, the project, copy the .bin file (in this example mbed-os-example-blinky.bin) from ./BUILD/<target name> to your device.
 
