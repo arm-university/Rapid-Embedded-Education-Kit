@@ -1,10 +1,4 @@
 
-<figure>
-<img src="Materials/img/ARM_University_WEP.png" width="600px">
-</figure>
-
----
-
 # Rapid-Embedded-Education-Kit
 
 Welcome to our Rapid Embedded Systems Design Education Kit!
@@ -24,40 +18,24 @@ We welcome contributions, amendments & modifications to this education kit. For 
 * [Type of modifications](https://github.com/arm-university/Rapid-Embedded-Education-Kit/blob/main/Contributions_and_Modifications/Desired_Contributions.md) we are looking for. We also use [Projects](https://github.com/arm-university/Rapid-Embedded-Education-Kit/projects) to track progress.
 * [Workflow](https://github.com/arm-university/Rapid-Embedded-Education-Kit/blob/main/Contributions_and_Modifications/workflow.pdf)
 
----
 
  ## Kit specification:
 
 * A full set of lecture slides, ready for use in a typical 10-12-week undergraduate course (full syllabus below) .
 * Lab manual with code solutions for faculty. Labs are based on low-cost but powerful Arm-based hardware platforms. 
-
----
+* **Prerequisites:** Basics of programming in C / C++.
 
 ## Course Aim
 To produce students who can design and program Arm-based embedded systems and implement them using commercial API.
 
----
-
-## Prerequisites
-It is assumed the learner has understood the basics of programming in C / C++. It is also helpful to have some basic knowledge of electrical circuits.
-
----
-
-## Getting Started
-This course contains materials that build and run on physical hardware. Where possible, support for the Mbed Simulator is included.
-
-Before proceeding, it is recommended that you read the [section on getting started](Materials/Getting_Started/README.MD).
-
----
-
 ## Syllabus
-1. [Introduction to Embedded Systems](/Materials/Module_1/README.md)
+1. Introduction to Embedded Systems
 1. The Arm Cortex-M4 Processor Architecture
 1. Introduction to Arm Cortex-M4 Programming
 1. Introduction to the Mbed Platform and CMSIS
 1. Digital Input and Output (IO)
 1. Interrupts and Low Power Features
-1. [Analog Input and Output](Materials/Module_7/README.md)
+1. Analog Input and Output
 1. Timer and Pulse-Width Modulation
 1. Serial Communication
 1. Real-Time Operating Systems
@@ -65,12 +43,8 @@ Before proceeding, it is recommended that you read the [section on getting start
 
 **Extra Reading:** The Arm Cortex-M Processor Architecture: Part 2.
 
----
-
 ## License
 You are free to amend, modify, fork or clone this material. See [LICENSE.md](https://github.com/arm-university/Rapid-Embedded-Education-Kit/blob/main/License/LICENSE.md) for the complete license.
-
----
 
 ## Inclusive Language Commitment
 Arm is committed to making the language we use inclusive, meaningful, and respectful. Our goal is to remove and replace non-inclusive language from our vocabulary to reflect our values and represent our global ecosystem.

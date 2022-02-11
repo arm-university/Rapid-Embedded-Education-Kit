@@ -1,8 +1,1 @@
-BUILD
-.mbed
-mbed-os
-ntp-client
 .DS_Store
-*.zip
-*.bak
-
