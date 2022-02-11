@@ -48,27 +48,27 @@ To install Docker Desktop on Windows, follow these steps:
 <figure>
 <img src="../../Materials/img/setting_up_docker.png" width="300px">
 <figcaption> Figure 1: Installing Docker Desktop </figcaption>
-</figure><br />
+</figure><br>
 
 Note: It may take some time for the Installer to unpack the files. If the installation is successful, there will be an ‘Installation succeeded’ display. 
 
 <figure>
 <img src="../../Materials/img/docker_unpacking_files.png" width="300px">
 <figcaption>Figure 2: Unpacking files </figcaption>
-</figure><br />
+</figure><br>
 
 3.	Click Close and restart. This will restart your PC.
 
 <figure>
 <img src="../../Materials/img/docker_installation_successful.png" width="300px">
 <figcaption>Figure 3: Installation succeeded </figcaption>
-</figure><br />
+</figure><br>
 After restarting your PC, you will notice Docker in your Windows system tray, for example:
 
 <figure>
 <img src="../../Materials/img/Docker_in_windows_system_tray.png" width="200px">
 <figcaption>Figure 4: Docker in Windows system tray </figcaption>
-</figure><br />
+</figure><br>
 
 For more information, see https://docs.docker.com/docker-for-windows/install/ 
 
@@ -93,7 +93,7 @@ You will notice Docker in the top status bar that indicates that Docker is runni
 <figure>
 <img src="../../Materials/img/Docker_in_mac_status_bar.png" width="200px">
 <figcaption>Figure 6: Docker in status bar </figcaption>
-</figure><br />
+</figure><br>
 
 For more information, see https://docs.docker.com/docker-for-mac/install/
 
@@ -155,7 +155,7 @@ You will get a message similar to the following snapshot, which will list the va
 <figure>
 <img src="../../Materials/img/snapshot_message.png" width="400px">
 <figcaption>Figure 7: Snapshot of the message </figcaption>
-</figure><br />
+</figure><br>
 
 7.	Install a specific version using the version string from the second column. For example, to install version ``` 5:19.03.11~3-0~ubuntu-focal``` which is listed in the above snapshot, run the following command:
 ``` 
@@ -166,7 +166,7 @@ You will get a message similar to the following snapshot:
 <figure>
 <img src="../../Materials/img/snapshot_docker_install.png" width="400px">
 <figcaption>Figure 8: Snapshot Docker install </figcaption>
-</figure><br />
+</figure><br>
 
 8.	Test that Docker Engine has been installed correctly by running a ‘hello world’ image: 
 ``` 
@@ -177,7 +177,7 @@ You will get a message similar to the following snapshot:
 <figure>
 <img src="../../Materials/img/docker_test_message.png" width="500px">
 <figcaption>Figure 9: Docker test message </figcaption>
-</figure><br />
+</figure><br>
 
 If you are unable to use the Docker’s repository to install Docker Engine, you can manually download the .deb file and install it. Read the Install from a package section in  https://docs.docker.com/engine/install/ubuntu/
 
@@ -203,7 +203,7 @@ Once completed you should get a display similar to the following:
 <figure>
 <img src="../../Materials/img/Mbed_simulator_pull_result.png" width="500px">
 <figcaption>Figure 10: Mbed simulator pull result </figcaption>
-</figure><br />
+</figure><br>
 
 3.	Run the Mbed Simulator by entering the following command: 
 docker run -p 7829:7829 armedu/mbed_sim
@@ -213,20 +213,20 @@ You should get the following message:
 <figure>
 <img src="../../Materials/img/Mbed_simulator_run_result.png" width="500px">
 <figcaption>Figure 11: Mbed simulator run result </figcaption>
-</figure><br />
+</figure><br>
 
 4.	Expand your OS system tray (or status bar, depending on your OS), and right click on the Docker Icon. Then select Dashboard. 
 
 <figure>
 <img src="../../Materials/img/windows_os_docker_icon.png" width="300px">
 <figcaption>Figure 12: Windows OS - Docker Icon - Dashboard  </figcaption>
-</figure><br />
+</figure><br>
 
 
 <figure>
 <img src="../../Materials/img/mac_os_docker_icon.png" width="300px">
 <figcaption>Figure 13: MAC OS - Docker Icon - Dashboard  </figcaption>
-</figure><br />
+</figure><br>
 
 5.	Hover your mouse over the relevant container named ‘mbed_sim’ and select ‘Open in Browser’. 
 
@@ -234,14 +234,14 @@ You should get the following message:
 <figure>
 <img src="../../Materials/img/container_Mbed_sim.png" width="400px">
 <figcaption>Figure 14: Relevant container ‘mbed_sim’  </figcaption>
-</figure><br />
+</figure><br>
 
 A browser will now launch with the Mbed Simulator as shown in the following diagram.
 
 <figure>
 <img src="../../Materials/img/browser_mbed_simulator.png" width="500px">
 <figcaption>Figure 15: Mbed Simulator  </figcaption>
-</figure><br />
+</figure><br>
 If you wish to stop the container by pressing the stop icon in the Docker Dashboard. You can also restart it by pressing the start icon in the Docker Dashboard. 
 
 ## 3.2	Ubuntu users: Downloading and Running Mbed Simulator image files with Docker Engine
@@ -262,7 +262,7 @@ Once completed you should get a display similar to the following:
 <figure>
 <img src="../../Materials/img/ubuntu_pull_complete.png" width="500px">
 <figcaption>Figure 16: Pull complete  </figcaption>
-</figure><br />
+</figure><br>
 
 3.	Run the Mbed Simulator
 ```
@@ -272,7 +272,7 @@ You should get the following message:
 <figure>
 <img src="../../Materials/img/ubuntu_mbed_simulator_run.png" width="500px">
 <figcaption>Figure 17: Run the Mbed Simulator  </figcaption>
-</figure><br />
+</figure><br>
 
 4.	Open a browser in Ubuntu and enter the following URL:
 ```
@@ -283,7 +283,7 @@ A browser will now launch with the Mbed Simulator as shown in the following diag
 <figure>
 <img src="../../Materials/img/mbed_simulator_ubuntu.png" width="500px">
 <figcaption>Figure 18: Mbed Simulator diagram </figcaption>
-</figure><br />
+</figure><br>
 
 5.	[Optional] If you would like to list all running docker containers, run the following command in a separate terminal: 
 ```
@@ -294,7 +294,7 @@ sudo docker ps
 <figure>
 <img src="../../Materials/img/ubuntu_list_all_running_docker_containers.png" width="400px">
 <figcaption>Figure 19: List with all running docker containers </figcaption>
-</figure><br />
+</figure><br>
 You can also stop the container by entering the following command: 
 
 ```
@@ -325,7 +325,7 @@ To enable Hyper-V and Containers, follow these steps:
 <figure>
 <img src="../../Materials/img/hyperv_container_checkboxes.png" width="400px">
 <figcaption>Figure 20: Containers and Hyper-V are checked </figcaption>
-</figure><br />
+</figure><br>
 4.	Click OK and restart your PC. 
 
 ## 4.3	Cannot start docker in Windows – Error response from daemon
