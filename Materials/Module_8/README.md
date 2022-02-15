@@ -55,7 +55,7 @@ In this experiment, we are going to use the Nucleo F401RE board. The pin descrip
 On a breadboard, build the circuit in Figure 2, using the hardware components listed in section [“2. Requirements”](#2-Requirements):
 
 <figure>
-<img src="../../Materials/img/pull_up_gpio.png" width="400px">
+<img src="../../Materials/img/Pull_up_gpio.png" width="400px">
 <figcaption>Figure 2: Circuit Layout</figcaption>
 </figure>
 
