@@ -58,7 +58,7 @@ In this experiment, we are going to use the Nucleo F401RE board. The pin descrip
 On 2 breadboards, build the circuits in Figure 2, using the hardware components listed in 2. [“2. Requirements”](#2-Requirements):
 
 <figure>
-<img src="../../Materials/img/pull_up_gpio.png" width="200px" height="200px">
+<img src="../../Materials/img/Pull_up_gpio.png" width="200px" height="200px">
 <figcaption>Figure 2: Button Pulling GPIO low</figcaption>
 </figure>
 
