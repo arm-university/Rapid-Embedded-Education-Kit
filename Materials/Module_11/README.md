@@ -62,7 +62,7 @@ On 2 breadboards, build the circuits in Figure 2, using the hardware components 
 <img src="../../Materials/img/LCD_Shift_Reg.png" width="200px" height="200px">
 <img src="../../Materials/img/Temp_I2C.png" width="200px" height="200px">
 <img src="../../Materials/img/Potentiometer.png" width="200px" height="200px">
-<img src="../../Materials/img/pull_up_gpio.png" width="200px" height="200px">
+<img src="../../Materials/img/Pull_up_gpio.png" width="200px" height="200px">
 <figcaption>Figure 2: Circuit Layouts</figcaption>
 </figure>
 
