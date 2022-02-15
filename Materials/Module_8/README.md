@@ -228,3 +228,7 @@ https://os.mbed.com/docs/mbed-os/v5.13/apis/ticker.html
 **Documentation of PwmOut API**
 
 https://os.mbed.com/docs/mbed-os/v5.13/apis/pwmout.html
+
+[Table of Contents](/README.md#syllabus)
+
+Copyright © 2021 Arm Limited (or its affiliates). All rights reserved. 

@@ -144,3 +144,8 @@ Also, if several buttons have been pressed the same number of times, their respe
 **Documentation for Mbed API for Interrupts**
 
 https://os.mbed.com/docs/mbed-os/v5.13/apis/interruptin.html#related-content 
+
+
+[Table of Contents](/README.md#syllabus)
+
+Copyright © 2021 Arm Limited (or its affiliates). All rights reserved. 
