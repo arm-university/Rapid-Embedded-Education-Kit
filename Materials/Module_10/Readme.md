@@ -97,7 +97,7 @@ The Thread class allows defining, creating and controlling parallel tasks.
 A Mutex is used to synchronize the execution of threads, for example to protect the access to a shared resource. 
 > Note that the Mutex methods cannot be called from interrupt service routines. It can break the thread safety mechanism and introduce race conditions into an otherwise safe piece of code.
 
-Additional information about the RTOS API with example can be found in the Additional references // ADD LINK
+
 
 ## 4.2 Your Application Code
 
