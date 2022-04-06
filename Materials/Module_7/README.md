@@ -97,7 +97,7 @@ We can use the PwmOut interface to control the frequency and duty cycle of a PWM
 
 | Task: 7-4-1 | PwmOut |
 | - | - |
-| 1. | Open, build and run Task module7-4-1_PWM_Interface |
+| 1. | Open, build and run Task module7-4-1-PWM_Interface |
 | 2. | Note the brightness of the red LED |
 | 3. | Now set the duty cycle to 0.9f. Run and compare |
 | - | Observe the evidence that more power is being delivered to the LED |
@@ -174,7 +174,7 @@ int main()
 
 | Task: 7-4-2 | Wave Generation |
 | - | - |
-| 1. | Open, build and run Task module7-4-2_WaveGeneration |
+| 1. | Open, build and run Task module7-4-2-WaveGeneration |
 | 2. | Modify the code to produce a triangle wave  |
 | - | (The LED smoothly brightens then dims)
 | - | A solution is provided |
