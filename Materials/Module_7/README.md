@@ -291,7 +291,7 @@ In this lab exercise you will need to:
 What changes when you adjust the amount by which variable *i* is incremented/decremented?
 
 
-% 6 Additional references
+# 6 Additional references
 
 **Documentation for AnalogIn API**
 
