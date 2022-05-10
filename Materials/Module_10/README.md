@@ -8,7 +8,7 @@ Rapid Embedded Systems - Design and Programming Course - Rev 1.1
 
 ---
 
-# Lab 6 - Real-time operating systems
+# Module 10 - Real-time operating systems
 
 ## Lecture slides
 

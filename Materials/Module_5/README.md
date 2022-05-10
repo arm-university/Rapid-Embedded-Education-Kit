@@ -1,13 +1,12 @@
-<style>
-red { color: red }
-yellow { color: yellow }
-blue { color: CornflowerBlue}
-green { color: green}
-purple { color: MediumPurple}
-</style>
+[Table of Contents](/README.md#syllabus)
 
-![ARM University](../../Materials/img/ARM_University_horizontal_blue_LG.png)
+---
 
+![header](../../Materials/img/ARM_University_horizontal_blue_LG.png)
+
+---
+
+# Module 5 - Digital Input and Output
 # 1 Introduction
 
 ## 1.1 Lab Overview
