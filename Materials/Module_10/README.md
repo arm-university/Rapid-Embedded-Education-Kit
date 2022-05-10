@@ -8,7 +8,7 @@ Rapid Embedded Systems - Design and Programming Course - Rev 1.1
 
 ---
 
-# Module 10 - Real-time operating systems
+# Module 10 - Real-Time Operating Systems
 
 ## Lecture slides
 
