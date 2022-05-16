@@ -58,8 +58,9 @@ In this experiment, we are going to use the Nucleo F401RE board. The pin descrip
 On 2 breadboards, build the circuits in Figure 2, using the hardware components listed in 2. [“2. Requirements”](#2-Requirements):
 
 <figure>
-<img src="../../Materials/img/Pull_up_gpio.png" width="200px" height="200px">
-<figcaption>Figure 2: Button Pulling GPIO low</figcaption>
+<img src="../../img/lab6-switch-circuit.png" width="400px" >
+<img src="../../img/lab6-led-circuit.png" width="400px" >
+<figcaption>Figure 2: (Upper) Buttons Pulling GPIO inputs low; (lower) LED Outputs</figcaption>
 </figure>
 
 On a breadboard, connect all four buttons according to the diagram on the left.  Your buttons should pull the GPIO pin low. Then connect the buttons and the LED to their respective pin on the board as defined in the table below.
@@ -74,6 +75,20 @@ On a breadboard, connect all four buttons according to the diagram on the left. 
 | `GREEN LED` | D7 |
 | `BLUE LED` | D8 |
 | - | - |
+
+| TASK 6-3-1 | Hardware Test |
+| - | - |
+| 1. | Set module6-3-1-hwtest as the active project |
+| 2. | Build and run |
+| 3. | Check all the LEDs are flashing |
+| 4. | Press each button in turn and check the output in the serial monitor |
+
+Note from figure 2 that the switches are configured as PULL-DOWN. 
+
+* With the switch open, the 10k&Omega; resistor will pull the level up to 3.3V (HIGH). Virtual no current flows into the microcontroller.
+* Pressing a switch will pull the respective input to 0V (LOW), and draw 0.1mA of current to ground.
+
+If the hardware is not working, proceed no further and check the wiring carefully.
 
 # 4 Software Interfaces
 
