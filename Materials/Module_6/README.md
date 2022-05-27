@@ -231,13 +231,13 @@ ButtonFlash obj(D2,D3,D4,D5, D6,D7,D8);
 
 If you really like C++ templates, then by all means look at the sources to see how this works! For this course, it is enough to simply *use* `callback` whenever we involve C++.
 
-## 4.2 Low Power Mode
+## 4.2 Timers
 
-Use the sleep mode to reduce the power consumption of your application. For example, to use the Sleep-on-Exit feature you can use the wait-for-interrupt operation:
+***[ TO BE DONE ]***
 
-```C++
-__wfi() ; 		//go to sleep.
-```
+Ticker
+Timeout
+Debouncing
 
 # 5 Your Application Code
 In this lab task, you will use the Mbed API for Interrupts in order to complete two exercises.

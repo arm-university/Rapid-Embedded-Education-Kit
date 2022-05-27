@@ -48,7 +48,7 @@ class ButtonFlash {
         this->_button1.rise(callback(this, &ButtonFlash::button1ISR));
         this->_button2.rise(callback(this, &ButtonFlash::button2ISR));
         this->_button3.fall(callback(this, &ButtonFlash::button3ISR));
-        this->_button4.fall(callback(this, &ButtonFlash::button4ISR));      
+        this->_button4.fall(callback(this, &ButtonFlash::button4ISR));  
     }
 
     ~ButtonFlash() {
