@@ -60,10 +60,10 @@ On 2 breadboards, build the circuits in Figure 2, using the hardware components 
 <figure>
 <img src="../../img/lab6-switch-circuit.png" width="400px" >
 <img src="../../img/lab6-led-circuit.png" width="400px" >
-<figcaption>Figure 2: (Upper) Buttons Pulling GPIO inputs low; (lower) LED Outputs</figcaption>
+<figcaption>Figure 2: (Upper) Buttons Pulling GPIO inputs HIGH; (Lower) LED Outputs</figcaption>
 </figure>
 
-On a breadboard, connect all four buttons according to the diagram on the left.  Your buttons should pull the GPIO pin low. Then connect the buttons and the LED to their respective pin on the board as defined in the table below.
+On a breadboard, connect all four buttons according to the diagram on the left.  For the purpose of this lab, your buttons should pull the GPIO pin HIGH. Then connect the buttons and the LED to their respective pin on the board as defined in the table below.
 
 | Pin | Pin name in Mbed API |
 | - | - |
@@ -78,15 +78,15 @@ On a breadboard, connect all four buttons according to the diagram on the left. 
 
 | TASK 6-3-1 | Hardware Test |
 | - | - |
-| 1. | Set module6-3-1-hwtest as the active project |
+| 1. | Set `module6-3-1-hwtest` as the active project |
 | 2. | Build and run |
-| 3. | Check all the LEDs are flashing |
+| 3. | Check all the LEDs are lighting up |
 | 4. | Press each button in turn and check the output in the serial monitor |
 
-Note from figure 2 that the switches are configured as PULL-DOWN. 
+Note from figure 2 that the switches are configured as PULL-UP. 
 
-* With the switch open, the 10k&Omega; resistor will pull the level up to 3.3V (HIGH). Virtual no current flows into the microcontroller.
-* Pressing a switch will pull the respective input to 0V (LOW), and draw 0.1mA of current to ground.
+* With the switch open, the 10k&Omega; resistor will pull the level down to 0V (LOW). Almost no current flows out of the microcontroller pin.
+* Pressing a switch will pull the respective input to 3.3V (HIGH), and conduct 0.1mA of current to ground via the resistor.
 
 If the hardware is not working, proceed no further and check the wiring carefully.
 
@@ -94,19 +94,22 @@ If the hardware is not working, proceed no further and check the wiring carefull
 
 ## 4.1 InterruptIn/InterruptOut Interfaces
 
-The InterruptIn interface is used to trigger an event when a digital input pin changes. For example:
-InterruptIn button_press(Input Pin);
+The InterruptIn interface is used to trigger an event when a digital input pin (GPIO) changes. For example:
 
 ```C++
+InterruptIn button_press(Input Pin);
+
 void button_ISR(){
     Led_out = !Led_out;
 }
  
 int main(){
-button_press.rise(&button_ISR);
-while(1);					  // waiting for interrupts
+    button_press.rise(&button_ISR);
+    while(1);					  // waiting for interrupts
 }
 ```
+
+
 
 Other functions are listed below:
 

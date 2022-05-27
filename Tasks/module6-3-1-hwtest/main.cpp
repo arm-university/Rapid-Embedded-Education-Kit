@@ -7,7 +7,7 @@
 #include <iostream>
 using namespace std;
 
-//Digital Inputs (PULL-DOWN Push Switches)
+//Digital Inputs (PULL-UP Push Switches)
 DigitalIn button1(D2);
 DigitalIn button2(D3);
 DigitalIn button3(D4);
@@ -19,7 +19,7 @@ DigitalOut ledGreen(D7);
 DigitalOut ledBlue(D8);
 
 //MACRO to create a literal string based on the state of an input  
-#define PRESSED(u) ((u.read() == 1) ? "RELEASED" : "PRESSED")
+#define PRESSED(u) ((u.read() == 0) ? "RELEASED" : "PRESSED")
 
 int main()
 {
