@@ -1,0 +1,18 @@
+# Python CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-python/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+      - image: mbedos/mbed-os-env:stable
+    working_directory: ~
+    steps:
+      - checkout:
+          path: mbed-os-example-blinky-baremetal
+      - run: |
+          cd mbed-os-example-blinky-baremetal
+          mbed deploy
+          mbed compile -t GCC_ARM -m K64F
+

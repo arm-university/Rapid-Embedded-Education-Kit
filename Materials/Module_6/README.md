@@ -92,26 +92,71 @@ If the hardware is not working, proceed no further and check the wiring carefull
 
 # 4 Software Interfaces
 
-## 4.1 InterruptIn/InterruptOut Interfaces
+## 4.1 InterruptIn in C
 
-The InterruptIn interface is used to trigger an event when a digital input pin (GPIO) changes. For example:
+The InterruptIn interface is used to trigger an event when a digital input pin (GPIO) changes. 
+
+| Task 4.1 | InterruptIn |
+| - | - |
+| 1. | Set task-4-1 as your active project. Build and run |
+| 2. | Press and release each of the buttons |
+| - | Observe the console output and LED states |
+
+Let's now look at some key points in this code. First, we declare 4 instances of `InterruptIn`.
 
 ```C++
-InterruptIn button_press(Input Pin);
+InterruptIn button1(D2);
+InterruptIn button2(D3);
+InterruptIn button3(D4);
+InterruptIn button4(D5);
+```
 
-void button_ISR(){
-    Led_out = !Led_out;
-}
- 
-int main(){
-    button_press.rise(&button_ISR);
-    while(1);					  // waiting for interrupts
+ This is similar to `DigitalIn` except we can now enable interrupts as follows:
+
+ ```C++
+button1.rise(&button1ISR);
+button2.rise(&button2ISR);
+button3.fall(&button3ISR);
+button4.fall(&button4ISR);
+  ```
+
+Not that the only parameter is the address of a function. This function takes no parameters and returns nothing. This function is known as an **Interrupt Service Routine (ISR)**
+
+One of these is shown below:
+
+```C++
+void button1ISR() {
+    ledRed = !ledRed;
 }
 ```
 
+Note also how a particular type of event triggers an interrupt. For `InterruptIn`, this is either a rising or falling edge.
+
+There are a few key points to note about an ISR:
+
+* They are usually kept very short and execute quickly.
+* Once these functions are configured as ISRs, they are ONLY called by the hardware using the on-chip Nested Interrupt Vector Controller (NVIC). 
+   * You do not normally call an ISR in your code.
+* All code inside the ISR must be **interrupt safe** and **re-entrant**. Many functions (such as `printf`) do not qualify.
+   * Calling functions that are not interrupt safe will result in unpredictable behaviour!
 
 
-Other functions are listed below:
+> **WARNING** *There are many hazzards when using interrupts. You should first learn about how to write them safely before considering using them*
+
+The remaining code in main spends most of it's time in a low-power sleep state:
+
+```C++
+while (true)
+{
+    cout << "Going to sleep...." << endl;
+    sleep();
+    cout << "Awake!" << endl;
+}
+```
+
+Once in the sleep state, the MCU will only wake upon an interrupt. This is a power-efficient way to write software. 
+
+`InterruptIn` has other functions are listed below:
 
 | Function Name | Description |
 | - | - |
@@ -123,6 +168,68 @@ Other functions are listed below:
 | `void  enable_irq ()` | Enable IRQ |
 | `void  disable_irq ()` | Disable IRQ |
 | - | - |
+
+
+## 4.2 InterruptIn and C++ (Optional)
+
+This section is for readers who are experienced in *writing* C++ and prefer to write their code in an Object Orientated way. If you are not familiar with C++, you may want to skip this section.
+
+`InterruptIn` is of course a C++ class, but the code in the previous section used ISRs written as C-functions. This is the simplest approach, as each function has a unique address in memory, and has access to local and global state, such as variables and IO.
+
+With C++, the situation gets a bit more complex (and is a source of confusion) due to the way class member functions are called.
+
+> Identical C++ class member functions are shared across all instances of a class, and there is only one copy of the function code. *However*, each instance has exclusive access to it's member variables via the *this* pointer.
+>
+>> Therefore, each instance of a class (object) shares the same identical member function code. This makes sense as the code is read-only.
+>
+>> Conversely, each instance of a class (object) contains it's own independent set of member variables. 
+>
+> When you invoke a member function on an object (instance of a class), it needs to know where it's member variables are in memory. Under the hood, the address for each object is passed as a hidden parameter, which becomes the *this* pointer.
+
+Therefore, to use a member function as an ISR, we need two pieces of information:
+
+* Address of the function (which has access to member variables)
+* The *this* pointer (so it can locate the member variables)
+
+Let's look at an example to illustrate how this is achieved:
+
+| Task 4.2 | InterruptIn in C++ |
+| - | - |
+| 1. | Set task-4-2 as your active project. Build and run |
+| 2. | Note how it performs the same as the previous task |
+| 3. | Look closely at the constructor of the `ButtonFlash` class |
+| - | The initialiser list ensure the members are initialised correctly BEFORE the constructor runs |
+| - | The constructor initialises the interrupts |
+
+The following would NOT work:
+
+```C++
+this->_button1.rise(&_button1ISR);
+```
+
+As explained above, all instances of the class share the same member function `_button1ISR`. This function would have no way to know the value of *this*.
+
+Luckily, the Mbed OS framework handles this for you via the `callback` function:
+
+```C++
+this->_button1.rise(callback(this, &ButtonFlash::button1ISR));
+```
+
+To instantiate an object for this set of buttons and LEDs, the following line is used:
+
+```C++
+ButtonFlash obj(D2,D3,D4,D5, D6,D7,D8);
+```
+
+| Task 4.2 | continued... |
+| - | - |
+| 4. | Simplify the class to simply control one LED with one switch |
+| - | The constructor only needs two pin names - one for the switch and one for the LED |
+| - | Add a parameter (`bool`) to control whether a rising or falling edge should be used |
+| 5. | Create 3 instances, one for each LED and test |
+| - | A example solution is provided |
+
+If you really like C++ templates, then by all means look at the sources to see how this works! For this course, it is enough to simply *use* `callback` whenever we involve C++.
 
 ## 4.2 Low Power Mode
 
