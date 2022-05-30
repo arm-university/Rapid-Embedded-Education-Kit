@@ -120,7 +120,7 @@ button3.fall(&button3ISR);
 button4.fall(&button4ISR);
   ```
 
-Not that the only parameter is the address of a function. This function takes no parameters and returns nothing. This function is known as an **Interrupt Service Routine (ISR)**
+Not that the only parameter is the address of a function (otherwise known as a **function pointer**). This function takes no parameters and returns nothing. This function is known as an **Interrupt Service Routine (ISR)**
 
 One of these is shown below:
 
@@ -231,7 +231,7 @@ ButtonFlash obj(D2,D3,D4,D5, D6,D7,D8);
 
 If you really like C++ templates, then by all means look at the sources to see how this works! For this course, it is enough to simply *use* `callback` whenever we involve C++.
 
-## 4.2 Timers
+## 4.3 Timer Interrupts
 
 ***[ TO BE DONE ]***
 
