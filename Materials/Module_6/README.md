@@ -233,11 +233,217 @@ If you really like C++ templates, then by all means look at the sources to see h
 
 ## 4.3 Timer Interrupts
 
-***[ TO BE DONE ]***
+Nearly every Microcontroller has a number of hardware **timers**. These on-chip devices can be programmed to count independently of the CPU, even when the CPU is in sleep mode. 
 
-Ticker
-Timeout
-Debouncing
+> It should be noted that all timers are driven from the same clock tree, so are fully synchronous. 
+
+* The programmer can read (poll) these timers. 
+* Timers can generate one or more interrupts.
+
+There are three timer classes of interest:
+
+* `Timer` - this is used to start and stop a hardware timer. The developer is able read it's value at any time. This class does not support interrupts.
+* `Timeout` - this is used to generate a **single** interrupt after a designated period of time.
+* `Ticker` - generates periodic interrupts that fire at regular intervals.
+
+For this section, we are concerned with interrupts so we will look more closely at `Timeout` and `Ticker`. It is important to note the following examples do not use the RTOS, and is in "bare metal" mode.
+
+### 4.3.1 - Ticker Class (periodic)
+In this task, we will look at the `Ticker` class to generate periodic interrupts. The basic usage of `Ticker` is to execute a C function every `T` seconds, where T>0.0.
+
+For example, if we wish to call the C function `funcRed` every 0.25s, we could do the following:
+
+1. Write the Interrupt Service Routine (ISR) function:
+
+```C++
+void funcRed() {
+    ledRed = !ledRed;
+}
+```
+
+2. Instantiate an instance of `Ticker`
+
+```C++
+Ticker tickRed;
+```
+
+3. Initialise the Ticker object
+
+```C++
+tickRed.attach(&funcRed, 250ms);
+```
+
+Note the first parameter is the **address** of the function `funcRed` (a function pointer). The second parameter is the duration between interrupts. 
+
+> The second parameter is of type `std::chrono::microseconds`. This is an 8-byte integer (under the hood, it is type `long long`). Thanks to the standard C++ `chrono` class,  literal values can be written in a human readable way, with both values and units. The unit suffix ensures the actual value is scaled to the correct value.
+
+| TASK 4.3.1 | `Ticker` |
+| - | - |
+| 1. | Make the project `module6-4-3-1-Ticker` the active project. Build and run. |
+| 2. | Try pressing 1 or 2 to slow down or speed up the flash rate of the LED |
+| 3. | Study the code and read the comments to try and understand how this code works. A copy is provided below for your convenience |
+| 4. | Note the loop in the function `main`. There is a line that read `char c = getchar();`. This is a BLOCKING read, therefore no code in main will run until a key is pressed. |
+| -  | Can you explain how the LEDs continue to flash even through the code stops on this line? |
+| 5. |  Modify the code so that the flash rate of the green LED can be changed. Use keys 3 and 4 |
+
+```c++
+#include "mbed.h"
+#include <iostream>
+#include <chrono>
+#include <ratio>
+using namespace std;
+using namespace chrono;
+
+//Digital Inputs (PULL-DOWN Push Switches)
+InterruptIn button1(D2);    //Supports edge detection
+InterruptIn button2(D3);
+InterruptIn button3(D4);
+InterruptIn button4(D5);    
+
+//Digital Outputs (LEDs - PUSH-PULL Mode)
+DigitalOut ledRed(D6);
+DigitalOut ledGreen(D7);
+DigitalOut ledBlue(D8);
+
+//Ticker (Timer with Interrupt)
+Ticker tickRed;
+Ticker tickGreen;
+
+void funcRed() {
+    ledRed = !ledRed;
+}
+void funcGreen() {
+    ledGreen = !ledGreen;
+}
+
+int main()
+{
+    //Note this useful data type in C++
+    chrono::milliseconds Tred_current, Tred_new;
+    Tred_current = Tred_new = 150ms;
+
+    //Initialise interrupts
+    tickRed.attach(&funcRed, Tred_current);
+    tickGreen.attach(&funcGreen, 1s);
+
+    //Main loop 
+    while (true) {
+
+        // Write status and instructions to user
+        cout << endl << endl << "T=" << Tred_current.count() << endl;
+        cout << "Press\n1: to slow down\n2: speed up\n";
+
+        // BLOCK waiting for key-press (via serial interface)
+        char c = getchar();
+
+        // Decode user input 
+        switch (c) {
+            case '1': 
+            Tred_new += 50ms;
+            break;
+            case '2':
+            //Do not allow to go below 50ms
+            Tred_new = (Tred_current > 50ms) ? (Tred_current - 50ms) : Tred_current;
+            break;
+            default:
+            break;
+        }
+
+        //Update ONLY if there was a change
+        if (Tred_new != Tred_current) {
+            //Turn off the current interrupt
+            tickRed.detach();
+            //Reattach with new time interval
+            tickRed.attach(&funcRed, Tred_new);
+            //Update state
+            Tred_current = Tred_new;
+        }
+    }
+}
+```
+
+**Key points**
+
+* Note how the ISR functions `funcRed` and `funcGreen` are never called directly. They are invoked by the Nested Vectored Interrupt Controller (NVIC) inside the microcontroller. 
+
+* The interrupts are generated by hardware Timers. These fire periodically.
+
+* To change the period of the `Ticker`, you must first `detach` and then `attach` with the new parameters.
+
+If you want to use C++ and encapsulate a `Ticker` inside a class, this is also possible. This is illustrated in the next part of this task.
+
+| TASK 4.3.1 | continued |
+| - | - |
+| 6. | The C++ class in `Flashy.hpp` is designed to make it easier to scale to multiple flashing LEDs. First study this code. Then change the code in `main.cpp` to use this class to make the code both shorter and more expressive |
+| - | A solution is provided |
+
+**Key points**
+
+Again, to obtain the address (function pointer) for a C++ member function, you need to use `callback`.
+
+```C++
+_tk.attach(callback(this, &Flashy::tickerISR), _t);
+```
+
+where `this` is the address of the object and `&Flashy::tickerISR` specifies which member function to invoke.
+
+### 4.3.2 - Timeout Class (one-shot)
+In this task, we will look at the `Timeout` class. Unlike `Ticker` which periodically generates an interrupt (until it is detached), `Timeout` generates a single "one-shot" interrupt after a given interval.
+
+| TASK 4.3.2 | `Timeout` |
+| - | - |
+| 1. | Make the project `module6-4-3-2-Timeout` the active project. Build and run. |
+| 2. | Press and release the button. Observe the serial terminal and wait one second. You should see the LED go out. |
+
+The relevant sections of code are shown below. First the `Timeout` object is instantiated:
+
+```C++
+Timeout oneshot;
+``` 
+
+The Interrupt Service Routine (ISR) is also defined:
+
+```C++
+void ledOFF() {
+    ledRed = 0;
+}
+```
+
+To call `ledOFF()` 1 second into the future, you would invoke the following:
+
+```C++
+//Trigger ISR in 1s
+oneshot.attach(&ledOFF, 1s);  
+```
+
+ Switches are noisy. At the point switch contacts are made or released, it is common for there to be a short burst of multiple contact and release events. This is known as *switch bounce* and can last hundreds of ms. The result of this is registering multiple fake press and release events.
+
+One way to address switch bounce is to ignore the switch signal for a period of time `T` after each first press (or release) is detected. This allows the mechanics (and hence signal) to acquire a steady state. We also want to do this in a power efficient way.
+
+Consider the following sequence:
+
+a) Wait for a switch press
+
+b) Toggle the red LED and wait for 250ms (allows time for bounce noise to stop)
+
+c) Wait for a switch release
+
+d) Wait for 250ms - then goto (a)
+
+
+| TASK 4.3.2 | continued |
+| - | - |
+| 3. | Starting with the project `module6-4-3-2-Timeout`, implement the above algorithm. |
+| - | Use the `InterruptIn` class to detect the switch events and `Timeout` to wait for bounce noise to clear |
+| - | A solution is provided |
+
+
+
+## Interaction with the RTOS?
+
+
+### Challenge - Switch Bounce
+
 
 # 5 Your Application Code
 In this lab task, you will use the Mbed API for Interrupts in order to complete two exercises.
