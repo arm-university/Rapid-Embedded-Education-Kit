@@ -435,14 +435,98 @@ d) Wait for 250ms - then goto (a)
 | - | - |
 | 3. | Starting with the project `module6-4-3-2-Timeout`, implement the above algorithm. |
 | - | Use the `InterruptIn` class to detect the switch events and `Timeout` to wait for bounce noise to clear |
-| - | A solution is provided |
+| hint | The sequence above spends most of it's time *waiting*, which in this context means putting the MCU into the sleep state. The transition between each of the states (a)-(d) is always caused by an interrupt. |
+| - | A solution is provided. |
+
+## Race Conditions
+
+We simply cannot talk about interrupts without discussing race conditions.
+
+In previous sections, all code was running *in-sequence*. From a logical standpoint, statements execute in the order they are written and there is no notion of parallel processing.
+
+However, interrupts leverage hardware that runs *concurrently* with the CPU. We saw this with the hardware timer. The CPU can even sleep while the timer continues to count. 
+
+Very often, the CPU will not be in a sleep state when an interrupt event occurs. When an interrupt occurs, the CPU will preempt (interrupt) whatever is taking place at that moment by:
+
+* completing the current machine-code instructions
+* pushing a set of registers onto the stack memory
+* branching to the interrupt service routine
+* executing the interrupt service routine
+* popping the registers back off the stack memory
+* resuming execution, *as if nothing had happened....*
+
+*Except... something did happen*. The code in the ISR will have had some effect on the state of the system (otherwise it does nothing!). This might be to modify the hardware or a variable (still hardware, SRAM).
+
+With the exception of trivial examples, we do NOT know when the ISR will run and interrupts are asynchronous events (consider the press of a button...your code cannot read the users mind!). Our code now contains *out-of-sequence operations*, and **this is potentially hazardous**.
+
+You compiler knows nothing of interrupts. It's job is to check the syntax and if correct, efficiently convert C/C++ language statements into sequences of machine code. What we mean by efficient is also influenced by our optimisation settings. Compilers can employ all manner of techniques to improve the speed of your code (or reduce it's size), such as:
+
+* cache variables in CPU registers
+* change the order of code
+* even remove code (that has no impact on code logic)
+
+For example, consider the following code:
+ 
+```C++
+uint32_t dat[10];
+uint32_t y = 0;
+for (uint32_t n=0; n<10; n++) {
+    dat[n] = 0;
+    //Flash LED
+    led = !led;
+
+    y++;
+
+    //Small delay (I think)
+    for (uint32_t m=0; m<0x8000; m++);
+
+    y++;
+}
+```
+
+It is likely that:
+
+* The index `n` is never created as a variable, and instead is cached in a 32-bit register. It cannot be used beyond the context of the loop and it is much faster to modify and read a CPU register.
+* The inner delay loop is removed. Logically it does nothing, so gets optimised to nothing. The compiler does not know this is supposed to be a delay
+* The two `y++` are combined into a single `y+=2`, or even removed from the loop, and replaced with a single `y+=20`.
+
+Note that **optimisation does not change the logic** of your code, so this is not something we usually concern ourselves with. But we are using interrupts, with code that runs out-of-sequence.
+
+> **Terminology** 
+>
+> *Mutable state* - anything that persists that can be modified, including memory (e.g. variables and hardware registers)
+>
+> *Shared Mutable State* - any mutable state that can be accessed from more than one one execution context, such as an interrupt service routine or thread. 
+
+As you will soon learn, it is critical that we know **where** in our code mutable state is accessed. However we now we have some sources of uncertainty:
+
+* We do not know where we will be in the code when an interrupt fires
+* We not not really know the precise sequence of the compiled code
+* We do not know when/if variables will be stored in memory
+
+None of this is a problem, until you introduce out-of-sequence code, such as interrupts or threads (see later section on RTOS).
+
+> **Terminology** 
+>
+> A *Race condition* (also called race hazard) is a problem with the design of a system. With a race condition, the result of a calculation or the behaviour of the system as a whole is dependent on how long a certain calculation takes, or when it is started. Race conditions occur in logic circuits and computer software, especially with multi-threaded or distributed systems.
+> [Wikipedia, access July 2022](https://simple.wikipedia.org/wiki/Race_condition#:~:text=A%20Race%20condition%20%28also%20called%20race%20hazard%29%20is,certain%20calculation%20takes%2C%20or%20when%20it%20is%20started.)
 
 
+The greatest concern with interrupts is the inadvertent introduction of race conditions. 
+
+Let's now look at a **very** contrived example that somewhat forces the phenomena known as a **race condition** to occur.
+
+// TODO Add example
+
+It should be noted that *race conditions* are usually much more subtle and may take many hours, days or even years to detect. This is what makes them so *sinister*.
+
+### The `CritcalSectionLock` class
+
+### Example - Serial Interface Interrupts
+
+## Non-reentrant functions
 
 ## Interaction with the RTOS?
-
-
-### Challenge - Switch Bounce
 
 
 # 5 Your Application Code
