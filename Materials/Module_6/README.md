@@ -438,7 +438,7 @@ d) Wait for 250ms - then goto (a)
 | hint | The sequence above spends most of it's time *waiting*, which in this context means putting the MCU into the sleep state. The transition between each of the states (a)-(d) is always caused by an interrupt. |
 | - | A solution is provided. |
 
-## Race Conditions
+## 4.4 Race Conditions
 
 We simply cannot talk about interrupts without discussing race conditions.
 
@@ -516,11 +516,33 @@ The greatest concern with interrupts is the inadvertent introduction of race con
 
 Let's now look at a **very** contrived example that somewhat forces the phenomena known as a **race condition** to occur.
 
-// TODO Add example
+| Task 4.4.1 | Race Conditions |
+| - | - |
+| 1. | Make `module6-4-4-1-race` the active project. Build and run |
+| 2. | Study the source. Note (i) of the impact of pressing the blue user button (BUTTON1) and (ii) the condition for the red LED to be switched off |
+| 3. | Press and release the black reset button - what happens to the RED led? |
+| 4. | While holding down the blue button, press and release the black reset button to re-run the code. What happens to the red LED? |
+| - | Can you explain the difference? |
 
-It should be noted that *race conditions* are usually much more subtle and may take many hours, days or even years to detect. This is what makes them so *sinister*.
+**Key Points**
 
-### The `CritcalSectionLock` class
+* The only difference between pressing the blue button or not is the *timing* of the interrupt service routine:
+
+   * When the blue button is not pressed, the `countUp()` is allowed to run to completion. Some time later, the ISR fires and `countDown()` runs to completion. The final count is zero, so the red light goes out. This is equivalent to running `countUp()` and `countDown()` sequentially.
+
+   * When the blue button is pressed, the `countUp()` begins as before, but shortly after, the timer ISR (`countDown()`)  interrupts it and executes to completion before `countUp()` is able to resume and complete. This results in data corruption of the variable `counter`, so the red light stays on.
+
+* 
+It should be noted that *race conditions* are usually much more subtle and may take many hours, days or even years to be detected. This is what makes them so *dangerous*.
+
+### The `CritcalSectionLock` class and `volatile` keyword
+
+// TBD
+
+```C++
+volatile long long counter = 0;
+```
+
 
 ### Example - Serial Interface Interrupts
 

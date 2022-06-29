@@ -1,19 +1,19 @@
-#include "uop_msb.h"
-using namespace uop_msb;
+#include "mbed.h"
 
 //Constants
 #define N 1000000
-#define RELEASED 0
-#define PRESSED  1
+#define RELEASED 1
+#define PRESSED  0
+#define BTN_STATE_STR(x) ((x==PRESSED) ? "RELEASED" : "PRESSED")
 
-DigitalOut red_led(TRAF_RED1_PIN);     //CountUp is in its critical section
-DigitalOut yellow_led(TRAF_YEL1_PIN);  //CountDown is in its critical section
-DigitalOut green_led(TRAF_GRN1_PIN);   //counter != 0
+DigitalOut red_led(D6);     //CountUp is in its critical section
+DigitalOut yellow_led(D8);  //CountDown is in its critical section
+DigitalOut green_led(D7);   //counter != 0
 
-DigitalIn button(USER_BUTTON);
+DigitalIn button(BUTTON1);
 
 //Shared mutable state
-volatile long long counter = 0; //Volatile means it must be stored in memory
+long long counter = 0; //Volatile means it must be stored in memory
 
 //Increment the shared variable 
 void countUp()
@@ -65,7 +65,7 @@ void countDown()
     }     
 }
 int main() {
-    
+    printf(BTN_STATE_STR(button.read()));
     red_led = 1;
     Timeout t1;
     
