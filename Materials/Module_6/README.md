@@ -543,6 +543,7 @@ Alternatively, you can get the destructor to invoke `disable`:
 }
 //When lock goes out of scope, disable() is called
 ``` 
+
 | Task 4.4 | continued |
 | - | - |
 | 5. | Can you use the `CriticalSectionLock` class to prevent races in this code? | 
