@@ -661,9 +661,15 @@ Now the compiler will not attempt to optimise any statements that reference `cou
 
 The examples above are very contrived to force an issue. It should be noted that *race conditions* are usually much more subtle and may take many hours, days or even years to be detected. This is what makes them so *dangerous*.
 
-## Example - Serial Interface Interrupts
+## Non re-entrant functions
 
-## Non-reentrant functions
+The majority 
+
+## 4.5 Serial Interface Interrupts
+
+
+
+
 
 ## Interaction with the RTOS?
 
