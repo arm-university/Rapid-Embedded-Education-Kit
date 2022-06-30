@@ -651,11 +651,11 @@ Things that spontaneously are said to be *volatile* and must be declared as such
 volatile long long counter = 0;
 ```
 
-**REFLECTION**
+**SOME PERSPECTIVE**
 
-It should be noted that *race conditions* are usually much more subtle and may take many hours, days or even years to be detected. This is what makes them so *dangerous*.
+The examples above are very contrived. It should be noted that *race conditions* are usually much more subtle and may take many hours, days or even years to be detected. This is what makes them so *dangerous*.
 
-### Example - Serial Interface Interrupts
+## Example - Serial Interface Interrupts
 
 ## Non-reentrant functions
 
