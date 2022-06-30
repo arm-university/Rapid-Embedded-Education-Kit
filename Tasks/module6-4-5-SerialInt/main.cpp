@@ -14,22 +14,15 @@ UnbufferedSerial serial_port(USBTX, USBRX);
 //Ticker
 Ticker ledTicker;
 
-//Flash rate (us)
+//Reason why MCU left sleep - with ISR safe API
+volatile bool isT_updated = false;
+
+//Flash rate (us) - with ISR safe API
 volatile long long T = 500000;
 
-//ISR Source
-struct {
-    bool usart = false;
-    bool timer = false;
-} isr_flags;
-
-
-//ISR for flashing blue LED
+//ISR for flashing green LED
 void onTick() {
-    CriticalSectionLock lock;
-    
     ledRed = !ledRed;
-    isr_flags.timer = true;
 }
 
 void on_rx_interrupt()
@@ -40,15 +33,8 @@ void on_rx_interrupt()
     // NON blocking - Read the data to clear the receive interrupt.
     if (serial_port.read(&p, 1)) {
 
-        //Flag that this has happened
-        isr_flags.usart = true;
-
         //Check the character input
         switch (p) {
-        case 13:
-            //User pressed return
-            serial_port.write("\n\r",2); //Echo a newline
-            break;
         case '1':
             //Switch on Green LED
             ledGreen = 1;
@@ -59,6 +45,7 @@ void on_rx_interrupt()
             break;
         case '+':
             T += 100000;
+            isT_updated = true;
             ledTicker.detach();
             ledTicker.attach(&onTick, microseconds(T));
             break;
@@ -67,13 +54,13 @@ void on_rx_interrupt()
                 T -= 100000;
                 ledTicker.detach();
                 ledTicker.attach(&onTick, microseconds(T));
+                isT_updated = true;
             }
             break;            
         default:
             //Echo typed character to the terminal
-            char newline[]="\n\r";
             serial_port.write(&p,1);
-            serial_port.write(newline,2);
+            serial_port.write("\n\r",2);
             break;
         };
     }
@@ -93,34 +80,31 @@ int main(void)
         /* stop bit */ 1
     );
 
+    //ISR to flash led
+    ledTicker.attach(&onTick, microseconds(T));
+
     // Register a callback to process a Rx (receive) interrupt.
     serial_port.attach(&on_rx_interrupt, SerialBase::RxIrq);
 
-    //ISR to flash led
-    CriticalSectionLock::enable();
-    ledTicker.attach(&onTick, microseconds(T));
-    CriticalSectionLock::disable();
-
     while (true) {
+
+        //Enter low power state until an ISR wakes the CPU
         sleep(); 
 
-        //Safely get copy of T
+        // Safely access shared mutable state, including: T, isT_updated, serial_port
         CriticalSectionLock::enable();
-        long long currentT = T;
-        CriticalSectionLock::disable();
 
-        //printf cannot be performed in an ISR
-        char strBuff[16];
-        sprintf(strBuff, "T=%Ldms\n\r", currentT/1000L);    
-
-        CriticalSectionLock::enable();
-        //If we woke from sleep because of a keypress, update
-        if (isr_flags.usart == true) {
-            serial_port.write(strBuff, sizeof(strBuff));
+        if (isT_updated) {
+            // printf would use the same serial interface, so we do things manually
+            char strBuff[32];
+            //snprintf(strBuff, 32, "T=%Ldms\n\r", T/1000L);
+            sprintf(strBuff, "T = %Ld ms", T/1000L);
+            serial_port.write(strBuff, strlen(strBuff));
+            serial_port.write("\n\r",2);
+            isT_updated = false;
         }
-        //Reset flags
-        isr_flags.usart = false;
-        isr_flags.timer = false;    
+ 
+        //Release lock
         CriticalSectionLock::disable();
     }
     
