@@ -17,9 +17,19 @@ Ticker ledTicker;
 //Flash rate (us)
 volatile long long T = 500000;
 
+//ISR Source
+struct {
+    bool usart = false;
+    bool timer = false;
+} isr_flags;
+
+
 //ISR for flashing blue LED
 void onTick() {
+    CriticalSectionLock lock;
+    
     ledRed = !ledRed;
+    isr_flags.timer = true;
 }
 
 void on_rx_interrupt()
@@ -29,6 +39,9 @@ void on_rx_interrupt()
 
     // NON blocking - Read the data to clear the receive interrupt.
     if (serial_port.read(&p, 1)) {
+
+        //Flag that this has happened
+        isr_flags.usart = true;
 
         //Check the character input
         switch (p) {
@@ -58,7 +71,9 @@ void on_rx_interrupt()
             break;            
         default:
             //Echo typed character to the terminal
+            char newline[]="\n\r";
             serial_port.write(&p,1);
+            serial_port.write(newline,2);
             break;
         };
     }
@@ -95,7 +110,18 @@ int main(void)
         CriticalSectionLock::disable();
 
         //printf cannot be performed in an ISR
-        printf("T=%Ldms\n\r", currentT/1000L);    
+        char strBuff[16];
+        sprintf(strBuff, "T=%Ldms\n\r", currentT/1000L);    
+
+        CriticalSectionLock::enable();
+        //If we woke from sleep because of a keypress, update
+        if (isr_flags.usart == true) {
+            serial_port.write(strBuff, sizeof(strBuff));
+        }
+        //Reset flags
+        isr_flags.usart = false;
+        isr_flags.timer = false;    
+        CriticalSectionLock::disable();
     }
     
 }
