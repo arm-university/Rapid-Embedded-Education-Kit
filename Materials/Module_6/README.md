@@ -661,13 +661,40 @@ Now the compiler will not attempt to optimise any statements that reference `cou
 
 The examples above are very contrived to force an issue. It should be noted that *race conditions* are usually much more subtle and may take many hours, days or even years to be detected. This is what makes them so *dangerous*.
 
-## Non re-entrant functions
+## Interrupt Service Routine Restrictions
 
-The majority 
+If you've new to using interrupts, you might be surprised at how few things you can do in an ISR. 
+
+| Guideline | Description |
+| - | - |
+| 1 |  An ISR should normally be kept as short as possible. At the time of writing, mbed os has all interrupts set to the same priority, so they cannot pre-empt another. This means interrupts may have to wait for those that fired before. So that all interrupts are responsive, each should be kept as short as possible. |
+| 2 | Never call a function that is non-reentrant from within an ISR. A non-reentrant function is one that access global variables, I/O, static locals and has no locking mechanism to prevent them being interrupted |
+| 3 | Assume alls function are NOT interrupt safe unless the documentation specifically says otherwise. [See the documentation for more details](https://os.mbed.com/docs/mbed-os/v6.15/apis/thread-safety.html). In general, *most* drivers in mbed-os are NOT interrupt safe (see below) |
+| - | Examples include the `printf` and `scanf` family. If these functions are preempted, the results are unpredictable. |
+
+From the [documentaton - accessed July 2022](https://os.mbed.com/docs/mbed-os/v6.15/apis/thread-safety.html):
+
+> Drivers that are interrupt safe:
+>
+> DigitalIn, DigitalOut, DigitalInOut.
+> InterruptIn.
+> PortIn, PortOut, PortInOut.
+> PwmOut.
+> Ticker, TimerEvent, Timeout.
+> Timer.
+
+Later when we meet RTOS, you will learn how tasks can ISRs can be kept very short, with more complex tasks being handed off to background *threads*.
 
 ## 4.5 Serial Interface Interrupts
 
+As a final example, let's look at something different from Timers and GPIO devices. Many interfaces offer an interrupt mechanism. One such interface is the Serial interface (UART). 
 
+In mbed OS are actually two driver classes for the UART:
+
+* `BufferedSerial` 
+* `UnBufferedSerial` 
+
+Normally we would use the `BufferedSerial` class, but for this simple demonstration, we will use `UnBufferedSerial` as it has a familiar API for interrupts.
 
 
 
