@@ -69,6 +69,7 @@ void countDown()
     }     
 }
 int main() {
+
     printf(BTN_STATE_STR(button.read()));
     red_led = 1;
     Timeout t1;

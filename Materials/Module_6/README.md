@@ -455,42 +455,9 @@ Very often, the CPU will not be in a sleep state when an interrupt event occurs.
 * popping the registers back off the stack memory
 * resuming execution, *as if nothing had happened....*
 
-*Except... something did happen*. The code in the ISR will have had some effect on the state of the system (otherwise it does nothing!). This might be to modify the hardware or a variable (still hardware, SRAM).
+*Except... something probably did happen*. Unless very trivial, the code in the ISR will have had some effect on the state of the system (otherwise it does nothing!). This might be to modify the hardware or a variable (still hardware, SRAM).
 
-With the exception of trivial examples, we do NOT know when the ISR will run and interrupts are asynchronous events (consider the press of a button...your code cannot read the users mind!). Our code now contains *out-of-sequence operations*, and **this is potentially hazardous**.
-
-You compiler knows nothing of interrupts. It's job is to check the syntax and if correct, efficiently convert C/C++ language statements into sequences of machine code. What we mean by efficient is also influenced by our optimisation settings. Compilers can employ all manner of techniques to improve the speed of your code (or reduce it's size), such as:
-
-* cache variables in CPU registers
-* change the order of code
-* even remove code (that has no impact on code logic)
-
-For example, consider the following code:
- 
-```C++
-uint32_t dat[10];
-uint32_t y = 0;
-for (uint32_t n=0; n<10; n++) {
-    dat[n] = 0;
-    //Flash LED
-    led = !led;
-
-    y++;
-
-    //Small delay (I think)
-    for (uint32_t m=0; m<0x8000; m++);
-
-    y++;
-}
-```
-
-It is likely that:
-
-* The index `n` is never created as a variable, and instead is cached in a 32-bit register. It cannot be used beyond the context of the loop and it is much faster to modify and read a CPU register.
-* The inner delay loop is removed. Logically it does nothing, so gets optimised to nothing. The compiler does not know this is supposed to be a delay
-* The two `y++` are combined into a single `y+=2`, or even removed from the loop, and replaced with a single `y+=20`.
-
-Note that **optimisation does not change the logic** of your code, so this is not something we usually concern ourselves with. But we are using interrupts, with code that runs out-of-sequence.
+With the exception of trivial examples, we do NOT know when the ISR will run so interrupts are asynchronous events (consider the press of a button...your code cannot read the users mind!). Our code now contains *out-of-sequence operations*, and **this is potentially hazardous**, leading to spurious corruption of data integrity.
 
 > **Terminology** 
 >
@@ -516,9 +483,9 @@ The greatest concern with interrupts is the inadvertent introduction of race con
 
 Let's now look at a **very** contrived example that somewhat forces the phenomena known as a **race condition** to occur.
 
-| Task 4.4.1 | Race Conditions |
+| Task 4.4 | Race Conditions |
 | - | - |
-| 1. | Make `module6-4-4-1-race` the active project. Build and run |
+| 1. | Make `module6-4-4-race` the active project. Build and run |
 | 2. | Study the source. Note (i) of the impact of pressing the blue user button (BUTTON1) and (ii) the condition for the red LED to be switched off |
 | 3. | Press and release the black reset button - what happens to the RED led? |
 | 4. | While holding down the blue button, press and release the black reset button to re-run the code. What happens to the red LED? |
@@ -532,17 +499,161 @@ Let's now look at a **very** contrived example that somewhat forces the phenomen
 
    * When the blue button is pressed, the `countUp()` begins as before, but shortly after, the timer ISR (`countDown()`)  interrupts it and executes to completion before `countUp()` is able to resume and complete. This results in data corruption of the variable `counter`, so the red light stays on.
 
-* 
-It should be noted that *race conditions* are usually much more subtle and may take many hours, days or even years to be detected. This is what makes them so *dangerous*.
+To properly understand the cause of data corruption, we need to drill down into machine code. For the purpose of this discussion, we can summarise as follows:
 
-### The `CritcalSectionLock` class and `volatile` keyword
+> An code that references any shared mutable-state (e.g. global variable) must never be pre-empted by code that also references the same resource.
+>
+> All code that makes reference (read or write) to any shared-mutable-state is considered a **critical section**
+>
+> The only exception is if the data is constant and is never modified anywhere (in which case you should mark it as `const`)
 
-// TBD
+In the example above:
+
+* the shared-mutable-state is the variable `counter`. 
+* `counter++` is likely to compile to at least 3 machine code instructions (fetch-modify-write)
+* If the the statement `counter++` is pre-empted (interrupted) part way through by code that references it, then `counter` will be misread or even corrupted (in the case of a write).  
+
+So our responsibility is to ensure that each `counter++` statement is allowed to complete all the underlying machine code instructions without interruption. We can do this by temporarily turning off interrupts
+
+## The `CritcalSectionLock` class 
+A problem with simply turning interrupts off and on again is when this process become nested. If interrupts were already off, then turning them back on is going to cause a serious bug.
+
+What we really should do is the following:
+
+> **IF ALREADY ON, TURN OFF INTERRUPTS**
+>
+> *perform critical section*
+> 
+> **RESTORE INTERRUPTS TO PREVIOUS STATE**
+
+We achieve this with the `CriticalSectionLock`class.
+
+```C++
+CriticalSectionLock::enable();
+// CRITICAL SECTION
+CriticalSectionLock::disable();
+``` 
+
+Alternatively, you can get the destructor to invoke `disable`:
+
+```C++
+{
+    CriticalSectionLock lock;
+    // CRITICAL SECTION
+}
+//When lock goes out of scope, disable() is called
+``` 
+| Task 4.4 | continued |
+| - | - |
+| 5. | Can you use the `CriticalSectionLock` class to prevent races in this code? | 
+| 6. | To see a solution, open `module6-4-4-solution` the active project. Build and run |
+| 7. | Re-run the code with the blue button both held down and released to confirm the race condition has been removed |
+
+--- 
+
+**KEY POINT**
+
+There was another change made in the solution that is very easy to miss. 
 
 ```C++
 volatile long long counter = 0;
 ```
 
+Note how `counter` is declared as `volatile`? There is often confusion around the meaning of this keyword. In short, any shared-mutable-state that needs to be protected in this way must **also** be declared to the compiler as `volatile`. If we did not do this, our efforts to protect it might fail.
+
+> `volatile` does not protect from race conditions, but it does makes it possible to identify the location of critical sections.
+
+---
+
+This can be very confusing. Before we can fully understand this, we also need to understand about code optimisation.
+
+### Compiler Optimisation and the `volatile` keyword
+
+Like the CPU knows nothing of the C/C++ languages (if knows machine code), so your compiler knows nothing of interrupts. It's job is to check the syntax and if correct, *efficiently* convert C/C++ language statements into sequences of machine code. What we mean by efficient is influenced by our compiler *optimisation* settings. Compilers can employ all manner of techniques to improve the speed of your code (or reduce it's size), such as:
+
+* cache variables in CPU registers
+* change the order of code
+* unwrap loops (remove the loop and simply add repetitive code)
+* even remove code (that has no impact on code logic)
+
+For example, consider the following code:
+ 
+```C++
+uint32_t dat[10];
+uint32_t y = 0;
+for (uint32_t n=0; n<10; n++) {
+    dat[n] = 0;
+    //Flash LED
+    led = !led;
+
+    y++;
+
+    //Small delay (only it isn't!)
+    for (uint32_t m=0; m<0x8000; m++);
+
+    y++;
+}
+
+printf("y=%d", y);
+```
+
+Some possible changes an optimising compiler **might** make:
+
+* The index `n` is never created as a variable, and is instead cached in a 32-bit register. It cannot be used beyond the context of the loop, and as it is much faster to modify and read a CPU register, this is a simple optimisation.
+* As the loop `n` is only short, it might "unfold" the loop to remove the overhead. In this case, `n` will not exist (see below)
+* The inner delay loop is removed. Logically it does nothing, so gets optimised to nothing (the code is removed). The compiler does not know this is supposed to be a delay (always use a hardware timer to implement delays). You can try this for yourself.
+* As the led is toggled an even number of times, so it will end up in the same state before and after the loop. In *theory*, a non-embedded compiler could simply remove that code especially now the delay has been removed.
+* The two `y++` could be combined into a single `y+=2`, or even removed from the loop, and replaced with a single `y+=20`. It might even simply initialise it with the literal value of 20.
+
+So conceivably (and this is only a theoretical example), the compiled code might match the following more closely:
+
+```C++
+uint32_t dat[10]; 
+uint32_t y = 20;
+register uint32_t* pDat = dat;
+*(pDat++)=0;
+*(pDat++)=0;
+*(pDat++)=0;
+*(pDat++)=0;
+*(pDat++)=0;
+*(pDat++)=0;
+*(pDat++)=0;
+*(pDat++)=0;
+*(pDat++)=0;
+*(pDat++)=0;
+printf("y=%d\n\r", y);
+```
+
+Note that **optimisation does not change the logic** of your code, but this is based on the analysis of a prescribed sequence of language statements. However, we are using interrupts, with code that runs out-of-sequence. 
+
+Consider this simple code (with line numbers):
+
+```C++
+1. CritcalSectionLock::enable();
+2. counter++;
+3. CritcalSectionLock::disable();
+```
+
+This works if (and only if) the full read-write-modify sequence in `counter++` is performed between lines 1 and 3. What is the compiler moved variable increment, or cached it in a register (to write to memory later)? In short, our efforts to protect it would fail.
+
+What was previously perfectly safe now presents us with a problem. We could turn off optimisation, but that would be detrimental to the performance of our code. The good news is that we can isolate aspects of our code and prevent optimisation from being applied.
+
+From the perspective of the compiler, it does not know that `counter` might be read or written in an ISR at a random point in time. In effect, anything that can spontaneously change is considered **volatile**.
+
+The keyword `volatile` declares a resource to be something that might spontaneously change out of line, so therefore must NOT be included in optimisation. This might include:
+
+* A global variable that is changed out-of-sequence by an ISR or thread (still driven by an ISR)
+* A hardware devices which, unbeknown to the compiler, can spontaneously change (e.g. timers). 
+
+Things that spontaneously are said to be *volatile* and must be declared as such. So in the solution above, this was another change:
+
+```C++
+volatile long long counter = 0;
+```
+
+**REFLECTION**
+
+It should be noted that *race conditions* are usually much more subtle and may take many hours, days or even years to be detected. This is what makes them so *dangerous*.
 
 ### Example - Serial Interface Interrupts
 
@@ -575,6 +686,35 @@ In the second exercise, you will need to complete the skeleton code so that it c
 Also, if several buttons have been pressed the same number of times, their respective LEDs should all be ON simultaneously.
 
 > **If you are stuck you can look at the code solution provided with the lab for some help.**
+
+## Reflection
+It is not unknown for developers to use interrupts and be completely oblivious to their dangers and limitations. In some applications, this could even pose a risk to life and/or the environment.
+
+Most developer tools will not help you detect race conditions. Most code tests are unlikely to detect them especially when they are rare. 
+
+Forgetting to make a variable volatile is another common error and very easy to make. 
+
+**You** have to spot these errors by reading the code. A group code walk-through with experienced developers is one way to increase the chances of spotting such an error. It also comes with practise.
+
+In contrast to rapid polling, interrupts are very efficient but also much more dangerous.
+
+> In the absence of any interrupts, rapid polling has no pre-emption so is always safe from race conditions.
+
+However, sometimes we simply have to use them, so this issue cannot be avoided entirely. The good news is you may be able to limit their use and approach multi-tasking in another and much simpler way. 
+
+> That way is to use a Real-Time Operating System (RTOS)  to write **multi-threaded applications**.
+
+Underpinning multi-threaded programming is a scheduler, driven by a timer interrupt. What does this achieve?
+
+* The harder and more dangerous interrupt operations are abstracted away
+* Running tasks in parallel is done for you.
+* Lot of tools are provided to prevent race conditions
+* Your code can be greatly simplified
+* Accessing the CPU sleep mode is handled automatically
+* Most functions and driver classes are thread safe, even where they are not interrupt safe
+* Facilities are provided to allow interrupts to synchronise with threads, enabling your interrupts to remain very short and simple
+
+Later we will introduce the concept of the Real Time Operation System (RTOS) aspects of mbed-os.
 
 # 6 Additional References
 
