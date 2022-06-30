@@ -541,7 +541,8 @@ Alternatively, you can get the destructor to invoke `disable`:
     CriticalSectionLock lock;
     // CRITICAL SECTION
 }
-//When lock goes out of scope, disable() is called
+// When lock goes out of scope, disable() is called automatically 
+// (so you don't forget!)
 ``` 
 
 | Task 4.4 | continued |
@@ -625,7 +626,9 @@ register uint32_t* pDat = dat;
 printf("y=%d\n\r", y);
 ```
 
-Note that **optimisation does not change the logic** of your code, but this is based on the analysis of a prescribed sequence of language statements. However, we are using interrupts, with code that runs out-of-sequence. 
+**KEY POINT**
+
+You can be confident that **optimisation improves the performance of the compiled code without changing the logic**, but this is based on the analysis of entirely sequential language statements. However, we are using interrupts, with code that runs out-of-sequence.
 
 Consider this simple code (with line numbers):
 
@@ -635,26 +638,28 @@ Consider this simple code (with line numbers):
 3. CritcalSectionLock::disable();
 ```
 
-This works if (and only if) the full read-write-modify sequence in `counter++` is performed between lines 1 and 3. What is the compiler moved variable increment, or cached it in a register (to write to memory later)? In short, our efforts to protect it would fail.
+This works if (and only if) the full read-write-modify sequence in `counter++` is performed between lines 1 and 3. What if the optimiser moves or replaces the `counter++` statement, or caches it in a register (to write to memory later)? In short, our efforts to protect it would fail.
 
-What was previously perfectly safe now presents us with a problem. We could turn off optimisation, but that would be detrimental to the performance of our code. The good news is that we can isolate aspects of our code and prevent optimisation from being applied.
+What was previously perfectly safe now presents us with a problem. We could turn off optimisation, but that would be detrimental to the broader performance of our code. The good news is that we can isolate aspects of our code and prevent optimisation from being applied.
 
-From the perspective of the compiler, it does not know that `counter` might be read or written in an ISR at a random point in time. In effect, anything that can spontaneously change is considered **volatile**.
+From the perspective of the compiler (where everything is sequential), it does not know that `counter` might be read or written in/by an ISR at a random point in time. In effect, anything that can spontaneously change like this is considered **volatile**.
 
 The keyword `volatile` declares a resource to be something that might spontaneously change out of line, so therefore must NOT be included in optimisation. This might include:
 
-* A global variable that is changed out-of-sequence by an ISR or thread (still driven by an ISR)
-* A hardware devices which, unbeknown to the compiler, can spontaneously change (e.g. timers). 
+* A global variable that is changed out-of-sequence by an ISR or thread (ultimately driven by an Timer ISR)
+* A hardware device - hardware registers, unbeknown to the compiler, can spontaneously change (e.g. timers, GPIO inputs etc..) by their very nature. 
 
-Things that spontaneously are said to be *volatile* and must be declared as such. So in the solution above, this was another change:
+Things that change spontaneously are said to be *volatile* and must be declared as such. So in the solution above, this was another change:
 
 ```C++
 volatile long long counter = 0;
 ```
 
+Now the compiler will not attempt to optimise any statements that reference `counter`.
+
 **SOME PERSPECTIVE**
 
-The examples above are very contrived. It should be noted that *race conditions* are usually much more subtle and may take many hours, days or even years to be detected. This is what makes them so *dangerous*.
+The examples above are very contrived to force an issue. It should be noted that *race conditions* are usually much more subtle and may take many hours, days or even years to be detected. This is what makes them so *dangerous*.
 
 ## Example - Serial Interface Interrupts
 
