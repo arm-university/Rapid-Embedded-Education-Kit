@@ -14,15 +14,16 @@ UnbufferedSerial serial_port(USBTX, USBRX);
 //Ticker
 Ticker ledTicker;
 
-//Reason why MCU left sleep - with ISR safe API
+//Reason why MCU left sleep
 volatile bool isT_updated = false;
 
-//Flash rate (us) - with ISR safe API
+//Flash rate (us)
 volatile long long T = 500000;
 
 //ISR for flashing green LED
 void onTick() {
     ledRed = !ledRed;
+    ledRed.write(1);
 }
 
 void on_rx_interrupt()
@@ -91,14 +92,14 @@ int main(void)
         //Enter low power state until an ISR wakes the CPU
         sleep(); 
 
-        // Safely access shared mutable state, including: T, isT_updated, serial_port
+        // Safely access shared mutable state
         CriticalSectionLock::enable();
 
         if (isT_updated) {
             // printf would use the same serial interface, so we do things manually
             char strBuff[32];
-            //snprintf(strBuff, 32, "T=%Ldms\n\r", T/1000L);
-            sprintf(strBuff, "T = %Ld ms", T/1000L);
+            snprintf(strBuff, 32, "T=%Ldms\n\r", T/1000L);
+            //sprintf(strBuff, "T = %Ld ms", T/1000L); //Not safe
             serial_port.write(strBuff, strlen(strBuff));
             serial_port.write("\n\r",2);
             isT_updated = false;

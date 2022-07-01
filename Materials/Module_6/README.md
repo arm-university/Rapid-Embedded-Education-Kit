@@ -689,13 +689,27 @@ Later when we meet RTOS, you will learn how tasks can ISRs can be kept very shor
 
 As a final example, let's look at something different from Timers and GPIO devices. Many interfaces offer an interrupt mechanism. One such interface is the Serial interface (UART). 
 
-In mbed OS are actually two driver classes for the UART:
+In Mbed OS are actually two driver classes for the UART:
 
 * `BufferedSerial` 
 * `UnBufferedSerial` 
 
-Normally we would use the `BufferedSerial` class, but for this simple demonstration, we will use `UnBufferedSerial` as it has a familiar API for interrupts.
+For simplicity, as we are only using interrupts to communicate with the serial interface, we will use `UnBufferedSerial`. This has a familiar API for interrupts and no buffering capability.
 
+| Task 4-5 | Serial Interrupts |
+| - | - |
+| 1. | Open, build and run module6-4-5-SerialInt |
+| 2. | In the serial terminal: |
+| - | Set the BAUD to 115200 |
+| - | Press 1 and 2 to toggle the green LED |
+| - | Press + and - to change the flash rate of the red LED |
+| - | Other key presses will be simply echoed back |
+| 3. | Examine the source code, including both ISR functions. Now try and answer the following (hover over to reveal the answer) |
+| a. | <p title="The CriticalSectionLock::disable() function is automatically called from the destructor of `CriticalSectionLock` when the ISR exits">At the top of the ISR for the serial interface, there is a line that reads `CriticalSectionLock lock`. This will disable the interrupts. How do they get re-enabled? </p> |
+| b. | <p title="T, isT_updated, serial_port">What shared mutable state is being protected by this lock? </p> |
+| c. | <p title="This is the only reference to `ledRed` in the code. DigitalOut is also interrupt safe.">In the ISR for the Ticker, why is there no `CriticalSectionLock` used? </p> |
+| d. | <p title="The serial port is shared, so has to be protected. `printf` does not have any protection and is also likely to use a `BufferedSerial`. With two class types both using the same serial port, the consequences are unpredictable to say the least! Equally, UnbufferedSerial is much more lightweight and opens the option of making the binary smaller">Why does the while-loop in `main.cpp` use `serial_port.write(..)` instead of `printf`? </p> |
+| e. | <p title="If two characters were sent, serial_port.write(..) might get interrupted. The UnbufferedSerial class has no protections and is not re-entrant, so it's internal state is likely to be corrupted; the global variable T is read in the main while loop. If this was interrupted and updated mid-read, it would return an invalid result. The same applies for isT_updated.">If the `CriticalSectionLock` was removed from the main while loop, what might be corrupted and why? </p> |
 
 
 ## Interaction with the RTOS?
