@@ -741,21 +741,27 @@ Also, if several buttons have been pressed the same number of times, their respe
 > **If you are stuck you can look at the code solution provided with the lab for some help.**
 
 ## Reflection
+Interrupts are the mechanism that underpins the modern computer. They allow the CPU to sleep (or even deep-sleep), and wake when an event occurs. For applications that need a timely (or deterministic) response, then interrupts can be essential.
+
+> We need to be careful however. The saying "a little knowledge is a dangerous thing" would seem to apply here.
+
 It is not unknown for developers to use interrupts and be completely oblivious to their dangers and limitations. In some applications, this could even pose a risk to life and/or the environment.
 
-Most developer tools will not help you detect race conditions. Most code tests are unlikely to detect them especially when they are rare. 
+Race conditions are hazardous and hard to detect / find. Most developer tools will not help you detect or find race conditions. Due to the statistical nature of race conditions, most code tests are unlikely to detect them especially when they are rare. 
 
-Forgetting to make a variable volatile is another common error and very easy to make. 
+> Forgetting to make a shared variable volatile is another common error and very easy to make. 
 
 **You** have to spot these errors by reading the code. A group code walk-through with experienced developers is one way to increase the chances of spotting such an error. It also comes with practise.
 
-In contrast to rapid polling, interrupts are very efficient but also much more dangerous.
+In contrast to rapid polling, interrupts are very responsive and power efficient, but are not the only approach: 
 
 > In the absence of any interrupts, rapid polling has no pre-emption so is always safe from race conditions.
+>
+> There are many standard library functions and drivers that simply cannot be used in an interrupt service routine, but can be used in a polling loop or a thread (see below).
 
 However, sometimes we simply have to use them, so this issue cannot be avoided entirely. The good news is you may be able to limit their use and approach multi-tasking in another and much simpler way. 
 
-> That way is to use a Real-Time Operating System (RTOS)  to write **multi-threaded applications**.
+> That way is to use a Real-Time Operating System (RTOS) to write **multi-threaded applications**.
 
 Underpinning multi-threaded programming is a scheduler, driven by a timer interrupt. What does this achieve?
 
@@ -765,16 +771,27 @@ Underpinning multi-threaded programming is a scheduler, driven by a timer interr
 * Your code can be greatly simplified
 * Accessing the CPU sleep mode is handled automatically
 * Most functions and driver classes are thread safe, even where they are not interrupt safe
-* Facilities are provided to allow interrupts to synchronise with threads, enabling your interrupts to remain very short and simple
+* Facilities are provided to allow interrupts to synchronise with threads, enabling your interrupts to remain very short and simple, thus easy to maintain.
 
-Later we will introduce the concept of the Real Time Operation System (RTOS) aspects of mbed-os.
+Later we will introduce the concept of the Real Time Operation System (RTOS) aspects of Mbed OS.
 
 # 6 Additional References
 
+**Mbed OS APIs**
+
+[Mbed OS APIs - Full List](https://os.mbed.com/docs/mbed-os/v6.15/apis/index.html)
+
 **Documentation for Mbed API for Interrupts**
 
-https://os.mbed.com/docs/mbed-os/v5.13/apis/interruptin.html#related-content 
+[InterruptIn](https://os.mbed.com/docs/mbed-os/v6.15/apis/interruptin.html)
 
+[Ticker](https://os.mbed.com/docs/mbed-os/v6.15/apis/ticker.html)
+
+[TimeOut](https://os.mbed.com/docs/mbed-os/v6.15/apis/timeout.html)
+
+[UnbufferedSerial](https://os.mbed.com/docs/mbed-os/v6.15/apis/unbufferedserial.html)
+
+--- 
 
 [Table of Contents](/README.md#syllabus)
 
