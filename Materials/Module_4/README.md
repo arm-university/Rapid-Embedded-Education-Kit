@@ -154,7 +154,7 @@ Features – provided via USB connection:
 # 4 Development Tools
 
 There are multiple ways for developers to program with Mbed. These consist of:
-* Mbed Studio
+* Mbed Studio and Keil Studio
 * Mbed Online Compiler
 * Mbed CLI
 
@@ -172,7 +172,11 @@ There are multiple ways for developers to program with Mbed. These consist of:
     * Flashes code directly to connected platform.
     * Provides debug session for debugging and profiling the target board.
 
-## 4.2 Mbed Online Compiler
+A new web version of Mbed Studio is now included in the upcoming [Keil Studio Cloud](https://studio.keil.arm.com/). This is a zero-install alternative that offers almost the same functionality. 
+
+## 4.2 Legacy Mbed Online Compiler
+
+**Note**: This is a legacy IDE that is no longer being developed.
 
 <figure>
 <img src="../../Materials/img/Mbed_online_compiler.png" width="500px">
@@ -185,6 +189,7 @@ There are multiple ways for developers to program with Mbed. These consist of:
 * No prior-installation or set-up required to work with Mbed.
 
 * Includes full code editor, version control, and library management.
+ 
 
 ## 4.3 Mbed CLI
 
@@ -271,30 +276,104 @@ Example of low-level programming:
 
 ```C
 #include "mbed.h"
-// Direct access MCU registers
-//Reuse initialization code from the mbed library
-DigitalOut led1(LED1); // P1_18
+DigitalOut led1(LED1); //Let Mbed OS initialise PA_5
 
 int main(){
-    unsigned int mask_pin18 = 1 << 18; //pin 18 is coded in a variable, by left-shifting a 1 eighteen times. So the bit 18 of mask_pin18 is set.
 
-    //define the addresses to which ports (in this case, port 1) can be set and reset.
-    volatile unsigned int *port1_set = (unsigned int *)0x2009C038;
-    volatile unsigned int *port1_clr = (unsigned int *)0x2009C03C;
+    //Let's have a look at the address of the BSRR register for PORTA
+    uint32_t *p = (uint32_t*)0x40020018;
+    printf("BSRR Address= %p\n", p);
 
     while(true){
-        //the pin 18 at port 1 is toggled by setting and resetting it respectively. 
+ 
+        //Set PA_5 HIGH
+        *p = 1<<5;
+        wait_us(500000);
 
-        *port1_set |= mask_pin18;
-        wait(0.5);
-
-        *port1_clr |= mask_pin18;
-        wait(0.5);
+        //Reset PA_5 
+        *p = 1<<21; 
+        wait_us(500000);
     }
 }
 ```
-This code is the closest approach to assembly level: everything is coded with addresses and pointers. The first line, including the mbed.h, should be disregarded as it is only used for this example’s readability.  This code encapsulates the necessary port initialization, so it can focus on the blinky-function as the main routine.
-The code is short and efficient, but is nearly unreadable if the purpose of the addresses is not known, and if the names of the variables are not self-speaking.
+This code is the closest approach to assembly level: everything is coded with addresses and pointers. 
+
+> Note - Normally this code would be much more complex, but for illustrative purposes, we have used the Mbed OS `DigitalOut` to perform the necessary port initialization, so we can focus on the blinking-function in the main routine.
+
+The code is short and efficient, but is mostly unreadable if the purpose of the addresses is not known, and if the names of the variables are not self-describing. Besides using platform specific addresses, it also uses a "Bit Set Reset Register" (BSRR) which may not feature in all microcontrollers, making this code less portable as well.
+
+We can improve matters by using some of the CMSIS definitions:
+
+```C
+#include "mbed.h"
+DigitalOut led1(LED1); //Let Mbed OS initialise PA_5
+
+#define SET_PIN_5 (1<<5)
+#define RESET_PIN_5 (SET_PIN_5 << 16)
+
+int main(){
+
+    //Let's have a look at the address of the BSRR register for PORTA
+    uint32_t *p = (uint32_t*)&(GPIOA->BSRR);
+    printf("BSRR Address= %p\n", p);
+
+    while(true){
+ 
+        //Set PA_5 HIGH
+        GPIOA->BSRR = SET_PIN_5;
+        wait_us(500000);
+
+        //Reset PA_5 
+        GPIOA->BSRR = RESET_PIN_5; 
+        wait_us(500000);
+    }
+}
+```
+
+This is much more readable if you know what a `BSRR` register mean (assuming your MCU supports it). Mbed OS can abstract away any need to make reference to register names and bit positions:
+
+```C++
+#include "mbed.h"
+DigitalOut led1(LED1); //Let Mbed OS initialise PA_5
+int main(){
+
+    while(true){
+ 
+        //Set PA_5 HIGH
+        led1.write(1);
+        wait_us(500000);
+
+        //Reset PA_5 
+        led1.write(0); 
+        wait_us(500000);
+    }
+}
+```
+
+The implementation of write may use a `BSRR` register (if present), but that is a platform specific detail that is abstracted away for us.
+
+At the highest level, by using C++ operator overloading, Mbed OS makes the code even more expressive:
+
+```C++
+#include "mbed.h"
+DigitalOut led1(LED1); //Let Mbed OS initialise PA_5
+
+int main(){
+
+    while(true){
+ 
+        //Set PA_5 HIGH
+        led1 = 1;
+        wait_us(500000);
+
+        //Reset PA_5 
+        led1 = 0; 
+        wait_us(500000);
+    }
+}
+```
+
+It is key to note that once compiled, all the examples above perform the same function. As the code becomes more abstracted, it becomes easier to read, maintain and port to other devices. The trade-off for this is sometimes additional overhead, but this is minimal.
 
 ### 7.3.2 Mbed API Example
 
