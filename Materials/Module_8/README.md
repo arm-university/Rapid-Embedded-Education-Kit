@@ -27,15 +27,16 @@ By the end of this lab you will get some insight and practical experience with t
 
 # 2 Requirements
 
-In this lab, we will be using the following software and hardware: 
+In this lab, we will be using the following software and hardware:
 
-* SOFTWARE - one of the following:
+- **Mbed Studio**, an IDE designed to streamline development and prototyping using Mbed enabled microcontrollers and development boards: https://os.mbed.com/studio/
 
-   * **Mbed Studio**, an IDE designed to streamline development and prototyping using Mbed enabled microcontrollers and development boards: https://os.mbed.com/studio/
-    
-   * **Mbed online compiler**, which can be found here: https://ide.mbed.com/compiler
+    **OR**
 
-* **NUCLEO-F401RE**, or another suitable Mbed OS 6 compatible development board. A full list of compatible devices can be found here: https://os.mbed.com/platforms, note that outputs may have to be reconfigured for devices following a different standard.
+    **Keil Studio**, which can be found here: https://studio.keil.arm.com/auth/login/
+  
+
+- **NUCLEO-F401RE**, or another suitable Mbed OS 6 compatible development board. A full list of compatible devices can be found here: https://os.mbed.com/platforms, note that outputs may have to be reconfigured for devices following a different standard.
 
 * A breadboard, 2 x 100Ω resistors, 2 x 10kΩ potentiometers, 1 x speaker (ABI-001-RC), 3 x RGB LED.
 

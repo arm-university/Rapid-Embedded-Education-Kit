@@ -33,14 +33,16 @@ In this lab, you will integrate the functions developed in the previous modules 
 
 # 2 Requirements
 
-In this lab, we will be using the following hardware and software: 
-* Mbed Studio, an IDE designed to streamline development and prototyping using Mbed enabled microcontrollers and development boards
+In this lab, we will be using the following software and hardware:
 
-OR
+- **Mbed Studio**, an IDE designed to streamline development and prototyping using Mbed enabled microcontrollers and development boards: https://os.mbed.com/studio/
 
-* Mbed online compiler, which can be found here: https://ide.mbed.com/compiler
+    **OR**
 
-* NUCLEO-F401RE, or another suitable Mbed OS 5 compatible development board. A full list of compatible devices can be found here: https://os.mbed.com/platforms, note that outputs may have to be reconfigured for devices following a different standard.
+    **Keil Studio**, which can be found here: https://studio.keil.arm.com/auth/login/
+  
+
+- **NUCLEO-F401RE**, or another suitable Mbed OS 6 compatible development board. A full list of compatible devices can be found here: https://os.mbed.com/platforms, note that outputs may have to be reconfigured for devices following a different standard.
 
 * A breadboard, 2 x 100Ω resistor, 2 x 1kΩ resistor, 1 x 10kΩ potentiometer, 1 x temperature sensor (DS1631), 1 x LCD (NHD_0216HZ), 1 x shift register (74HC595N), 3 x RGB LED and 1 x LED.
 
