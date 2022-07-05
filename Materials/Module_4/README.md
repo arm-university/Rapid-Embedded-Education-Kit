@@ -373,6 +373,12 @@ int main(){
 }
 ```
 
+| Task 7-3-1 | MCU Register Example |
+| - | - |
+| 1. | Make task `module4-7-3-1-MCU_Reg_Example` your active project |
+| 2. | Build and run this code |
+| 3. | Change it to use Mbed OS (as above) and show it has the same behaviour |
+
 It is key to note that once compiled, all the examples above perform the same function. As the code becomes more abstracted, it becomes easier to read, maintain and port to other devices. The trade-off for this is sometimes additional overhead, but this is minimal.
 
 ### 7.3.2 Mbed API Example
