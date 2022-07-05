@@ -11,7 +11,8 @@
 
 ## 1.1 Lab Overview
 
-In this lab, we will implement two functions in which the RGB LEDs are controlled by the status of the buttons. We will use the DigitalIn/DigitalOut and the BusIn/BusOut interfaces to assist with this. 
+In this lab, we will implement two functions in which the RGB LEDs are controlled by the status of the buttons. We will use the `DigitalIn`/`DigitalOut` and the `BusIn`/`BusOut` interfaces to assist with this. 
+
 By the end of this lab you will get some insight and practical experience with the Mbed API for Digital I/O.
 
 # 2 Requirements
@@ -24,13 +25,14 @@ In this lab, we will be using the following software and hardware:
 
     **OR**
 
-    **Mbed online compiler**, which can be found here: https://ide.mbed.com/compiler
+    **Keil Studio**, which can be found here: https://studio.keil.arm.com/auth/login/
+  
 
-- **NUCLEO-F401RE**, or another suitable Mbed OS 5 compatible development board. A full list of compatible devices can be found here: https://os.mbed.com/platforms, note that outputs may have to be reconfigured for devices following a different standard.
+- **NUCLEO-F401RE**, or another suitable Mbed OS 6 compatible development board. A full list of compatible devices can be found here: https://os.mbed.com/platforms, note that outputs may have to be reconfigured for devices following a different standard.
 
-- A breadboard, 4 x 330 Ω resistors, 4 x buttons, 1 red LED, 1 blue LED, 1 green LED.
+- A breadboard, 4 x 330 Ω resistors, 4 x buttons, 1 red LED, 1 green LED, 1 blue LED.
 
-The code skeleton, which includes some support for implementing the task at the end of this lab  should be found in the same folder as this manual.
+The code skeleton, which includes some support for implementing the task at the end of this lab should be found in the same folder as this manual.
 
 # 3 Hardware Setup
 
@@ -91,13 +93,20 @@ On a breadboard, connect all 4 buttons according to the diagram on the left. You
 
 # 4 DigitalIn/DigitalOut Interfaces
 
-In this task, you will be implementing a function with which you can control RGB LEDs using the status of the buttons. This will be achieved using the DigitalIn/DigitalOut interfaces.
+In this task, you will be implementing a function with which you can control RGB LEDs using the status of the buttons. This will be achieved using the `DigitalIn`/`DigitalOut` interfaces and the following hardware.
+
+<figure>
+<img src="../../img/lab6-switch-circuit.png" width="400px" >
+<img src="../../img/lab6-led-circuit.png" width="400px" >
+<figcaption>Figure 2: (Upper) Buttons Pulling GPIO inputs HIGH; (Lower) LED Outputs</figcaption>
+</figure>
+
 
 ## 4.1 Introduction to DigitalIn/DigitalOut Interfaces
 
-The DigitalIn interface is used to read the value of a digital input pin. The logic level is either 1 or 0. 
+The `DigitalIn` interface is used to read the value of a digital input pin. The logic level is either 1 or 0. 
 The DigitalOut interface is used to configure and control a digital output pin by setting the pin to a logic level 0 or 1.
-You can use any of the numbered Arm Mbed pins as a DigitalIn or DigitalOut, for example:
+You can use any of the numbered Arm Mbed pins as a `DigitalIn` or `DigitalOut`, for example:
 
 ```C++
 DigitalIn mybutton (Input Pin);
@@ -109,7 +118,7 @@ int main(){
 }
 
 ```
-The DigitalIn/Out interfaces have a set of member functions which can be found in figure 2.
+The `DigitalIn`/`DigitalOut` interfaces have a set of member functions which can be found in figure 2.
 <table>
 <tbody>
   <tr>
@@ -143,11 +152,21 @@ The DigitalIn/Out interfaces have a set of member functions which can be found i
 </tbody>
 </table>
 
-The DigitalInOut interface is a bidirectional digital pin, we can use this interface to read the value of a digital pin when set as an input(), as well as write the value when set as an output().
+The `DigitalInOut` interface is a bidirectional digital pin, we can use this interface to read the value of a digital pin when set as an `input()`, as well as write the value when set as an `output()`.
+
+
+
 
 ## 4.2 Application Code
 
-In this exercise you are required to write the function ControlLED_DigitalIO in the code skeleton provided, using the DigitalIn, DigitalOut Interfaces, and boolean algebra.
+In this exercise you are required to write the function `ControlLED_DigitalIO` in the code skeleton provided, using the `DigitalIn`, `DigitalOut` Interfaces, and boolean algebra.
+
+| Task 4-2 | DigitalIO | 
+| - | - |
+| 1. | Make `module5-4-2-DigitalIO` the active project |
+| - | - |
+
+//TDB
 
 The buttons represent an unsigned binary number N with button 1 being the Least Significant Bit (LSB) and button 4 the Most Significant Bit (MSB).  Your function should turn on the right combination of RGB LEDs for all ranges of N as specified below:
 
