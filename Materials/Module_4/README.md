@@ -611,3 +611,13 @@ The Arm-Cortex processors then provide the CoreSight Debug and Trace Unit.
 | `uint32_t SysTick_Config(uint32_t ticks)` | Initialize and start the SysTick counter and its interrupt. |
 | `void SystemInit (void)` | Initialize the system. |
 | `void SystemCoreClockUpdate(void)` | Update the SystemCoreClock variable. |
+
+## Reflection
+
+Mbed OS gives the developer access to multiple levels of abstraction.
+
+The higher the level of abstraction, the more portable and readable your code becomes. Abstraction may come at the price of overhead, but in most cases it is minimal.
+
+However, there may be times when Mbed OS does not meet your needs. In such cases, you might drop down to the CMSIS level or even write to registers directly. An example might be to implement a feature that is not supported (at the time of writing, this might include DMA).
+
+When using Mbed OS, it is often possible to avoid calling any of the CMSIS APIs. However, it is important to note that you are not prevented from doing so.
