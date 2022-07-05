@@ -330,7 +330,7 @@ int main(){
 }
 ```
 
-This is much more readable if you know what a `BSRR` register mean (assuming your MCU supports it). Mbed OS can abstract away any need to make reference to register names and bit positions:
+This is much more readable if you know what a `BSRR` register does (and assumes your MCU supports it). Mbed OS can abstract away any need to make reference to register names and bit positions:
 
 ```C++
 #include "mbed.h"
