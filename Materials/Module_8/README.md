@@ -98,7 +98,7 @@ You can independently create, start and stop any number of Timer objects simulta
 | c | <p title="No. If it is already running, it will reset to zero and keep running.">If you reset a timer with `reset()`, do you need to restart it again?</p> |
 | d | <p title="std::chrono::microseconds which (under the hood) is represented as a `long long`">When you read a timer (without blocking) using the `elapsed_time()` function, what is the data type of the returned value?</p> | 
 
-## 4.1.1 The `std::chrono::microseconds` type
+### 4.1.1 The `std::chrono::microseconds` type
 
 If you are not familiar with the `C++` type `std::chrono::microseconds`, the last question might confuse you, as might the suffixes `ms` and `us`.
 
@@ -130,12 +130,15 @@ constexpr long double operator"" degrees(long double deg)
     return radians;
 }
 ```
+### 4.1.3 Relationship to the Hardware
 
+Microcontrollers based on the Arm Cortex M4.....
 
+## 4.2 Ticker interface
 
-# 4.2 Ticker interface
+`Timer` does not abstract interrupts. It is only used for polling.
 
-We can use the Ticker interface to set up a recurring interrupt; it calls a function repeatedly and at a specified rate, for example:
+As we learned in module 6, we can use the `Ticker` interface to set up a recurring interrupt; it calls a function repeatedly and at a specified rate, for example:
 
 ```C++
 Ticker flipper;
