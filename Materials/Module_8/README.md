@@ -22,8 +22,11 @@ If you clone this repository, lecture slides are available in PowerPoint format 
 # 1 Introduction
 
 # 1.1	Lab overview
-In this lab, we will design an audio player that will play a melody saved beforehand. The volume of the music as well as its speed can be controlled by two buttons. 
-By the end of this lab you will get some insight and practical experience with the Mbed API for Timers and Tickers.
+We have already met Timers in previous module 6 (Interrupts). Hardware timers underpin the `Ticker` and `Timeout` types as well are RTOS scheduling (see module 10). Hardware timers are also used with sequential code, and this is what we are going to look at here.
+
+`PwmOut` was also used back in module 7 as a way to generate a mean DC output. This is also underpinned by hardware timers.
+
+In this lab, we will design an audio player that will play a melody saved beforehand. The volume of the music as well as its speed can be controlled by two buttons. By the end of this lab you will get some insight and practical experience with the Mbed API for Timers and Tickers.
 
 # 2 Requirements
 
@@ -44,7 +47,7 @@ The code skeleton, which includes some support for implementing the task in [sec
 
 # 3 Hardware Setup
 
-## 3.1 Pin Layout
+## 3.1 Pin Layout [TO BE CHANGED]
 
 In this experiment, we are going to use the Nucleo F401RE board. The pin descriptions for the board can be found below:
 
@@ -118,7 +121,10 @@ int main() {
 
 You can create any number of Ticker objects, allowing multiple outstanding interrupts at the same time. The function can be a static function, a member function of a particular object or a Callback object. This can be done using the member functions of this API which can be found in [section 4.3](#43-Software-Functions).
 
-# 4.3 Software functions
+# 4.3 PWM
+
+
+# 4.4 Software functions
 
 You can find in the table below the member function of the Timer Interface and Ticker interface which were introduced in this lab, as well as some member function of the PwmOut Interface which will be helpful for this lab.
 
