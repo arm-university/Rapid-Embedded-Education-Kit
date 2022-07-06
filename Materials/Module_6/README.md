@@ -28,7 +28,7 @@ In this lab, we will implement two functions. For the first function, the RGB LE
 
 # 2 Requirements
 
-## 2.1	Software and Hardware
+## 2.1	Software Setup
 
 In this lab, we will be using the following software and hardware:
 
@@ -41,13 +41,7 @@ In this lab, we will be using the following software and hardware:
 
 - **NUCLEO-F401RE**, or another suitable Mbed OS 6 compatible development board. A full list of compatible devices can be found here: https://os.mbed.com/platforms, note that outputs may have to be reconfigured for devices following a different standard.
 
-* A breadboard, 4 x 330Ω resistors, 4 x buttons, 1 red LED, 1 blue LED, 1 green LED.
-
-Two code skeletons, which includes some support for implementing the task in section [5.1](#51) and [5.2](), should be found in the same folder as this manual.
-
-# 3 Hardware Setup
-
-## 3.1 Pin Layout
+## 3.1 Hardware Setup
 
 In this experiment, we are going to use the Nucleo F401RE board. The pin descriptions for the board can be found below:
 

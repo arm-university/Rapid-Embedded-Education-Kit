@@ -28,7 +28,7 @@ We have already met Timers in previous module 6 (Interrupts). Hardware timers un
 
 In this lab, we will design an audio player that will play a melody saved beforehand. The volume of the music as well as its speed can be controlled by two buttons. By the end of this lab you will get some insight and practical experience with the Mbed API for Timers and Tickers.
 
-# 2 Requirements
+# 2	Software Setup
 
 In this lab, we will be using the following software and hardware:
 
@@ -41,13 +41,7 @@ In this lab, we will be using the following software and hardware:
 
 - **NUCLEO-F401RE**, or another suitable Mbed OS 6 compatible development board. A full list of compatible devices can be found here: https://os.mbed.com/platforms, note that outputs may have to be reconfigured for devices following a different standard.
 
-* A breadboard, 2 x 100Ω resistors, 2 x 10kΩ potentiometers, 1 x speaker (ABI-001-RC), 3 x RGB LED.
-
-The code skeleton, which includes some support for implementing the task in [section 5.1](#51-Define-the-Music-Note-and-Beat-Length), [section 5.2](#52-Your-Application-Code) should be found in the same folder as this manual.
-
 # 3 Hardware Setup
-
-## 3.1 Pin Layout [TO BE CHANGED]
 
 In this experiment, we are going to use the Nucleo F401RE board. The pin descriptions for the board can be found below:
 
@@ -56,45 +50,90 @@ In this experiment, we are going to use the Nucleo F401RE board. The pin descrip
 <figcaption>Figure 1: The NUCLEO F401RE board pin descriptions</figcaption>
 </figure>
 
-On a breadboard, build the circuit in Figure 2, using the hardware components listed in section [“2. Requirements”](#2-Requirements):
+On 2 breadboards, build the circuits in Figure 2, using the hardware components listed in 2. [“2. Requirements”](#2-Requirements):
 
 <figure>
-<img src="../../Materials/img/Pull_up_gpio.png" width="400px">
-<figcaption>Figure 2: Circuit Layout</figcaption>
+<img src="../../img/lab6-switch-circuit.png" width="400px" >
+<img src="../../img/lab6-led-circuit.png" width="400px" >
+<figcaption>Figure 2: (Upper) Buttons Pulling GPIO inputs HIGH; (Lower) LED Outputs</figcaption>
 </figure>
 
-On a breadboard, connect the 2 buttons according to the diagram on the left.  Your buttons should pull the GPIO pin low. 
-
-Then connect the buttons, the RGB LEDs and the speaker to their respective pin on the board as defined in the table below. 
+On a breadboard, connect all four buttons according to the diagram on the left.  For the purpose of this lab, your buttons should pull the GPIO pin HIGH. Then connect the buttons and the LED to their respective pin on the board as defined in the table below.
 
 | Pin | Pin name in Mbed API |
 | - | - |
-| Button 1 | D4 |
-| Button 2 | D7 |
-| PWM speaker | D3 |
-| RED LED | D5 |
-| Green LED | D6 |
-| Blue LED | D9 |
+| `BUTTON 1` | D2 |
+| `BUTTON 2` | D3 |
+| `BUTTON 3` | D4 |
+| `BUTTON 4` | D5 |
+| `RED LED` | D6 |
+| `GREEN LED` | D7 |
+| `BLUE LED` | D8 |
 | - | - |
 
-# Software Interfaces
+# 4 Timer Interfaces
 
 ## 4.1 Timer Interface
 We can use the timer interface to create, start, stop and read a timer for measuring precise times (better than millisecond precision), for example:
+
 ```C++
-Timer t;
+Timer tmr;
  
 int main() {
-    t.start();
+    tmr.start();
     printf("Hello World!\n");
-    t.stop();
-    printf("The time taken was %f seconds\n", t.read());
+    long long t = tmr.elapsed_time().count();
+    printf("The time taken was %Ld uSeconds\n", t); 
 }
 ```
 
-You can independently create, start and stop any number of Timer objects simultaneously. The member functions of the API can be found in [section 4.3](#43-Software-Functions).
+You can independently create, start and stop any number of Timer objects simultaneously. The member functions of the API can be found in [section 4.4](#44-software-functions).
 
-# 4.2	Ticker interface
+| Task 4-1 | Timer |
+| - | - |
+| 1. | Make `module8-4-1-Timer` the active project. Build and run |
+| 2. | Read the code comments and answer the following questions (Hover your mouse over the following questions to reveal the answers) |
+| a | <p title="Approximately 2.5%">What percentage of the time is the red LED on?</p> |
+| b | <p title="Approximately 50%">What percentage of the time is the green LED on?</p> |
+| c | <p title="No. If it is already running, it will reset to zero and keep running.">If you reset a timer with `reset()`, do you need to restart it again?</p> |
+| d | <p title="std::chrono::microseconds which (under the hood) is represented as a `long long`">When you read a timer (without blocking) using the `elapsed_time()` function, what is the data type of the returned value?</p> | 
+
+## 4.1.1 The `std::chrono::microseconds` type
+
+If you are not familiar with the `C++` type `std::chrono::microseconds`, the last question might confuse you, as might the suffixes `ms` and `us`.
+
+Timing is such a fundamental task of embedded systems. When interfacing with external devices and signals, we often work in units of seconds, milliseconds (ms) and microseconds (us). Scaling values between these units is error prone and hard to read. This is where `chrono` comes in.
+
+`std::chrono` is a **namespace**.  This is simply a C++ a prefix to prevent name collisions.
+
+* Under the hood, anything of type `std::chrono::seconds`, `std::chrono::milliseconds` or `std::chrono::microseconds` is really a variable of type `long long`
+* The basic resolution is 1 microsecond
+* A literal value with the suffix `ms` will be scaled by 1000
+* A literal value with the suffix `s` will be scaled by 1000000
+
+So the following are actually the exact same value:
+
+`1s`, `1000ms`, `1000000us`
+
+Perform a type-cast, you each will give you the value of 1000000.
+
+(long long)1s will return `1000000`
+
+This means that literal values in our code that represent timings can be written with natural units. They may be values taken from a data sheet for example. Remember that all the values are scaled to microseconds.
+
+How does this work? C++ operator overloading. Here is an example that converts angles to radians:
+
+```C++
+constexpr long double operator"" degrees(long double deg)
+{
+    long double radians = deg * 3.1415926 / 180.0;
+    return radians;
+}
+```
+
+
+
+# 4.2 Ticker interface
 
 We can use the Ticker interface to set up a recurring interrupt; it calls a function repeatedly and at a specified rate, for example:
 

@@ -24,11 +24,11 @@ https://github.github.com/gfm/
 I suggest you use HTML for images so that you can control the width. Here is an example:
 
 ```HTML
-<img src="img/Icon-jpg-small.jpg" width="300px">
+<img src="../Materials/img/m5_gpio_diagram.png" width="200px">
 ```
 
 <figure>
-<img src="../img/Icon-jpg-small.jpg" width="300px">
+<img src="../Materials/img/m5_gpio_diagram.png" width="200px">
 <figcaption>Course Icon</figcaption>
 </figure>
 
