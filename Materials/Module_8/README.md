@@ -53,9 +53,8 @@ In this experiment, we are going to use the Nucleo F401RE board. The pin descrip
 On 2 breadboards, build the circuits in Figure 2, using the hardware components listed in 2. [“2. Requirements”](#2-Requirements):
 
 <figure>
-<img src="../../img/lab6-switch-circuit.png" width="400px" >
-<img src="../../img/lab6-led-circuit.png" width="400px" >
-<figcaption>Figure 2: (Upper) Buttons Pulling GPIO inputs HIGH; (Lower) LED Outputs</figcaption>
+<img src="../../img/lab8-circuit.png" width="600px" >
+<figcaption>Figure 2: (Upper) Buttons Pulling GPIO inputs; (Lower) LED and Buzzer Outputs</figcaption>
 </figure>
 
 On a breadboard, connect all four buttons according to the diagram on the left.  For the purpose of this lab, your buttons should pull the GPIO pin HIGH. Then connect the buttons and the LED to their respective pin on the board as defined in the table below.
@@ -69,6 +68,7 @@ On a breadboard, connect all four buttons according to the diagram on the left. 
 | `RED LED` | D6 |
 | `GREEN LED` | D7 |
 | `BLUE LED` | D8 |
+| `BUZZER` | D9 |
 | - | - |
 
 # 4 Timer Interfaces
@@ -134,37 +134,76 @@ constexpr long double operator"" degrees(long double deg)
 
 Microcontrollers based on the Arm Cortex M4.....
 
-## 4.2 Ticker interface
+## 4.2 Ticker and Timeout Interfaces
 
 `Timer` does not abstract interrupts. It is only used for polling.
 
-As we learned in module 6, we can use the `Ticker` interface to set up a recurring interrupt; it calls a function repeatedly and at a specified rate, for example:
+As we learned in module 6, we can use the `Ticker` interface to set up a recurring interrupt that calls a function (ISR) repeatedly at a specified rate. We also have `Timeout` which calls a function once after a specified duration.
+
+We can see examples of this below:
 
 ```C++
-Ticker flipper;
-DigitalOut led1(LED1);
-DigitalOut led2(LED2);
+#include "mbed.h"
+
+Ticker t1;
+Ticker t2;
+Timeout oneShot;
+
+DigitalOut led1(D6);
+DigitalOut led2(D7);
+DigitalOut led3(D8);
  
-void flip() {
+void flip1() {
+    led1 = !led1;
+}
+
+void flip2() {
     led2 = !led2;
 }
  
 int main() {
-    led2 = 1;
-    flipper.attach(&flip, 2.0); // the address of the function to be attached (flip) and the interval (2 seconds)
- 
-    // spin in a main loop. flipper will interrupt it to call flip
+    // Passing a function pointer
+    t1.attach(&flip1, 500ms); 
+    t2.attach(&flip2, 700ms);
+
+    //Using a C++ lambda function
+    oneShot.attach( []() { led3 = 1; }, 5s);
+
+    // Sleep in the main loop
     while(1) {
-        led1 = !led1;
-        wait(0.2);
+        sleep();
+        printf("I'm awake\n\r");
     }
 }
 ```
+
+Note that for the ticker, we used a C++ lambda function. If you are not familiar with lambda function, it is a way to write the function code inline. This helps to keep the code all in one place.
+
+| Task 4-2 | `TickerTimeout` |
+| - | - |
+| 1. | Set module8-4-2-TickerTimeout as the active project. Build and run. |
+| 2. | Comment out or delete functions `flip1()` and `flip2()`, and perform the led flashing in a lamda function |
+ 
 
 You can create any number of Ticker objects, allowing multiple outstanding interrupts at the same time. The function can be a static function, a member function of a particular object or a Callback object. This can be done using the member functions of this API which can be found in [section 4.3](#43-Software-Functions).
 
 # 4.3 PWM
 
+We met the PWM earlier in the course. In this section, we look at how to generate musical notes using a PWM.
+
+* The period of the PWM controls the fundamental frequency (musical tone)
+* The duty controls the volume
+
+| Task 4-3 | PWM |
+| - | - |
+| 1. | Make module8-4-3-PWM the active project. Build and run |
+| - | Press the blue button to start |
+| - | Try changing the volume using buttons 1 and 2 |
+| - | Try changing the pitch with buttons 3 and 4 |
+| 2. | Challenge - this example uses polling to read the buttons. Can you change this to interrupts to save power? |
+| - | A solution is provided |
+
+The buzzer can become quite annoying after a while (which is why it does not play immediately). Press the black reset button to silence the buzzer.
 
 # 4.4 Software functions
 
