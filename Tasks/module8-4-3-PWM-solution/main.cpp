@@ -39,8 +39,8 @@ float calcVolume(uint16_t vol)
 }
 
 //Shared mutable state
-uint16_t vol  = 1;
-uint16_t note = 0;  // Musical A
+volatile uint16_t vol  = 1;
+volatile uint16_t note = 0;  // Musical A
 
 // ISRs for buttons
 // These do not perform any debounce so may be a bit erratic

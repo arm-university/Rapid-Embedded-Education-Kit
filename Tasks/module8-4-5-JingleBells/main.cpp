@@ -10,15 +10,17 @@ Output: PWM Speaker (play the music), and RGB LED (reflect the melody)
  *----------------------------------------------------------------------------*/
 
 #include "mbed.h"
+#include <chrono>
+#include <ratio>
 
-#define SPEAKER D3
-#define RED_LED D5
-#define GREEN_LED D6
-#define BLUE_LED D9
-#define BUTTON1 D4
-#define BUTTON2 D7
-
-
+#define BUTTON_1 D2
+#define BUTTON_2 D3
+#define BUTTON_3 D4
+#define BUTTON_4 D5
+#define RED_LED D6
+#define GREEN_LED D7
+#define BLUE_LED D8
+#define SPEAKER D9
 
 //Define the frequency of basic music notes
 # define Do     0.5
@@ -41,8 +43,8 @@ float note[] = {Mi,No,Mi,No,Mi,No, Mi,No,Mi,No,Mi,No, Mi,No,So,No,Do,No,Re,No,Mi
 float beat[] = {b3,b3,b3,b3,b2,b2, b3,b3,b3,b3,b2,b2, b3,b3,b3,b3,b3,b3,b3,b3,b2,b1, b3,b3,b3,b3,b3,b3,b3,b3, b3,b3,b3,b3,b3,b3,b4,b4,b4,b4, b2,b3,b3,b2,b2, b2,b2,b2,b2};
 
 //Define the analog inputs
-DigitalIn volume(BUTTON1);
-DigitalIn speed(BUTTON2);
+DigitalIn volume(BUTTON_1);
+DigitalIn speed(BUTTON_2);
 
 //Define the PWM output for the speaker
 PwmOut Speaker(SPEAKER);
@@ -82,7 +84,8 @@ void timer_ISR(){
 		k++;
 			
 		//Set the time for the next ticker interrupt, this is determined by the default music beat and the potentiometer
-		timer.attach(&timer_ISR, ((beat[k]/2)+0.5));
+        float timeIn_ms = 1000.0f*((beat[k]/2)+0.5);
+		timer.attach(&timer_ISR, chrono::milliseconds( (uint32_t)timeIn_ms ));
 			
 		//RGB LED indicator
     	RedLed = note[k];
@@ -99,7 +102,7 @@ void timer_ISR(){
  *----------------------------------------------------------------------------*/
 
 int main(){
-	timer.attach(&timer_ISR, 0.1);    					//Initialize the time ticker
+	timer.attach(&timer_ISR, 100ms);    					//Initialize the time ticker
     k=0;
 
     while(1){ 
