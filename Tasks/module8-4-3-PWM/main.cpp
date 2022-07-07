@@ -1,81 +1,83 @@
-/*----------------------------------------------------------------------------
-LAB EXERCISE 4 - TIMER AND PWM
- ----------------------------------------
-Make an audio player to play a music
-
-Input: 2x potentiometers, one for tuning the music speed, and one for the volume
-Output: PWM Speaker (play the music), and RGB LED (reflect the melody)
-
-	GOOD LUCK!
- *----------------------------------------------------------------------------*/
-
 #include "mbed.h"
-#include <chrono>
 #include "nonblocking_read.h"
+#include "math.h"
+#include <chrono>
+#include <cmath>
+
+//Inputs
+DigitalIn startButton(BUTTON1);
+BusIn volControl(D2, D3);      //Button_1 and Button_2
+BusIn freqControl(D4, D5);     //Button_3 and Button_4
 
 // Digital Outputs
-// See https://os.mbed.com/platforms/ST-Nucleo-F401RE/ to see which pins also support PWM
-DigitalOut redLED(D5);      
-DigitalOut greenLED(D6);
+DigitalOut redLED(D6,0);      
+DigitalOut greenLED(D7,0);
+DigitalOut blueLED(D8,1);   //Initial state ON
 
-//Create instance of a timer
-Timer tmr;
- 
-//Create instance of a PWM
-PwmOut blueLED(D7);
- 
-int main() {
-    tmr.start();
-    printf("Hello World!\n");
-    tmr.stop();
-    printf("The time taken was %Ld uSeconds\n", tmr.elapsed_time().count()); 
+// PWM
+PwmOut buzz(D9);
 
-    //Start the hardware PWM to produce 50% duty cycle
-    blueLED.period_ms(10);      //Fast enought to avoid flicker
-    blueLED.pulsewidth_ms(5);   //Start with half power   
-    int pwBlue = 5;
+// Calculate the period for a given note
+// note = 0, freq = 440Hz (middle A)
+// note = +1, frequency is one tone above middle A
+// note = -1, frequency is one tone below middle A
+// Result is in uSeconds
+uint32_t notePeriod(uint16_t note)
+{
+    double T = (10000.0/4.4) * pow(2.0, -(double)note/12.0);
+    return round(T);
+}
+
+// Human ear is logarithmic - perceived loudness is proportional to log(power)
+// Caluclate the pulse width for a volume vol
+// where 1 <= vol <= 9
+float calcVolume(uint16_t vol)
+{
+    return (1.0f/1024.0f) * (1 << vol);
+}
+
+int main() 
+{
+    uint16_t vol  = 1;
+    uint16_t note = 0;  // Musical A
+
+    //Press blue button to start (and press the black button to silence)
+    while (startButton == 1);
+
+    //Initial tone - 440Hz A
+    buzz.period_us(notePeriod(note));
+    buzz = calcVolume(vol);
 
     while (true) {
 
-        //LED ON
-        redLED = 1;     //Duty: 25%
-        greenLED = 1;   //Duty: 50%
-
-        //Blocking delay of 25ms
-        tmr.reset();
-        while (tmr.elapsed_time() < 25ms);
-
-        //LED OFF
-        redLED = 0;
-
-        //Blocking delay of 25ms
-        tmr.reset();
-        while (tmr.elapsed_time() < 25ms);
-        greenLED = 0;
-
-        //Blocking delay of 50ms
-        tmr.reset();
-        while (tmr.elapsed_time() < 50ms);
-
-        //Read keyboard and update duty of blue
-        char key = getCharNonblocking();
-        switch (key) {
-            case '1':
-            //Make darker
-            if (pwBlue>=1) {
-                pwBlue--;
-                blueLED.pulsewidth_ms(pwBlue);
-            }
+        // Update volume
+        switch (volControl.read())
+        {
+            case 1:
+            vol = vol - ( (vol >= 2) ? 1 : 0);
+            buzz = calcVolume(vol);
             break;
-            case '2':
-            //Make lighter
-            if (pwBlue <= 9) {
-                pwBlue++;
-                blueLED.pulsewidth_ms(pwBlue);
-            }
-            break;
-            default:
+            
+            case 2:
+            vol = vol + ( (vol <= 8) ? 1 : 0);
+            buzz =calcVolume(vol);
             break;
         }
+
+        // Update frequency
+        switch (freqControl.read())
+        {
+            case 1:
+            note = note + 1;
+            buzz.period_us(notePeriod(note));
+            break;
+
+            case 2:
+            note = note - ((note >= 1) ? 1 : 0);
+            buzz.period_us(notePeriod(note));
+            break; 
+        }
+
+        ThisThread::sleep_for(250ms);
     }
 }
