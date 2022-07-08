@@ -1,7 +1,7 @@
 /*----------------------------------------------------------------------------
-LAB EXERCISE 4 - TIMER AND PWM
+LAB EXERCISE  - TIMER AND PWM
  ----------------------------------------
-Make an audio player to play a music
+Make an audio player to play music
 
 Input: 2x potentiometers, one for tuning the music speed, and one for the volume
 Output: PWM Speaker (play the music), and RGB LED (reflect the melody)
@@ -25,6 +25,8 @@ Output: PWM Speaker (play the music), and RGB LED (reflect the melody)
 
 // Frequency of middle C (Hz)
 #define MIDDLEC 261.63
+
+// Calculate frequency for each semi-tone in the chromatic scale
 double noteFreq[12];    //C,C#,D,D#,E,F,F#,G,G#,A,A#,B
 double notePeriod[12];
 void preCalculateNotes()
@@ -35,7 +37,7 @@ void preCalculateNotes()
     }
 }
 
-//Define the frequency of basic music notes (no accidentals)
+//MACROS to define the frequency of basic music notes (no accidentals)
 #define Do(octave)  ((double)octave*noteFreq[0])      //C
 #define Re(octave)  ((double)octave*noteFreq[2])      //D        
 #define Mi(octave)  ((double)octave*noteFreq[4])      //E
@@ -54,24 +56,13 @@ void preCalculateNotes()
 //Blue button to start
 DigitalIn blueButton(BUTTON1);
 
-//Define the analog inputs
-DigitalIn volume(BUTTON_1);
-DigitalIn speed(BUTTON_2);
-
 //Define the PWM output for the speaker
 PwmOut Speaker(SPEAKER);
 
-//Define the PWM output for the RGB LED
-PwmOut RedLed(RED_LED);
-PwmOut GreenLed(GREEN_LED);
-PwmOut BlueLed(BLUE_LED);
-
-
-/*----------------------------------------------------------------------------
+/*---------------------------------------------------------------------------
  MAIN function
  *----------------------------------------------------------------------------*/
 
-using namespace std;
 int main(){
     //Initialise the arrays
     preCalculateNotes();
@@ -91,28 +82,27 @@ int main(){
 
     //Play tune
     for (unsigned int n=0; n< sizeof(note)/sizeof(double); n++) {
-        double nextNote     = note[n];       //This is the period of the note
-        double nextDuration = beat[n];   //This is in seconds
-        printf("note: %10.8f\tduration: %4.1f\n\r", nextNote, nextDuration);
+        double nextNote     = note[n];   // This is the *frequency* of the note, or a zero (for a rest)
+        double nextDuration = beat[n];   // This is the duration
 
+        //Note or rest?
         if (nextNote == No) {
-            //Rest
-            Speaker = 0.0;
+            Speaker = 0.0;           // Rest - sound off
         } else {
-            //Tone
-            double T = 1.0/nextNote;     //Period of the next note
-            Speaker.period(T);
-            Speaker = 0.5;
+            double T = 1.0/nextNote; // Period of the next note
+            Speaker.period(T);       // Set PWM period
+            Speaker = 0.5;           // Volume to on
         }
         
-        // Pause to allow the note or rest to complete 
+        // Sets the duration of the note or rest
         wait_us(beat[n]*1000000);
     }
 
+    // All done - sleep
     while(1){ 
-		__WFI();
+		sleep();
     }
 	
 }
 
-// *******************************ARM University Program Copyright (c) ARM Ltd 2019*************************************
+// *******************************ARM University Program Copyright (c) ARM Ltd 2022*************************************
