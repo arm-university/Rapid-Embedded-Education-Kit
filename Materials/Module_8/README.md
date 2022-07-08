@@ -244,8 +244,28 @@ You can find in the table below the member function of the Timer Interface and T
 In this lab task, you will design an audio player that uses a timer, PWM, and interrupts.
 
 ## 5.1 Define the Music Note and Beat Length
-To play music, it is better to define a list of notes that maybe used to play the music, including the music notes (the frequency of the sound, e.g. do, re, mi, fa, so, la, si) and the beat length (the time that the current note lasts for, such as whole note, half note). To do that, you need to adjust the period of the PWM so that it can produce a correct frequency for each music note, and the period of play to produce the desired beat.
+To play music, it is better to define a list of notes that maybe used to play the music, including the music notes (the frequency of the sound, e.g. do, re, mi, fa, so, la, si) and the beat length (the time that the current note lasts for, such as whole note, half note). To do that, you need to:
+
+* Set the **period** of the PWM so that it can produce a correct frequency for each music note
+* Wait for a defined period to obtain the correct note duration.
+
 After defining the music note and beat length, you can then make a note array which will produce a simple piece of music, for example the following sheet gives the notes and beats of “Jingle bells”
+
+Some starter code has been provided.
+
+| Task 5-1 | JingleBells |
+| - | - |
+| 1. | Make module8-5-1-JingleBells your active project. |
+| 2. | Build and run. Press the blue button to start playback |
+
+This is a basic application that you are going to improve. 
+
+You may note some key points:
+
+* The frequency of each note is pre-calculated in the function `void preCalculateNotes()`
+* Some `C` Macros are provided to calculate the frequency of the notes in the key of C-Major. The value of octave is limited to 1 in this exercise, but would be 2 to move up and octave, and 0.5 to drop down.
+
+For those who are musical, the score is shown below. If you do not read music, it does not matter. All notes and durations are already pre-created for you. Your task should focus around software.
 
 <figure>
 <img src="../../Materials/img/Module_8_jingle-bells-4-bar.png" width="400px">
@@ -257,49 +277,21 @@ After defining the music note and beat length, you can then make a note array wh
 <figcaption>Figure 4: jingle bells 4 bar 2</figcaption>
 </figure>
 
-In this first task, on the skeleton code, you should:
-* Define a basic musique note, for example:
-```C++
-# define Do		0.5
-# define Re		0.45
-# define Mi		0.4
-# define Fa		0.36
-# define So     0.33
-# define La     0.31
-# define Si     0.3
-# define No		0
-```
 
-* Define a basic beat note, for example:
-```C++
-# define b1		0.5		//whole note
-# define b2		0.25		//half note
-…
-```
+# 5.2 Challenge
 
-* Define a basic beat note, for example:
-```C++
-float note []={ Mi,  No,  Mi …
-float beat [] ={ b3,  b3,  b3 …
-…
-```
+This challenge builds on what you have learned in previous sections as well as this one. Starting with the demonstration code in 5.1, your challenge is to make some changes and additions to improve this music player. Key to this is power saving as the intention is that this will be powered by a coin cell, and needs a shelf life of many months.
 
-# 5.2	Application code
-In this task, you will be completing the code skeleton using the functions presented in [section 4.3](#43-Software-Functions). You can make use of the following guidelines:
-* Define the digital inputs (two buttons) and PWM outputs (speaker and LEDs)
-* Define the time ticker
-* Write the time ticker ISR, which will be periodically triggered after each single music note 
-    - Update the PWM frequency to the next music note
-    - Update the beat length for the next music note (reconfigure the tick interrupt time)
-    - Update the brightness of the LEDs to reflect the melody change
-        - The red LED intensity should represent the note being played.
-        - The green LED intensity should represent the beat’s length.
-        - The blue LED intensity should represent the volume. It also should blink at the same speed of the melody.
-    -	The input of the first button will be used to adjust the volume to 80% when it is pressed and 20% when it is not,
-    -	The input of the second button will be used to adjust the speed of the song by adding a delay of 0.5 seconds when the button is pressed.
-*	In the main program
-    -	Initialize the time ticker
-    -	Sleep and wait for interrupts
+| Task 5-2 | Requirements |
+| - | - |
+| 1. | The software shall not use spinning waits (such as `wait_us`). Instead interrupts should be used to minimise power consumption. |
+| 2. | A potentiometer shall be used to set the speed of the playback. Note that AnalogIn is NOT interrupt safe |
+| *hint* | You can access `AnalogIn` in main when the CPU comes out of sleep. Use a `Ticker` to wake the CPU periodically to sample the analog input |
+| 3. | Use two buttons to control the volume. Use interrupts to keep power consumption low. See the function `float calcVolume(uint16_t vol)` in Task 4-3 as an example of controlling volume |
+| 4. | Try to debounce the switches without using spinning waits. |
+| *hint* | When a rising edge it detected, turn off the switch interrupt and use a `Timeout` turn it back on once the switch state has (probably) settled. Assume 250ms as a suitable delay. |
+ 
+Watch out for race conditions. Remember that shared mutable state should be `volatile` and access protected with `CriticalSectionLock`. 
 
 # 6 Additional references
 
