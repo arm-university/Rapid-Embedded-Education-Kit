@@ -41,7 +41,7 @@ In this lab, we will be using the following software and hardware:
 
 - **NUCLEO-F401RE**, or another suitable Mbed OS 6 compatible development board. A full list of compatible devices can be found here: https://os.mbed.com/platforms, note that outputs may have to be reconfigured for devices following a different standard.
 
-* A breadboard, 2 x 1kΩ resistors, 1 x temperature sensor (DS1631), 1 x LCD (NHD_0216HZ) and 1 x shift register (74HC595N).
+* A breadboard, 2 x 1kΩ resistors, 1 x temperature sensor (DS1631), 1 x LCD (NHD-0420H1Z) and 1 x shift register (74HC595N).
 
 The code skeletons, which includes some support for implementing the task in [section 4.3](#43-Your-Application-Code), [section 5.2](#52-Your-Application-Code), [section 6.3](#63-Your-Application-Code) and [section 7](#70-Integration-using-high-level-API) should be found in the same folder as this manual
 
@@ -83,9 +83,15 @@ In this task we are going to display a string on an LCD screen using a shift reg
 
 ## 4.1 LCD display and Shift Register
 
-The LCD (NHD-0216HZ-FSW-FBW-33V3C) has a 2 line x 16 character display. It can be configured, and the data can be written via SPI interface. To be able to use SPI with the LCD, you will have to use a 74HC595N shift register. 
+The LCD (NHD-0420H1Z-FSW-GBW-33V3C) has a 4 line x 20 character display. It can be configured, and the data can be written via SPI interface. To be able to use SPI with the LCD, you will have to use a 74HC595N shift register. 
 You can find out more about shift registers and the 74HC595N in Additional references section.
 You will be using the LCD in 4-bit mode. Detailed initialisation procedure can be found on page 25-26 of the ST7066U LCD driver datasheet.
+
+| Task 4-1 | LCD Display |
+| - | - |
+| 1. | Make module904-1-SPI_LCD the active project. Build and run |
+| 2. | Press the reset button on your Nucleo board - check there are not characters on the display |
+| - | Adjust the potentiometer to get the right contrast |
 
 ## 4.2 SPI API on Mbed Studio 
 
@@ -159,7 +165,7 @@ On your PC:
 
 In this lab task, we are going to display the temperature on the PC using the I2C interface.
 
-## 6.1 Temperature Sensor 
+## 6.1 I2C Temperature Sensor 
 
 In this task we are going to use the temperature sensor (DS1631), its pin configurations are presented below: 
 
@@ -242,6 +248,12 @@ You can find some the member function of the I2C API in the table below:
 | - | - |
 
 # 6.2 Your Application Code 
+
+| Task 6-2 | I2C Temperature Sensor |
+| - | - |
+| 1. | Make module9-6-2-I2C your active project. Build and run |
+| 2. | Over time observe the temperature vary |
+
 
 The aim of this task is to display the temperature on the PC. Using the I2C Interface,
 * Write the Start Convert T command to the sensor 
