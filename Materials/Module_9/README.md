@@ -89,7 +89,6 @@ In this lab, we will be using the following software and hardware:
 
 * A breadboard, 2 x 1kΩ resistors, 1 x temperature sensor (DS1631), 1 x LCD (NHD-0420H1Z) and 1 x shift register (74HC595N).
 
-The code skeletons, which includes some support for implementing the task in [section 4.3](#43-Your-Application-Code), [section 5.2](#52-Your-Application-Code), [section 6.3](#63-Your-Application-Code) and [section 7](#70-Integration-using-high-level-API) should be found in the same folder as this manual
 
 # 3 Hardware Setup
 
