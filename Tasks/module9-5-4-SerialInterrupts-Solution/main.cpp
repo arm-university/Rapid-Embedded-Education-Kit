@@ -21,25 +21,23 @@ UnbufferedSerial serial_port(USBTX, USBRX);
 //This will hold the single byte that we read from the serial port
 volatile char p = 0;
 
+//Cause of wake
+volatile bool wasWokenBySerial = false;
+
 //Serial Receive ISR
 void on_rx_interrupt()
 {
-    // The variable p is shared, so we MUST use a critical section lock to avoid races
     CriticalSectionLock lock;
     serial_port.read((void*)&p, 1);
-    // Also note that:
-    // (i) serial_port is not referenced anywhere else
-    // (ii) only ONE serial port is being used
-    // So we work on the basis that read can be used.
-    // UnbufferedSerial is not strictly documented as interrupt safe https://os.mbed.com/docs/mbed-os/latest/apis/thread-safety.html
+    wasWokenBySerial = true;
 }
 
 // ISR for the switch
 void button1Pressed() {
-
+    redLED = 1;
 }
 void button1Released() {
- 
+    redLED = 0;
 }
 
 int main()
@@ -74,7 +72,19 @@ int main()
     do
     {
         sleep();
-        onBoardLED = !onBoardLED;       //Wake indicator
+
+        //Find out why we are awake
+        CriticalSectionLock::enable();
+        bool processSerialInput = wasWokenBySerial;  //Get copy of flag
+        wasWokenBySerial = false;       //Reset flag
+        CriticalSectionLock::disable();
+
+        //If not due to the serial interface - then skip
+        if (!processSerialInput)  continue;
+
+        //Must have been woken by the serial interrut
+
+        onBoardLED = !onBoardLED;       //Serial Indicator
 
         //Read p safely
         CriticalSectionLock::enable();
@@ -97,8 +107,10 @@ int main()
         
     } while (copyOfp != 'q');
 
-    //Detatch ISR
+    //Detatch ISRs
     serial_port.attach(NULL);
+    button_1.rise(NULL);
+    button_1.fall(NULL);
 
     //Notify user
     serial_port.write("Done\n\r", 7);   //Blocking

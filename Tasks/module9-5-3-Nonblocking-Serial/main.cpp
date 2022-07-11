@@ -86,7 +86,7 @@ int main()
     } while (p != 'q');
 
     //Comment this out to see the change
-    serial_port.enable_input(false);
+    //serial_port.enable_input(false);
 
     //Once finished - sleep
     while (true) {

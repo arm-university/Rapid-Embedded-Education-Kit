@@ -208,10 +208,12 @@ Sometimes we wish to check for serial input data, but we cannot afford to block 
 | 4. | <p title="The green LED is now switching on and off very rapidly as the loop iterates. This is a similar effect to PWM that we saw in an earlier exercise">Why does the green LED become dimmer?<p> |
 | - | Confirm that pressing 1 and 2 toggle the buzzer |
 | - | Press some other characters to see them echoed back |
-| - | Note the on-board LED each time a key is typed |
-| 4. | <p title="The blocking printf function is realtively slow, sending a stream of characters at 9600 bits per second back to the host. This is relatively slow, so noticeably interferes with the loop time.">If you type a sequence of characters quickly (not q), note the green led flickers. Why is this?</p> | 
+| - | Note the on-board LED flicker each time a key is typed |
+| 4. | <p title="Each time a key is pressed, the printf function sends a stream of characters at 9600 bits per second back to the host. As printf is relatively slow, so it noticeably interferes with the loop time.">If you type a sequence of characters quickly (not q), note the green led flickers. Why is this?</p> | 
 
 **Key Points**
+
+Note the following
 
 * The example above uses non-blocking reads for both the serial interface and the switch. 
 * Both the serial interface and switch are sampled as fast as possible, as set by the loop-time of the do-while loop.
@@ -220,17 +222,75 @@ Sometimes we wish to check for serial input data, but we cannot afford to block 
 
 | Task 5-3 | ...continued |
 | - | - |
-| 5. | When you press q, the loop exits |
+| 5. | <p title="The interrupts for the UnbufferedSerial interface are still on. When the host sends a character, the MCU exits the sleep state and toggled teh LED">When you press q, the loop exits. Keep pressing keys while observing the on board LED. Why is the LED changing state></p> |
+| 6 | Uncomment the line that reads `serial_port.enable_input(false);` to turn off the interrupts on receive. Confirm the CPU now stays in the sleep state. | 
 
+In these examples, `BufferedSerial` has been using interrupts under the hood to process received and sent characters. This is somewhat abstracted from the developer, so that it provides a simple yet robust mechanism for read and writing serial data. Combining the interrupts with buffering also buys your application "timing slack". For example, when a byte is receivied by the Serial interface, it is automatically processed and stored in a buffer. You application does not need to process it immediately. This is particularly helpful when your code is busy doing something else.
+
+There may be scenarios where you do not wish to leverage the functionality of `BufferedSerial` and prefer / need to take control at a lower level. There is the use-case for `UnbufferedSerial` 
 
 ## 5.4 Serial Interrupts
 
-For this task we will use [UnbufferedSerial](https://os.mbed.com/docs/mbed-os/latest/apis/unbufferedserial.html). 
+For this task we will use [UnbufferedSerial](https://os.mbed.com/docs/mbed-os/latest/apis/unbufferedserial.html). As the name suggests, there is no buffering and there is no automatic handling of interrupts. Let's look at an example where we use interrupts to handle multiple devices at the same time.
+
+| Task 5-4 | Serial Interrupts |
+| - | - |
+| 1. | Set `module9-5-4-SerialInterrupts` as the active project. Build and run |
+| 2. | Type 1 or 2 to control the buzzer |
+| 3. | <p title="The switch interrupt is waking the CPU from sleep. In the main loop, this is confused as a serial interrupt">Press button 1 - does anything happen and why?</p> |
+
+Note how the serial receive interrupt is configured:
+
+```C++
+serial_port.attach(&on_rx_interrupt, SerialBase::RxIrq);
+```
+
+Every time a byte is received on the serial interface, the ISR `on_rx_interrupt` is called.
+
+Let's look closely at the ISR for the serial interface:
+
+```C++
+//This will hold the single byte that we read from the serial port
+volatile char p = 0;
+
+//Serial Receive ISR
+void on_rx_interrupt()
+{
+    CriticalSectionLock lock;
+    serial_port.read((void*)&p, 1);
+}
+```
+
+**Note and Disclaimer**
+
+(i) `serial_port` is not referenced anywhere else
+
+(ii) only ONE serial port is being used in the entire project
+
+On this basis, we assume that `read()` can be used safely under these conditions (as also [demonstrated in the documentation](https://os.mbed.com/docs/mbed-os/v6.15/latest/unbufferedserial.html)).
+
+However - `UnbufferedSerial` is not strictly documented as interrupt safe https://os.mbed.com/docs/mbed-os/latest/apis/thread-safety.html so great care should be exercised. 
+
+> Beyond this simple example, do not treat `UnbufferedSerial` as interrupt safe unless the documentation explicitly states as much.
+
+| Task 5-4 | ... continued |
+| - | - |
+| 4. | Press q to exit the main loop. Keep pressing button 1. What do you notice? |
+| 5. | Modify the code to address the following issues: |
+| (i) | When button 1 is pressed, the LED comes ON |
+| (ii) | When button 1 is released, the LED goes OFF |
+| (iii) | When the button is pressed, this is not confused with a serial input. No serial output should occur unless a key is pressed in the host serial terminal. |
+| (iv) | When q is pressed, all interrupts should be turned off. |
+| - | A solution is provided |
 
 
 ## 5.5 Standard Library Functions
 
 A common question often asked is "how do I use standard library functions such as `printf` with the new serial classes?"
+
+// TO BE DONE
+
+## 5.6 The default BAUD rate
 
 // TO BE DONE
 
