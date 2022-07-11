@@ -59,9 +59,9 @@ If you clone this repository, lecture slides are available in PowerPoint format 
 
 [6-1 I2C Temperature Sensor](#61-i2c-temperature-sensor)
 
-[6-2 Challenge](#62-challenge)
+[6-2 I2C Interface on Mbed Studio](#62-i2c-interface-on-mbed-studio)
 
-[6-3 i2C Interface on Mbed Studio](#62-i2c-interface-on-mbed-studio)
+[6-3 Challenge](#63-challenge)
 
 [7 Additional References](#7-additional-references)
 
@@ -501,9 +501,9 @@ http://en.wikipedia.org/wiki/Shift_register
 
 http://www.nxp.com/documents/data_sheet/74HC_HCT595.pdf
 
-**ST7066U LCD driver datasheet**
+**LCD driver datasheet**
 
-http://www.newhavendisplay.com/app_notes/ST7066U.pdf 
+https://newhavendisplay.com/content/specs/NHD-0420H1Z-FSW-GBW-33V3.pdf
 
 **DS1631 temperature sensor datasheet**
 
