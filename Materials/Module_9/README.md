@@ -123,43 +123,116 @@ If you get stuck or need help, refer to the solution code provided for this lab 
 
 # 5	UART
 
-In this lab task, you will send text from the Nucleo F401RE Board to the PC.
+In these lab tasks, you will exchange text between the Nucleo F401RE Board and the PC.
 
 ## 5.1 Serial Interface on Mbed Studio
 
 The Serial interface provides UART functionality. The serial link has two unidirectional channels, one for sending and one for receiving. The link is asynchronous, and so both ends of the serial link must be configured to use the same settings.
-You can find some the member function of the Serial API in the table below:
 
-| Function Name | Description |
+| Interface | |
 | - | - |
-| `Serial (PinName tx, PinName rx, const char *name=NULL)` | Create a Serial port, connected to the specified transmit and receive pins |
-| `void baud (int baudrate)` | Set the baud rate of the serial port |
-| `void format (int bits=8, Parity parity=SerialBase::None, int stop_bits=1)` | Set the transmission format used by the serial port |
-| `int readable ()` | Determine if there is a character available to read |
-| `int writeable ()` | Determine if there is space available to write a character |
-| `void attach (void(*fptr)(void), IrqType type=RxIrq)` | Attach a function to call whenever a serial interrupt is generated |
-| `void send_break ()` | Generate a break condition on the serial line |
-| `void set_flow_control (Flow type, PinName flow1=NC, PinName flow2=NC)` | Set the flow control type on the serial port |
-| `int putc(int ch, FILE *stream )` | Writes the character ch to stream. Function returns the character written, or EOF if an error happens |
-| `int getc(FILE *stream )` | Read a character from the stream, an EOF indicates the end of file is reached |
-| `int printf(const char *format, ... )` | Prints output both text string and data, according to format and other arguments passed to printf() |
+| [BufferedSerial](https://os.mbed.com/docs/mbed-os/latest/apis/serial-uart-apis.html) | The recommended interface for serial communication. This is the type used with the default serial IO (`putchar, printf, getchar, scanf` etc..). As the name suggests, this has buffering capability. |
+| [UnbufferedSerial](https://os.mbed.com/docs/mbed-os/latest/apis/unbufferedserial.html) | This is a much more lightweight interface requiring less resources. There is no buffering, so all transactions have to be handled in real-time. This interface is well suited to using interrupts. | 
+
+For the purpose of this section, we will use a serial terminal as a source of serial bytes, 
+
+> We recommend you use the integrated serial terminal in Mbed Studio or Keil Studio. You can also use a third-party terminal emulator, such as [PuTTY](https://putty.org/) (PC) or [SerialTools](https://apps.apple.com/app/serialtools/id611021963?mt=12) (Mac)
+
+### Standard IO
+The `BufferedSerial` and `UnbufferedSerial` interfaces only cover APIs for serial interfacing. For standard library functions (such as `printf`), there is addition work needed to redirection I/O to a specific serial interface.
+
+Boards designed for Mbed OS will automatically direct standard IO to a pre-configured serial interface, which are re-directed over USB back to the host computer.
+
+The serial pins for Serial-over-usb are `USBTX` and `USBRX`
+
+Note that in previous versions of Mbed OS, there was a [Serial](https://os.mbed.com/docs/mbed-os/v5.15/mbed-os-api-doxy/classmbed_1_1_serial.html) class that replicated standard IO. This interface was removed in Mbed OS 6 in preference to an alternative approach (see [Standard Library Functions](#55-standard-library-functions) ).
+
+## 5.2 Blocking Serial
+
+For this task and for illustrative purposes, we are going to use the serial-over-usb (pins `USBTX` and `USBRX`) to exchange data with the host computer.
+
+| Task 5-2 | Blocking Serial |
 | - | - |
+| 1. | Make `module9-5-2` the active project. Build and run. | 
+| 2. | Press 1 to turn on the buzzer and 2 to turn off the buzzer |
+| 3. | Press a different key. Try also pressing the return key |
+| - | <P title="In this context, pressing return is simply sending the character 13. It is no different to any other byte we might want to send. Using the return character for other purposes is a behaviour often associated with the standard library. These interfaces are just working with raw bytes.">Question: Why is it you don't need to press the return key? (hover to see the answer)</P> |
+| 5. | We've added a small 250ms delay to the loop to illustrate the next point. Press lots of letter keys rapidly (but not q). Note how the character keep coming in **after** you've stopped typing. |
+| - | <p title="The BufferedSerial interface utilises interrupts to capture received data and stores data in an intermediate buffer (the host computer terminal may also be buffering, but we cannot rely on that). This buys us timing slack">If we are only reading once ever 250ms, why are these character not lost?</p> Try to use the the [documentation](https://os.mbed.com/docs/mbed-os/latest/apis/serial-uart-apis.html), then hover over the above to reveal the answer. |
 
-## 5.2 Your application code
+We've observed both the **blocking** and **buffering** behaviour of `BufferedSerial`. For a single task application, this works well. However, blocking behaviour can also be problematic. 
 
-The aim of this task is to send “Hello to the world of mbed!” from the board to the PC with a baud rate of 9600 using the Serial interface.  
-Programming the board:
-* Create a Serial port
-* Set the baud rate 
-* Print “Hello to the world of mbed!”
-  
-On your PC:
+| Task 5-2 | ...continued |
+| - | - |
+| 5. | <p title="Because the CPU is blocked on the `read()` API and is ignoring the switch">Press and hold down button 1. Why does the LED not turn on?</p> |
+| 6. | <p title="Pressing a key has sent a character to the serial interface of the microcontroller. This in turn has unblocked the 1-byte read() API, allowing the rest of the code to run.">While holding down button 1, type a character into the terminal. The code should unblock and the LED should light. What has happened?</p> |
 
-* Open a terminal (There is a serial monitoring tool in Mbed Studio or you can use other tools such as Terra Term or Putty)
-  * If you are running your program with Mbed Studio and you would like to use Putty or Terra, please remember to close mbed studio first after the program has been downloaded into the board
-* Setup the Serial Port and the baud rate
-* Connect the Nucleo F401RE Board to your PC using the USB cable (it should be already done)
-* Reset your board and receive the message
+Using blocking APIs is attractive as it means our code runs in-sequence, making it easy to write and comprehend (we will return to this when we talk about threads in module 10). However, blocking hardware is famously problematic when you want to interface with more than one device. One approach is to use interrupts for the other devices:
+
+| Task 5-2 | ...continued |
+| - | - |
+| 6. | Using interrupts for the input switch (`InterruptIn` instead of `DigitalIn`), modify this code so that the LED can be independently switched on and off even when the CPU is blocking on the serial interface |
+| - | Now open the solution |
+
+You might observe the following lines and the end of the solution:
+
+```C++
+const char msg[] = "Button Pressed\n\r";
+while (true) {
+    sleep();
+    serial_port.write(msg, sizeof(msg));
+    //Now wait for all interrupts to clear
+    wait_us(250000); //uncomment this line to see what happens!
+}
+```
+
+| Task 5-2 | ...continued |
+| - | - |
+| 7 | Build and run, press q to quit, then press and release button 1 to show the interrupts are still enabled. |
+| 8 | Now comment out the wait (as suggested in the comments). Repeat the experiment. |
+| - | Note what happens |
+
+The experiment above might have surprised you. As explained in the [documentation](https://os.mbed.com/docs/mbed-os/latest/apis/serial-uart-apis.html), `BufferedSerial` uses interrupts to send each byte of data. **There is an interrupt for each character sent**. As it is buffered, the write does not usually block, so the loop repeats and puts the MCU to sleep. However, the serial interrupts wake the MCU from sleep (9600 times a second), thus  another string is sent before the previous one was complete.
+
+> This is another example of where we need to be careful when using interrupts. For all the benefits of interrupts, they also bring complications and risks of race conditions etc.. An alternative (albeit less efficient) is to avoid blocking entirely, and instead use a *rapid polling loop*. 
+
+## 5.3 Non-blocking Serial
+
+Sometimes we wish to check for serial input data, but we cannot afford to block and wait. This might include a rapid polling loop for example. Let's modify the previous example and examine this approach:
+
+| Task 5-3 | Non-blocking Serial |
+| - | - |
+| 1. | Set module9-5-3-Nonblocking-Serial as the active project |
+| 2. | Build and run. Note the brightness of the green LED |
+| 3. | Press the blue button to start the polling loop |
+| 4. | <p title="The green LED is now switching on and off very rapidly as the loop iterates. This is a similar effect to PWM that we saw in an earlier exercise">Why does the green LED become dimmer?<p> |
+| - | Confirm that pressing 1 and 2 toggle the buzzer |
+| - | Press some other characters to see them echoed back |
+| - | Note the on-board LED each time a key is typed |
+| 4. | <p title="The blocking printf function is realtively slow, sending a stream of characters at 9600 bits per second back to the host. This is relatively slow, so noticeably interferes with the loop time.">If you type a sequence of characters quickly (not q), note the green led flickers. Why is this?</p> | 
+
+**Key Points**
+
+* The example above uses non-blocking reads for both the serial interface and the switch. 
+* Both the serial interface and switch are sampled as fast as possible, as set by the loop-time of the do-while loop.
+* The loop time is not constant as it depends on what inputs and outputs take place.
+* This is not power efficient. The CPU is running at full speed.
+
+| Task 5-3 | ...continued |
+| - | - |
+| 5. | When you press q, the loop exits |
+
+
+## 5.4 Serial Interrupts
+
+For this task we will use [UnbufferedSerial](https://os.mbed.com/docs/mbed-os/latest/apis/unbufferedserial.html). 
+
+
+## 5.5 Standard Library Functions
+
+A common question often asked is "how do I use standard library functions such as `printf` with the new serial classes?"
+
+// TO BE DONE
 
 # 6 I2C
 
@@ -170,7 +243,7 @@ In this lab task, we are going to display the temperature on the PC using the I2
 In this task we are going to use the temperature sensor (DS1631), its pin configurations are presented below: 
 
 <figure>
-<img src="../../Materials/img/Module_9_DS1631.png" width="200px" height="200px">
+<img src="../../Materials/img/Module_9_DS1631.png" width="200px" >
 <figcaption>Figure 2: DS1631</figcaption>
 </figure>
 
