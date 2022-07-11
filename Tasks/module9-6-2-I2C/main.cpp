@@ -13,14 +13,14 @@ char read_temp[2];
 int main(){
     
 while(1){
-    //Write 0x51 to 0x90 to start temperature conversion
+    //Write 0x51 to address 0x90 to start temperature conversion
     temp_sensor.write(temp_addr, &commands[0], 1, false);
     thread_sleep_for (500);    //wait for the conversion to complete
     
-    //Write 0xAA to 0x90 to read the last converted temperature
+    //Write 0xAA to address 0x90 to read the last converted temperature
     //TO BE DONE    
 
-    //Read the temperature into the read_temp array
+    //Read the temperature (2 bytes) into the read_temp array
     //TO BE DONE
     
     //Convert temperature to Celsius

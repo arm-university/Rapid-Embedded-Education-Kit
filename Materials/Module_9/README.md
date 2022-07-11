@@ -21,6 +21,52 @@ The lecture slides relevant to this section are listed below. It is suggested yo
 
 If you clone this repository, lecture slides are available in PowerPoint format in the folder `Materials/Module_9`
 
+# Table of Contents
+
+[1 - Introduction](#1-introduction)
+
+[1-1 Lab Overview](#11-lab-overview)
+
+[2 Requirements](#2-requirements)
+
+[2-1 Software and Hardware](#21-software-and-hardware)
+
+[3 Hardware Setup](#3-hardware-setup)
+
+[3-1 Pin Layout](#31-pin-layout)
+
+[4 SPI](#4-spi)
+
+[4-1 LCD Display and Shift Register](#41-lcd-display-and-shift-register)
+
+[4-2 SPI API on Mbed Studio](#42-spi-api-on-mbed-studio)
+
+[4-3 Your Application Code](#43-your-application-code)
+
+[5 UART](#5-uart)
+
+[5-1 Serial Interfaces in Mbed Studio](#51-serial-interface-on-mbed-studio)
+
+[5-2 Blocking Serial](#52-blocking-serial)
+
+[5-3 Non-blocking Serial](#53-non-blocking-serial)
+
+[5-4 Serial Interrupts](#54-serial-interrupts)
+
+[5-5 The default BAUD rate](#55-the-default-baud-rate)
+
+[6 I2C](#6-i2c)
+
+[6-1 I2C Temperature Sensor](#61-i2c-temperature-sensor)
+
+[6-2 Challenge](#62-challenge)
+
+[6-3 i2C Interface on Mbed Studio](#62-i2c-interface-on-mbed-studio)
+
+[7 Additional References](#7-additional-references)
+
+---
+
 # 1 Introduction
 
 ## 1.1 Lab Overview
@@ -284,29 +330,50 @@ However - `UnbufferedSerial` is not strictly documented as interrupt safe https:
 | (iv) | When q is pressed, ALL interrupts should be turned off. |
 | - | A solution is provided |
 
+## 5.5 The default BAUD rate
 
-## 5.5 Standard Library Functions
+A common question is how to change the BAUD rate for the default serial communication. For example, by default the following code will write a string to a designated serial port at 9600 BAUD.
 
-A common question often asked is "how do I use standard library functions such as `printf` with the new serial classes?"
+```C++
+#include "mbed.h"
 
-// TO BE DONE
-
-## 5.6 The default BAUD rate
-
-// TO BE DONE
+int main()
+{
+    printf("Hello World\n\r");
+    sleep();
+}
 ```
+
+## Method 1 - `mbed_app.json`
+The simplest way to change the baud rate is via the `target_overrides` collection found in the file `mbed_app.json`. This file can be found in every Mbed OS project. For example:
+
+```json
 {
     "requires": ["bare-metal"],
     "target_overrides": {
         "*": {
-            "target.printf_lib": "std",
-            "target.c_lib": "std",   
-            "platform.stdio-baud-rate": 115200,
-            "platform.stdio-buffered-serial": 1
+            "platform.stdio-baud-rate": 115200
         }      
     }
 }
 ```
+
+would give us a *bare metal* project (no RTOS) with a default serial BAUD rate of 115200.
+
+More platform parameters can be found [here](https://os.mbed.com/docs/mbed-os/latest/apis/platform-options-and-config.html)
+
+## Method 2 - Define `mbed_override_console`
+
+If you add the following to your project, an alternative serial interface will be used for standard input and output.
+
+```C++
+FileHandle* mbed::mbed_override_console(int)
+{
+    static BufferedSerial   myConsole(USBTX, USBRX, 115200);
+    return &myConsole;
+}
+```
+
 
 # 6 I2C
 
@@ -333,6 +400,11 @@ In this task we are going to use the temperature sensor (DS1631), its pin config
 | 8 | VDD | Supply Voltage Pin. +2.7V to 5.5V Power Supply Pin. |
 | - | - | - |
 
+<figure>
+<img src="../../Materials/img/Temp_I2C.png" width="400px">
+<figcaption>I2C Circuit</figcaption>
+</figure>
+
 The temperature (DS1631) can be accessed by I2C interface. 
 General I2C information:
 * All data is transmitted MSB first over the 2-wire bus
@@ -340,6 +412,7 @@ General I2C information:
 * Pull-up resistors are required on SDA and SCL lines, so that when the bus is idle both lines must remain in a logic-high state
 
 To use it, you first need to setup the address for the temperature sensor. It is done by connecting pins 5, 6 and 7 to either Vcc or ground. In this case, we’ll connect pins 5, 6 and 7 to ground, which means that our temperature sensor address will be 1001000 0x90.
+
 In this example, two 1kΩ pull-up resistors were used to keep the SDA and SCL lines in a logic-high while the bus is idle.
 Each read or write command must start with a Control Byte:
 | Bit 7 | Bit 6 | Bit 5 | Bit 4 | Bit 3 | Bit 2 | Bit 1 | Bit 0 |
@@ -378,7 +451,7 @@ The MSB is used to indicate the sign of the temperature, for example:
 * If the Temp data MSByte bit D10 = 1, then the temperature is negative and Temp value (oC) = o (two’s complement of Temp data) x 0.125 oC.
 The detailed information can be found at the product datasheet
 
-# 6.2 I2C Interface on Mbed Studio
+## 6.2 I2C Interface on Mbed Studio
 
 You can find some the member function of the I2C API in the table below:
 
@@ -394,50 +467,31 @@ You can find some the member function of the I2C API in the table below:
 | `void stop (void)` | Creates a stop condition on the I2C bus |
 | - | - |
 
-# 6.2 Your Application Code 
+## 6.3 Challenge
 
 | Task 6-2 | I2C Temperature Sensor |
 | - | - |
-| 1. | Make module9-6-2-I2C your active project. Build and run |
-| 2. | Over time observe the temperature vary |
+| 1. | Make module9-6-2-I2C your active project.  |
+| - | Note that the code is not yet complete |
+| 2. | Read the comments and write the missing lines of code |
+| - | A solution is provided |
 
+The steps are as follows:
 
-The aim of this task is to display the temperature on the PC. Using the I2C Interface,
 * Write the Start Convert T command to the sensor 
 * Wait and Write the Read Temperature command to the sensor
 * Read the 16-bit temperature data
 * Convert the temperature data into real temperature, to do this refer to **DS1631 datasheet, Table 4. 12-Bit Resolution Temperature/ Data Relationship**
 * Print the temperature to the PC via UART
 
-# 7 Integration using high-level API
-
-In this task, you are required to display the temperature on the LCD using high-level APIs, including:
-
-| Function Name | Description |
-| - | - |
-| `NHD_0216HZ (PinName CS, PinName MOSI, PinName SCLK)` | Create an NHD_0216HZ LCD interface |
-| `void init_lcd ()` | Initialize the NHD_0216HZ LCD |
-| `void clr_lcd()` | Clear the screen |
-| `void set_cursor (int column, int row)` | Set location of the starting text |
-| `int printf(const char *format, ... )` | Print to the LCD |
-| `DS1631 (PinName sda, PinName scl, int addr)` | Create a DS1631 temperature sensor interface |
-| `int read ()` | Read the temperature register and convert to the real temperature presentation |
-| - | - |
+If you get this working, you should see the temperature being displayed in the serial terminal.
 
 
-# 8 Additional references
+# 7 Additional references
 
-**Documentation of the SPI API**
+**Mbed OS APIs**
 
-https://os.mbed.com/docs/mbed-os/v5.13/apis/spi.html
-
-**Documentation of the Serial API**
-
-https://os.mbed.com/docs/mbed-os/v5.13/apis/serial.html
-
-**More about I2C**
-
-https://os.mbed.com/docs/mbed-os/v5.13/apis/i2c.html
+https://os.mbed.com/docs/mbed-os/latest/apis/index.html
 
 **More about shift registers**
 
@@ -455,30 +509,6 @@ http://www.newhavendisplay.com/app_notes/ST7066U.pdf
 
 http://datasheets.maximintegrated.com/en/ds/DS1631-DS1731.pdf
 
-
-# 9	Troubleshooting
-
-If you experience a problem when trying to print a word to the lcd using SPI, it could be because your init_lcd method is not correct, if you were to use the solution provided and you still can not print any word in the lcd do the following:
-Make a while loop in main.cpp and inside add the init_lcd() method along with the print_lcd() , this will ensure that the lcd initializes at least one time as well as the execution of the printing function.
-
-```C++
-/*----------------------------*/
-#include "mbed.h"
-#include "NHD_0216HZ.h"
-
-/*----------------------------
-    MAIN FUNCTION
-----------------------------*/
-
-int main() {
-    init_spi();
-    while(1)
-    {
-        init_lcd();
-        print_lcd("HELLO WORLD!");
-    }
-}
-```
 ---
 
 [Table of Contents](/README.md#syllabus)
