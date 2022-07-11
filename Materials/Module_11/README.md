@@ -122,7 +122,7 @@ int main() {
     timeoutflipper.attach(&timeoutFlipper, 2.0); // setup flipper to call flip after 2 seconds
     // spin in a main loop.
     while(1) {
-        wait(0.2);
+        wait_us(200000);
     }
 }
 ```
