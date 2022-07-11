@@ -275,12 +275,13 @@ However - `UnbufferedSerial` is not strictly documented as interrupt safe https:
 
 | Task 5-4 | ... continued |
 | - | - |
-| 4. | Press q to exit the main loop. Keep pressing button 1. What do you notice? |
+| 4. | Press q to exit the main loop. Type some characters to confirm the serial interrupt is off. |
+| - | Keep pressing button 1. What do you notice? |
 | 5. | Modify the code to address the following issues: |
 | (i) | When button 1 is pressed, the LED comes ON |
 | (ii) | When button 1 is released, the LED goes OFF |
 | (iii) | When the button is pressed, this is not confused with a serial input. No serial output should occur unless a key is pressed in the host serial terminal. |
-| (iv) | When q is pressed, all interrupts should be turned off. |
+| (iv) | When q is pressed, ALL interrupts should be turned off. |
 | - | A solution is provided |
 
 
