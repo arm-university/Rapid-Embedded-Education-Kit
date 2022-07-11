@@ -294,6 +294,19 @@ A common question often asked is "how do I use standard library functions such a
 ## 5.6 The default BAUD rate
 
 // TO BE DONE
+```
+{
+    "requires": ["bare-metal"],
+    "target_overrides": {
+        "*": {
+            "target.printf_lib": "std",
+            "target.c_lib": "std",   
+            "platform.stdio-baud-rate": 115200,
+            "platform.stdio-buffered-serial": 1
+        }      
+    }
+}
+```
 
 # 6 I2C
 
