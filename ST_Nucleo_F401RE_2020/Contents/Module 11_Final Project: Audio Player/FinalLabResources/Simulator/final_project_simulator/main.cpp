@@ -46,7 +46,7 @@ Ticker timer;
 Timeout delay;
 
 //Define the LCD display and the Serial
-C12832 lcd(SPI_MOSI, SPI_SCK, SPI_MISO, p8, p11);
+C12832 lcd(SPI_COTI, SPI_SCK, SPI_CITO, p8, p11);
 Serial pc(UART_TX, UART_RX);
 
 
