@@ -15,7 +15,7 @@ using namespace std;
 # define BLUE_LED D8
 # define SPEAKER D9
 # define SPI_CS D10
-# define SPI_MOSI D11
+# define SPI_COTI D11
 # define SPI_SCLK D13
 # define UART_TX D1
 # define UART_RX D0
@@ -56,7 +56,7 @@ Ticker timer;
 Timeout delay;
 
 //Define the LCD display and the Serial
-NHD_0216HZ lcd(SPI_CS, SPI_MOSI, SPI_SCLK);
+NHD_0216HZ lcd(SPI_CS, SPI_COTI, SPI_SCLK);
 Serial pc(UART_TX, UART_RX);
 
 
