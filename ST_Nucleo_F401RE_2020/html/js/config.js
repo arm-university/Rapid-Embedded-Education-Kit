@@ -149,7 +149,7 @@ var index =
       {
         "column": "exercises",
         "name": "Appendix: Mbed Simulator Modification Guide",
-        "link": "Contents/Simulator_Modifications/Simulator_code_modiciations"
+        "link": "Contents/Simulator_Modifications/Simulator_code_modifications"
       }
     ],		
 	
