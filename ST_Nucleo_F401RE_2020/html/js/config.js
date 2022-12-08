@@ -135,7 +135,7 @@ var index =
 	  {
         "column": "exercises",
         "name": "Final Lab",
-        "link": "Contents/Module 11_Final Project/ Audio Player/FinalLabResources"
+        "link": "Contents/Module 11_Final Project: Audio Player/FinalLabResources"
       }
     ],	
 
