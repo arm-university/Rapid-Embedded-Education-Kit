@@ -20,7 +20,7 @@ var index =
       {
         "column": "modules",
         "name": "Module 1: Introduction to Embedded Systems",
-        "link": "Contents/Module_1/Module_1.pptx"
+        "link": "Contents/Module 01_Introduction to Embedded Systems/Module_1.pptx"
       }
     ],
 
@@ -28,7 +28,7 @@ var index =
       {
         "column": "modules",
         "name": "Module 2: The Arm Cortex-M4 Processor Architecture",
-        "link": "Contents/Module_2/Module_2.pptx"
+        "link": "Contents/Module 02_The Arm Cortex-M4 Processor Architecture/Module_2.pptx"
       }
     ], 
 	
@@ -36,7 +36,7 @@ var index =
       {
         "column": "modules",
         "name": "Module 3: Introduction to Arm Cortex-M4 Programming",
-        "link": "Contents/Module_3/Module_3.pptx"
+        "link": "Contents/Module 03_Introduction to Arm Cortex-M4 Programming/Module_3.pptx"
       },
 
     ],
@@ -45,12 +45,12 @@ var index =
       {
         "column": "modules",
         "name": "Module 4: Introduction to the Mbed Platform and CMSIS",
-        "link": "Contents/Module_4/Module_4.pptx"
+        "link": "Contents/Module 04_Introduction to the Mbed Platform and CMSIS/Module_4.pptx"
       },
 	  {
         "column": "exercises",
         "name": "Getting Started Guide",
-        "link": "Contents/Module_4/Getting_Started.docx"
+        "link": "Contents/Module 04_Introduction to the Mbed Platform and CMSIS/Getting_Started.docx"
       }
     ],
 		
@@ -58,24 +58,24 @@ var index =
       {
         "column": "modules",
         "name": "Module 5: Digital Input and Output(IO)",
-        "link": "Contents/Module_5/Module_5.pptx"
+        "link": "Contents/Module 05_Digital Input and Output (IO)/Module_5.pptx"
       },
       {
         "column": "exercises",
         "name": "Lab 1: Digital IO",
-        "link": "Contents/Module_5/Lab1_resources.zip"
+        "link": "Contents/Module 05_Digital Input and Output (IO)/Lab1_resources"
       }
     ],
 	[
       {
         "column": "modules",
         "name": "Module 6: Interrupts and Low Power Features ",
-        "link": "Contents/Module_6/Module_6.pptx"
+        "link": "Contents/Module 06_Interrupts and Low Power Features/Module_6.pptx"
       },
       {
         "column": "exercises",
         "name": "Lab 2: Interrupts",
-        "link": "Contents/Module_6/Lab2_resources.zip"
+        "link": "Contents/Module 06_Interrupts and Low Power Features/Lab2_resources"
       }
     ],	
 	
@@ -84,24 +84,24 @@ var index =
       {
         "column": "modules",
         "name": "Module 7: Analog Input and Output ",
-        "link": "Contents/Module_7/Module_7.pptx"
+        "link": "Contents/Module 07_Analog Input and Output/Module_7.pptx"
       },
 	  {
         "column": "exercises",
         "name": "Lab 3: Analog IO",
-        "link": "Contents/Module_7/Lab3_resources.zip"
+        "link": "Contents/Module 07_Analog Input and Output/Lab3_resources"
       }
     ],
 	[
       {
         "column": "modules",
         "name": "Module 8: Timer and Pulse-width Modulation ",
-        "link": "Contents/Module_8/Module_8.pptx"
+        "link": "Contents/Module 08_Timer and Pulse-Width Modulation/Module_8.pptx"
       },
 	  {
         "column": "exercises",
         "name": "Lab 4: Timer and Pulse-width Modulation",
-        "link": "Contents/Module_8/Lab4_resources.zip"
+        "link": "Contents/Module 08_Timer and Pulse-Width Modulation/Lab4_resources"
       }
     ],
 	
@@ -109,12 +109,12 @@ var index =
       {
         "column": "modules",
         "name": "Module 9: Serial Communication ",
-        "link": "Contents/Module_9/Module_9.pptx"
+        "link": "Contents/Module 09_Serial Communication/Module_9.pptx"
       },
 	  {
         "column": "exercises",
         "name": "Lab 5: Serial Communication",
-        "link": "Contents/Module_9/Lab5_resources.zip"
+        "link": "Contents/Module 09_Serial Communication/Lab5_resources"
       }
     ],
 
@@ -122,12 +122,12 @@ var index =
       {
         "column": "modules",
         "name": "Module 10: Real-Time Operating System ",
-        "link": "Contents/Module_10/Module_10.pptx"
+        "link": "Contents/Module 10_Real-Time Operating Systems/Module_10.pptx"
       },
 	  {
         "column": "exercises",
         "name": "Lab 6: Real-Time Operating System",
-        "link": "Contents/Module_10/Lab6_resources.zip"
+        "link": "Contents/Module 10_Real-Time Operating Systems/Lab6_resources"
       }
     ],	
 
@@ -135,7 +135,7 @@ var index =
 	  {
         "column": "exercises",
         "name": "Final Lab",
-        "link": "Contents/Module_11/FinalLabResources.zip"
+        "link": "Contents/Module 11_Final Project/ Audio Player/FinalLabResources"
       }
     ],	
 
@@ -149,7 +149,7 @@ var index =
       {
         "column": "exercises",
         "name": "Appendix: Mbed Simulator Modification Guide",
-        "link": "Contents/Simulator_Modifications/mbed_simulator_modification.zip"
+        "link": "Contents/Simulator_Modifications/Simulator_code_modiciations"
       }
     ],		
 	
