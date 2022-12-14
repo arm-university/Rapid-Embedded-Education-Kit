@@ -7,6 +7,18 @@
 ---
 
 # Module 5 - Digital Input and Output
+
+## Lecture Slides
+
+The lecture slides relevant to this section are listed below. It is suggested you follow these first before attempting the lab materials.
+
+| Lecture | Description |
+| - | - |
+| 5 | [Digital IO](./Module_5.pptx) |
+| |
+
+If you clone this repository, lecture slides are available in PowerPoint format in the folder `Materials/Module_5`
+
 # 1 Introduction
 
 ## 1.1 Lab Overview
