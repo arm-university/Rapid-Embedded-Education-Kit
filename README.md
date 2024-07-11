@@ -3,6 +3,10 @@
 
 Welcome to our Rapid Embedded Systems Design Education Kit!
 
+## Update
+
+Arm has announced the End of Life Timeline for Mbed. The Arm Education team is actively working on creating alternative teaching and learning solutions in time for the new academic terms starting Fall/Autumn 2025. We welcome feedback from the academic community on this. Reach out to the team at: education@arm.com
+
 ### [Download the EdKit here](https://github.com/arm-university/Rapid-Embedded-Education-Kit/archive/refs/heads/main.zip)
 
 Our flagship offering to universities worldwide is the Arm University Program Education Kit series.
