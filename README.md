@@ -32,6 +32,23 @@ We welcome contributions, amendments & modifications to this education kit. For 
 * Lab manual with code solutions for faculty. Labs are based on low-cost but powerful Arm-based hardware platforms. 
 * **Prerequisites:** Basics of programming in C / C++.
 
+## Tools Used
+
+The lab exercises in this course have been developed and tested using the hardware and software listed below. If you use alternatives, you may need to make adjustments to ensure the labs run successfully.
+
+Hardware:
+- NUCLEO-F401RE Development Board
+- Breadboard
+- 4 x 330 Ohm Resistors, 4 x buttons, 1 red LED, 1 Blue LED, 1 green LED
+- 2 x 100 Ohm resistors, 2 10kOhm potentiometers, 1 x speaker, 2 x LED
+- 2 x 1kOhm resistors, 1 x temperature sensor, 1 x LCD, 2 x Shift register
+
+Software:
+- Python 2.7
+- Mbed Studio or Mbed Online Compiler
+- Mbed simulator
+- Visual Studio Code
+
 ## Course Aim
 To produce students who can design and program Arm-based embedded systems and implement them using commercial API.
 
